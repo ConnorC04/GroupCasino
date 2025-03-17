@@ -6,28 +6,33 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class BlackjackGame {
-    Integer[] dealerCard1;
-    Integer[] dealerCard2;
-    Integer[] dealerHand;
-    Integer[]  playerCard1;
-    Integer[]  playerCard2;
-    //    ArrayList<Integer> ace= new ArrayList<>();
-//    ace.add(11);
-    Scanner input = new Scanner(System.in);
-    Random random = new Random();
-    Integer[] deck ;
+    private int dealerCard1;
+    private int dealerCard2;
+    private int playerCard1;
+    private int playerCard2;
+    private int playerTotal;
+    private int dealerTotal;
+    private Scanner input;
+    private Random random;
+    private Integer[] deck;
 
-    public void playBlackJack(){
-        deck = new Integer[] {2,3,4,5,6,7,8,9,10,10,10,10,};
+    public BlackjackGame() {
+        input = new Scanner(System.in);
+        random = new Random();
+        deck = new Integer[]{2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 11}; // 11 represents Ace
+    }
+
+    public void playBlackJack() {
         intro();
-        int i =random.nextInt();
-        dealerCard1= new Integer[]{deck[i]};
-        dealerCard2= new Integer[]{deck[i]};
-        playerCard1= new Integer[]{deck[i]};
-        playerCard2= new Integer[]{deck[i]};
-        System.out.println("Dealer hand: "+ dealerCard1);
+        //Drawing cards
+        dealerCard1= drawCard();
+        dealerCard2= drawCard();
+        dealerTotal = dealerCard1+dealerCard2;
 
-        System.out.println("Playler hand: "+ playerCard1+playerCard2);
+        playerCard1= drawCard();
+        playerCard2= drawCard();
+        playerTotal = playerCard1+playerCard2;
+
 
 
 
@@ -36,17 +41,28 @@ public class BlackjackGame {
 
 
     }
+
 
 
     private void intro() {
-        System.out.println("Welcome to BlackJack");
-
+        System.out.println("Welcome to BlackJack!");
     }
-//    public  String[] getDeck(){
-//        return deck;
-//    }
-//    private String userInput(String message){
-//        while()
-//        return message;
-//    ???????
+
+    public int drawCard() {
+        return deck[random.nextInt(deck.length)]; // Draws a random card from the deck
+    }
+
+    private String userInput() {
+        while (true) {
+            System.out.print("Would you like to Hit or Stay? Type 'Hit' or 'Stay': ");
+            String decision = input.nextLine().trim().toLowerCase();
+
+            if (decision.equals("hit") || decision.equals("stay")) {
+                return decision;
+            } else {
+                System.out.println("Invalid input. Please type 'Hit' or 'Stay'.");
+            }
+        }
+    }
+
 }
