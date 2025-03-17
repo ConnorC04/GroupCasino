@@ -11,7 +11,7 @@ public class BlackjackGame {
     Integer[] dealerHand;
     Integer[]  playerCard1;
     Integer[]  playerCard2;
-//    ArrayList<Integer> ace= new ArrayList<>();
+    //    ArrayList<Integer> ace= new ArrayList<>();
 //    ace.add(11);
     Scanner input = new Scanner(System.in);
     Random random = new Random();
@@ -20,11 +20,11 @@ public class BlackjackGame {
     public void playBlackJack(){
         deck = new Integer[] {2,3,4,5,6,7,8,9,10,10,10,10,};
         intro();
-            int i =random.nextInt();
-                dealerCard1= new Integer[]{deck[i]};
-                dealerCard2= new Integer[]{deck[i]};
-                playerCard1= new Integer[]{deck[i]};
-                playerCard2= new Integer[]{deck[i]};
+        int i =random.nextInt();
+        dealerCard1= new Integer[]{deck[i]};
+        dealerCard2= new Integer[]{deck[i]};
+        playerCard1= new Integer[]{deck[i]};
+        playerCard2= new Integer[]{deck[i]};
         System.out.println("Dealer hand: "+ dealerCard1);
 
         System.out.println("Playler hand: "+ playerCard1+playerCard2);
@@ -48,6 +48,5 @@ public class BlackjackGame {
 //    private String userInput(String message){
 //        while()
 //        return message;
-//    }
-
+//    ???????
 }
