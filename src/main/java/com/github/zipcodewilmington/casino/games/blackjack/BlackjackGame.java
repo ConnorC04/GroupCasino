@@ -6,15 +6,34 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class BlackjackGame {
-    ArrayList<String> dealerHand;
-    ArrayList<String>  playerHand;
+    Integer[] dealerCard1;
+    Integer[] dealerCard2;
+    Integer[] dealerHand;
+    Integer[]  playerCard1;
+    Integer[]  playerCard2;
+//    ArrayList<Integer> ace= new ArrayList<>();
+//    ace.add(11);
     Scanner input = new Scanner(System.in);
     Random random = new Random();
-    Object[] deck ;
+    Integer[] deck ;
 
     public void playBlackJack(){
-        deck = new Object[] {2,3,4,5,6,7,8,9,10,"J","Q","K","A"};
+        deck = new Integer[] {2,3,4,5,6,7,8,9,10,10,10,10,};
         intro();
+            int i =random.nextInt();
+                dealerCard1= new Integer[]{deck[i]};
+                dealerCard2= new Integer[]{deck[i]};
+                playerCard1= new Integer[]{deck[i]};
+                playerCard2= new Integer[]{deck[i]};
+        System.out.println("Dealer hand: "+ dealerCard1);
+
+        System.out.println("Playler hand: "+ playerCard1+playerCard2);
+
+
+
+
+
+
 
     }
 
@@ -23,8 +42,12 @@ public class BlackjackGame {
         System.out.println("Welcome to BlackJack");
 
     }
-    public  Object getDeck(){
-        return deck;
-    }
+//    public  String[] getDeck(){
+//        return deck;
+//    }
+//    private String userInput(String message){
+//        while()
+//        return message;
+//    }
 
 }
