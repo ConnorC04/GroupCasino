@@ -31,24 +31,27 @@ private double getUserInput(String s) {
      System.out.println("Let's Play!!");
      double amountToBet = getUserInput("How much would you like to bet?");
      double balanceAfterBet = balance - amountToBet;
+     double winnings;
      double winningMultiplier;
      double balanceAfterPlay;
      pullTrigger();
-     System.out.println(slot1);
-     System.out.println(slot2);
+     System.out.print(slot1 + " ");
+     System.out.print(slot2 + " ");
      System.out.println(slot3);
      if (slot1 == slot2 || slot1 == slot3 || slot2 == slot3) {
          winningMultiplier = 1.4;
-         balanceAfterPlay = (amountToBet * winningMultiplier) + balanceAfterBet;
-         System.out.println("You've won!! Here's your winnings: " + (amountToBet * winningMultiplier) + ".\n" +
+         winnings = (winningMultiplier * amountToBet);
+         balanceAfterPlay = (winnings + balanceAfterBet);
+         System.out.println("You've won!! Here's your winnings: " + winnings + ".\n" +
                  "Your new balance is " + balanceAfterPlay);
 
          return balanceAfterPlay;
      }
      if (slot1 == slot2 && slot2 == slot3){
          winningMultiplier = 2;
-         balanceAfterPlay = (amountToBet * winningMultiplier) + balanceAfterBet;
-         System.out.println("You've won!! Here's your winnings: "+ (amountToBet * winningMultiplier)  + ".\n" +
+         winnings = (winningMultiplier * amountToBet);
+         balanceAfterPlay = winnings + balanceAfterBet;
+         System.out.println("You've won!! Here's your winnings: " + winnings  + ".\n" +
                  "Your new balance is " + balanceAfterPlay);
          return balance;
      } else {
