@@ -14,12 +14,13 @@ public class SlotsGame {
     If all three match, then the player wins double their winnings. player's account + (wager * 2).
 
  */
+    double currentBalance = 1000.00;
     int slot1 = 0;
     int slot2 = 0;
     int slot3 = 0;
 
 
-private double getUserInput(String s) {
+    private double getUserInput(String s) {
     System.out.println(s);
     Scanner bet = new Scanner(System.in);
     return bet.nextDouble();
@@ -27,13 +28,12 @@ private double getUserInput(String s) {
 
 
 
- public double bet(double balance){
+ public double play(double balance){
      System.out.println("Let's Play!!");
      double amountToBet = getUserInput("How much would you like to bet?");
      double balanceAfterBet = balance - amountToBet;
      double winnings;
      double winningMultiplier;
-     double balanceAfterPlay;
      pullTrigger();
      System.out.print(slot1 + " ");
      System.out.print(slot2 + " ");
@@ -41,23 +41,23 @@ private double getUserInput(String s) {
      if (slot1 == slot2 || slot1 == slot3 || slot2 == slot3) {
          winningMultiplier = 1.4;
          winnings = (winningMultiplier * amountToBet);
-         balanceAfterPlay = (winnings + balanceAfterBet);
+         currentBalance = (winnings + balanceAfterBet);
          System.out.println("You've won!! Here's your winnings: " + winnings + ".\n" +
-                 "Your new balance is " + balanceAfterPlay);
+                 "Your new balance is " + currentBalance);
 
-         return balanceAfterPlay;
+         return currentBalance;
      }
      if (slot1 == slot2 && slot2 == slot3){
          winningMultiplier = 2;
          winnings = (winningMultiplier * amountToBet);
-         balanceAfterPlay = winnings + balanceAfterBet;
+         currentBalance = winnings + balanceAfterBet;
          System.out.println("You've won!! Here's your winnings: " + winnings  + ".\n" +
-                 "Your new balance is " + balanceAfterPlay);
-         return balance;
+                 "Your new balance is " + currentBalance);
+         return currentBalance;
      } else {
-         balanceAfterPlay = balanceAfterBet;
-         System.out.println("Sorry, try again. Your current balance is " + balanceAfterPlay);
-         return balanceAfterPlay;
+         currentBalance = balanceAfterBet;
+         System.out.println("Sorry, try again. Your current balance is " + currentBalance);
+         return currentBalance;
      }
  }
 
@@ -75,13 +75,13 @@ private double getUserInput(String s) {
     public static void main(String[] args)
     {
         Scanner scanner = new Scanner(System.in);
-        double currentBalance = 1000.00;
+//        double currentBalance = 1000.00;
         SlotsGame sg = new SlotsGame();
         //Scanner choiceToPlayAgain;
         //Casino currentBalance = new Casino(wallet);
         String choiceToPlayAgain;
         do {
-            sg.bet(currentBalance);
+            sg.play(sg.currentBalance);
             System.out.println("Do you want to play again? (Yes/No): ");
             choiceToPlayAgain = scanner.nextLine();
         }
