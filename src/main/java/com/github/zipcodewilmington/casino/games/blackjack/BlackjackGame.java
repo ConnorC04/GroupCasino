@@ -1,7 +1,6 @@
 package com.github.zipcodewilmington.casino.games.blackjack;
 
 
-import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -10,8 +9,8 @@ public class BlackjackGame {
     private int dealerCard2;
     private int playerCard1;
     private int playerCard2;
-    private int playerTotal;
-    private int dealerTotal;
+    private int playerHand;
+    private int dealerHand;
     private Scanner input;
     private Random random;
     private Integer[] deck;
@@ -27,11 +26,14 @@ public class BlackjackGame {
         //Drawing cards
         dealerCard1= drawCard();
         dealerCard2= drawCard();
-        dealerTotal = dealerCard1+dealerCard2;
+        dealerHand = dealerCard1+dealerCard2;
 
         playerCard1= drawCard();
         playerCard2= drawCard();
-        playerTotal = playerCard1+playerCard2;
+        playerHand = (playerCard1+playerCard2);
+
+        System.out.println("Dealer is showing: " + dealerCard1+", ?");
+        System.out.println("Your hand is: " +playerCard1+playerCard2+ " your total: "+playerHand);
 
 
 

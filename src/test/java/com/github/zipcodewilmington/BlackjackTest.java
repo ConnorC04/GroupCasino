@@ -1,10 +1,10 @@
 package com.github.zipcodewilmington;
 
 import com.github.zipcodewilmington.casino.games.blackjack.BlackjackGame;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class BlackjackTest {
@@ -43,5 +43,12 @@ public class BlackjackTest {
 
         assertTrue(playerTotal >= 4 && playerTotal <= 20);
     }
+//    @Test Need to check this tomorrow!!!!
+//    public void playerHands(){
+//        int playerCard1 = game.drawCard();
+//        int playerCard2 = game.drawCard();
+//        int expectedTotal = playerCard1 + playerCard2;
+//        assertEquals(expectedTotal,playerCard1+playerCard2);
+//    }
 
 }
