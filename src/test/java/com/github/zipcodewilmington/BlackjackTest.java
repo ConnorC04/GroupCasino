@@ -18,10 +18,8 @@ public class BlackjackTest {
         BlackjackGame game = new BlackjackGame();
         int card = game.drawCard();
 
-        // Deck contains values 2-10 (including face cards represented as 10)
         Integer[] validCards = {2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10};
-        assertTrue(java.util.Arrays.asList(validCards).contains(card),
-                "Drawn card should be within the valid deck values");
+        assertTrue(java.util.Arrays.asList(validCards).contains(card));
     }
 
     @Test
@@ -32,8 +30,7 @@ public class BlackjackTest {
         int dealerCard2 = game.drawCard();
         int dealerTotal = dealerCard1 + dealerCard2;
 
-        assertTrue(dealerTotal >= 4 && dealerTotal <= 20,
-                "Dealer total should be between 4 and 20");
+        assertTrue(dealerTotal >= 4 && dealerTotal <= 20);
     }
 
     @Test
@@ -44,8 +41,7 @@ public class BlackjackTest {
         int playerCard2 = game.drawCard();
         int playerTotal = playerCard1 + playerCard2;
 
-        assertTrue(playerTotal >= 4 && playerTotal <= 20,
-                "Player total should be between 4 and 20");
+        assertTrue(playerTotal >= 4 && playerTotal <= 20);
     }
 
 }
