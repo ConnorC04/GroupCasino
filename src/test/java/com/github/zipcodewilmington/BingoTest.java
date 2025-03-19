@@ -28,8 +28,13 @@ public class BingoTest {
     }
 
     @Test
-    public void testRandomChoice(){
+    public void testMakeBoard(){
         BingoGame bingoGame = new BingoGame();
         System.out.println(Arrays.deepToString(bingoGame.makeBoard()));
+    }
+
+    @Test
+    public void testRandomChoice(){
+
     }
 }

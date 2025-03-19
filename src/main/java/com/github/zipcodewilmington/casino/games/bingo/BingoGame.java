@@ -9,12 +9,9 @@ public class BingoGame {
     private int numberChosen;
     private ArrayList<Integer> numbers;
 
-    public BingoGame() {
-    }
+    public BingoGame() {}
 
-    public void runGame(){
-
-    }
+    public void runGame(){}
 
     public void setNumbers(ArrayList<Integer> num, int start, int end) {
         for (int i = start; i < end; i++) {
@@ -80,8 +77,13 @@ public class BingoGame {
         return board;
     }
 
-    public int chooseRandomNumber(ArrayList<Integer> num){
-        return 0;
+    public int chooseRandomNumber(){
+        BingoGame bingoGame = new BingoGame();
+        bingoGame.setNumbers(numbers, 1, 75);
+        int randomIndex = numbers.size();
+        int randomNumber = numbers.get(randomIndex);
+        numbers.remove(randomIndex);
+        return randomNumber;
     }
 
     public int checkFiveInARow(){
