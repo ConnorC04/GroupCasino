@@ -1,6 +1,7 @@
 package com.github.zipcodewilmington;
 
 import com.github.zipcodewilmington.casino.games.blackjack.BlackjackGame;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
 
@@ -43,6 +44,31 @@ public class BlackjackTest {
 
         assertTrue(playerTotal >= 4 && playerTotal <= 20);
     }
+    @Test
+    public void testPlayerBust(){
+        BlackjackGame game = new BlackjackGame();
+
+        //Given
+        game.setPlayerHand(15);
+        game.getHit(10);
+        //When
+        boolean playerBusted = game.getPlayerTotal() > 21;
+        //Then
+        assertTrue(playerBusted,"Player's hand is over 21");
+    }
+    @Test
+    public void testDealerBust(){
+        BlackjackGame game = new BlackjackGame();
+
+        //Given
+        game.setDealerHand(15);
+        game.getHit(10);
+        //When
+        boolean dealerBusted = game.getDealerTotal() > 21;
+        //Then
+        assertTrue(dealerBusted,"Dealer's hand is over 21");
+    }
+
 //    @Test Need to check this tomorrow!!!!
 //    public void playerHands(){
 //        int playerCard1 = game.drawCard();

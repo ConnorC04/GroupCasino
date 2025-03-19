@@ -11,6 +11,7 @@ public class BlackjackGame {
     private int playerCard2;
     private int playerHand;
     private int dealerHand;
+    private int newCard;
     private Scanner input;
     private Random random;
     private Integer[] deck;
@@ -35,30 +36,52 @@ public class BlackjackGame {
         System.out.println("Dealer is showing: " + dealerCard1+", ?");
         System.out.println("Your hand is: " +playerCard1+playerCard2+ " your total: "+playerHand);
 
-
-
-
-
-
-
-
+        while(playerHand<21){
+            String decision=userInput();
+            if(decision.equals("hit")) {
+                int newCard = drawCard();
+                playerHand += newCard;
+                System.out.println("You drew: " + newCard);
+                System.out.println("New total = " + (newCard + playerHand));
+                if (playerHand > 21) {
+                    System.out.println("Bust, over 21 Dealer wins");
+                }
+            }else{
+                break;
+        }
     }
-
-
-
+        while(dealerHand<17){
+            int newCard = drawCard();
+            dealerHand+=newCard;
+            System.out.println("Dealer drew: " + newCard);
+            System.out.println("New total = " + (newCard + dealerHand));
+            if(playerHand>dealerHand){
+                System.out.println("Winner winner chicken dinner");
+            } else if (playerHand<dealerHand){
+                System.out.println("Loser loser pay up!");
+            } else if (playerHand==dealerHand) {
+                System.out.println("Push keep your bet");
+            }
+        }
+    }
     private void intro() {
         System.out.println("Welcome to BlackJack!");
     }
-
     public int drawCard() {
-        return deck[random.nextInt(deck.length)]; // Draws a random card from the deck
+        return deck[random.nextInt(deck.length)];
+    }
+
+
+
+    public void getHit(int newCard){
+        this.playerHand+=newCard;
+        this.dealerHand+=newCard;
     }
 
     private String userInput() {
         while (true) {
             System.out.print("Would you like to Hit or Stay? Type 'Hit' or 'Stay': ");
             String decision = input.nextLine().trim().toLowerCase();
-
             if (decision.equals("hit") || decision.equals("stay")) {
                 return decision;
             } else {
@@ -67,4 +90,18 @@ public class BlackjackGame {
         }
     }
 
+    public int getPlayerTotal() {
+        return playerHand;
+    }
+
+    public void setDealerHand(int dealerHand) {
+        this.dealerHand=dealerHand;
+    }
+
+    public int getDealerTotal() {
+        return dealerHand;
+    }
+    public void setPlayerHand(int playerHand) {
+        this.playerHand = playerHand;
+    }
 }
