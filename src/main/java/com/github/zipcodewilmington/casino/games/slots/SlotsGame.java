@@ -62,6 +62,9 @@ public class SlotsGame {
  }
 
     private void pullTrigger() {
+        /*Spin through 7 characters: Spade, Heart, Club, Diamonds, Slots (maybe), Star, Token, Rabbit
+
+         */
         slot1 = randomColumn();
         slot2 = randomColumn();
         slot3 = randomColumn();
