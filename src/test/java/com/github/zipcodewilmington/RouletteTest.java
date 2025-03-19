@@ -63,4 +63,52 @@ public class RouletteTest {
         assertTrue(about(1000, numOfHitsFor0));
     }
 
+    @Test
+    public void test1OddOrEven() {
+        roulette.isOddOrEven(0);
+        String expected = "Neither";
+        String actual = roulette.getOddOrEven();
+        assertTrue(expected.equals(actual));
+    }
+
+    @Test
+    public void test2OddOrEven() {
+        roulette.isOddOrEven(28);
+        String expected = "Even";
+        String actual = roulette.getOddOrEven();
+        assertTrue(expected.equals(actual));
+    }
+
+    @Test
+    public void test3OddOrEven() {
+        roulette.isOddOrEven(19);
+        String expected = "Odd";
+        String actual = roulette.getOddOrEven();
+        assertTrue(expected.equals(actual));
+    }
+
+    @Test
+    public void test1RedOrBlack() {
+        roulette.isRedOrBlack(0);
+        String expected = "Green";
+        String actual = roulette.getCurrentColor();
+        assertTrue(expected.equals(actual));
+    }
+
+    @Test
+    public void test2RedOrBlack() {
+        roulette.isRedOrBlack(14);
+        String expected = "Red";
+        String actual = roulette.getCurrentColor();
+        assertTrue(expected.equals(actual));
+    }
+
+    @Test
+    public void test3RedOrBlack() {
+        roulette.isRedOrBlack(22);
+        String expected = "Black";
+        String actual = roulette.getCurrentColor();
+        assertTrue(expected.equals(actual));
+    }
+
 }

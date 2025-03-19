@@ -63,7 +63,7 @@ public class RouletteGame {
     public int getCurrentNum() {
         return currentSpinVal;
     }
-    private void isOddOrEven(int randomNumber) {
+    public void isOddOrEven(int randomNumber) {
         if (randomNumber == 0) {
             this.oddOrEven = "Neither";
         } else if (randomNumber % 2 == 0) {
@@ -72,10 +72,10 @@ public class RouletteGame {
             this.oddOrEven = "Odd";
         }
     }
-    private String getOddOrEven() {
+    public String getOddOrEven() {
         return oddOrEven;
     }
-    private void isRedOrBlack(int randomNumber) {
+    public void isRedOrBlack(int randomNumber) {
         if (randomNumber % 2 == 0) {
             if (randomNumber > 0 && randomNumber < 11 ||
                     randomNumber > 18 && randomNumber < 29) {
@@ -88,7 +88,7 @@ public class RouletteGame {
             }
         }
     }
-    private String getCurrentColor() {
+    public String getCurrentColor() {
         return currentColor;
     }
     //matchingNum (checks if currentNum matches user's guess),
