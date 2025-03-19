@@ -12,11 +12,10 @@ public class BingoGame {
     public BingoGame(){
     }
 
-    public ArrayList<Integer> setNumbers(ArrayList<Integer> num, int start, int end){
+    public void setNumbers(ArrayList<Integer> num, int start, int end){
         for (int i = start; i < end; i++){
              num.add(i);
         }
-        return num;
     }
 
     public int[][] makeBoard(){
