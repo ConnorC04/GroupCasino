@@ -65,14 +65,17 @@ public class SlotsGame {
         /*Spin through 7 characters: Spade, Heart, Club, Diamonds, Slots (maybe), Star, Token, Rabbit
 
          */
-        slot1 = randomColumn();
-        slot2 = randomColumn();
-        slot3 = randomColumn();
+        SlotsGame sg = new SlotsGame();
+        String[] slotCharacters = new String[]{"\u2660", "\u2665", "\u2663", "\u2666", "\u26C0", "\u26C1", "\u26C2", "\u26C3", "\u265B", "\u277C"};
+        slot1 = sg.randomColumn();
+        slot2 = sg.randomColumn();
+        slot3 = sg.randomColumn();
+        String[] column = new String[]{slotCharacters[slot1], slotCharacters[slot2], slotCharacters[slot3]};
     }
 
     public int randomColumn() {
-    Random num = new Random();
-    return num.nextInt(7);
+    Random rand = new Random();
+    return rand.nextInt(10);
     }
 
     public static void main(String[] args)
