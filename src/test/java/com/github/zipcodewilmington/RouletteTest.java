@@ -9,7 +9,7 @@ public class RouletteTest {
 
     RouletteGame roulette;
     boolean about(int expected, int actual) {
-        return actual > 0.90 * expected && actual < 0.10 * expected;
+        return actual > 0.90 * expected && actual < 1.10 * expected;
     }
 
     @BeforeEach
@@ -35,19 +35,32 @@ public class RouletteTest {
         assertTrue(-1 < randomNumber && randomNumber < 37);
     }
 
-//    @Test
-//    public void testWheelSpinChances() {
-//        int numOfHitsFor13 = 0;
-//        for (int i = 0; i < 37000; i++) {
-//            roulette.spinWheel();
-//            int luckyNum13 = roulette.getCurrentNum();
-//            if (luckyNum13 == 13) {
-//                numOfHitsFor13 += 1;
-//            }
-//        }
-//        System.out.println(numOfHitsFor13);
-//        assertTrue(about(1000, numOfHitsFor13));
-//    }
+    @Test
+    public void test1WheelSpinChances() {
+        int numOfHitsFor13 = 0;
+        for (int i = 0; i < 37000; i++) {
+            roulette.spinWheel();
+            int luckyNum13 = roulette.getCurrentNum();
+            if (luckyNum13 == 13) {
+                numOfHitsFor13++;
+            }
+        }
+        System.out.println(numOfHitsFor13);
+        assertTrue(about(1000, numOfHitsFor13)); //if between 900 and 1100, should come up true
+    }
 
+    @Test
+    public void test2WheelSpinChances() {
+        int numOfHitsFor0 = 0;
+        for (int i = 0; i < 37000; i++) {
+            roulette.spinWheel();
+            int luckyNum0 = roulette.getCurrentNum();
+            if (luckyNum0 == 0) {
+                numOfHitsFor0++;
+            }
+        }
+        System.out.println(numOfHitsFor0);
+        assertTrue(about(1000, numOfHitsFor0));
+    }
 
 }
