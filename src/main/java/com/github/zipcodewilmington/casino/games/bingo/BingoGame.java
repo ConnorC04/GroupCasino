@@ -5,22 +5,26 @@ import java.util.Random;
 
 public class BingoGame {
 
-    private Random random = new Random();
+
     private int numberChosen;
     private ArrayList<Integer> numbers;
 
-    public BingoGame(){
+    public BingoGame() {
     }
 
-    private BingoGame bingoGame = new BingoGame();
+    public void runGame(){
 
-    public void setNumbers(ArrayList<Integer> num, int start, int end){
-        for (int i = start; i < end; i++){
-             num.add(i);
+    }
+
+    public void setNumbers(ArrayList<Integer> num, int start, int end) {
+        for (int i = start; i < end; i++) {
+            num.add(i);
         }
     }
 
     public int[][] makeBoard(){
+
+        BingoGame bingoGame = new BingoGame();
 
         ArrayList<Integer> firstColumn = new ArrayList<>();
         ArrayList<Integer> secondColumn = new ArrayList<>();
@@ -28,30 +32,55 @@ public class BingoGame {
         ArrayList<Integer> fourthColumn = new ArrayList<>();
         ArrayList<Integer> fifthColumn = new ArrayList<>();
 
-
-
         bingoGame.setNumbers(firstColumn, 1, 15);
         bingoGame.setNumbers(secondColumn, 16, 30);
         bingoGame.setNumbers(thirdColumn, 31, 45);
         bingoGame.setNumbers(fourthColumn, 46, 60);
         bingoGame.setNumbers(fifthColumn, 61, 75);
 
+        Random random = new Random();
+        int randomIndex;
+        int numberForSlot;
+
         int[][] board = new int[5][5];
         for (int i = 0; i < 5; i++){
             for (int j = 0; j < 5; j++){
                 if (i == 0){
-
+                    randomIndex = random.nextInt(firstColumn.size());
+                    numberForSlot = firstColumn.get(randomIndex);
+                    board[i][j] = numberForSlot;
+                    firstColumn.remove(randomIndex);
+                }
+                if (i == 1){
+                    randomIndex = random.nextInt(secondColumn.size());
+                    numberForSlot = secondColumn.get(randomIndex);
+                    board[i][j] = numberForSlot;
+                    secondColumn.remove(randomIndex);
+                }
+                if (i == 2){
+                    randomIndex = random.nextInt(thirdColumn.size());
+                    numberForSlot = thirdColumn.get(randomIndex);
+                    board[i][j] = numberForSlot;
+                    thirdColumn.remove(randomIndex);
+                }
+                if (i == 3){
+                    randomIndex = random.nextInt(fourthColumn.size());
+                    numberForSlot = fourthColumn.get(randomIndex);
+                    board[i][j] = numberForSlot;
+                    fourthColumn.remove(randomIndex);
+                }
+                if (i == 4){
+                    randomIndex = random.nextInt(fifthColumn.size());
+                    numberForSlot = fifthColumn.get(randomIndex);
+                    board[i][j] = numberForSlot;
+                    fifthColumn.remove(randomIndex);
                 }
             }
         }
-        return null;
+        return board;
     }
 
     public int chooseRandomNumber(ArrayList<Integer> num){
-
-//        int randomChoice = random.nextInt(1, 75);
-//        num.remove(randomChoice);
-//        return randomChoice;
         return 0;
     }
 
