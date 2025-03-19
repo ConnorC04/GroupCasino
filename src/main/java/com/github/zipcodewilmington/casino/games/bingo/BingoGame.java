@@ -12,6 +12,8 @@ public class BingoGame {
     public BingoGame(){
     }
 
+    private BingoGame bingoGame = new BingoGame();
+
     public void setNumbers(ArrayList<Integer> num, int start, int end){
         for (int i = start; i < end; i++){
              num.add(i);
@@ -26,10 +28,13 @@ public class BingoGame {
         ArrayList<Integer> fourthColumn = new ArrayList<>();
         ArrayList<Integer> fifthColumn = new ArrayList<>();
 
-        BingoGame bingoGame = new BingoGame();
+
 
         bingoGame.setNumbers(firstColumn, 1, 15);
         bingoGame.setNumbers(secondColumn, 16, 30);
+        bingoGame.setNumbers(thirdColumn, 31, 45);
+        bingoGame.setNumbers(fourthColumn, 46, 60);
+        bingoGame.setNumbers(fifthColumn, 61, 75);
 
         int[][] board = new int[5][5];
         for (int i = 0; i < 5; i++){
