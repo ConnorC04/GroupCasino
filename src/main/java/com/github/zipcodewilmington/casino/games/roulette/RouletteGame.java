@@ -9,15 +9,17 @@ public class RouletteGame {
     private String oddOrEven;
     //private ??? currentBets; //need to decide what type of hashmap would be best for storing bets
     private boolean playGame = true;
-    private enum betTypes{}
+    private enum betTypes{INSIDE, OUTSIDE}
+    private enum insideBets{SINGLE}
+    private enum outsideBets{RED, BLACK, ODD, EVEN}
     private boolean addBets = true;
     private double betAmount;
     private String rouletteTable = "   |        1-12       |       13-24       |      25--36  \n" +
-            "   |  3 |  6 |  9 | 12 | 15 | 18 | 21 | 24 | 27 | 30 | 33 | 36 |2 to 1\n" +
-            " 0 |  2 |  5 |  8 | 11 | 14 | 17 | 20 | 23 | 26 | 29 | 32 | 35 |2 to 1\n" +
-            "   |  1 |  4 |  7 | 10 | 13 | 16 | 19 | 22 | 25 | 28 | 31 | 34 |2 to 1\n" +
-            "   |   1-18  |  EVEN   |  REDS   |  BLACK  |  ODDS   |  19-36  |";
-
+            "   |  3 |  6 |  9 | 12 | 15 | 18 | 21 | 24 | 27 | 30 | 33 | 36 | ROW 1\n" +
+            " 0 |  2 |  5 |  8 | 11 | 14 | 17 | 20 | 23 | 26 | 29 | 32 | 35 | ROW 2\n" +
+            "   |  1 |  4 |  7 | 10 | 13 | 16 | 19 | 22 | 25 | 28 | 31 | 34 | ROW 3\n" +
+            "   |LOW  1-18|  EVEN   |  REDS   |  BLACK  |  ODDS   |19-36 HIGH|";
+//change 1-18 to have LOW in the block, and 19-36 to have HIGH for clarity
     public RouletteGame() {
     }
 
