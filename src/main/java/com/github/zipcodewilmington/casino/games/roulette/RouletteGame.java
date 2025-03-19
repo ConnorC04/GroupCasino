@@ -19,13 +19,14 @@ public class RouletteGame {
             " 0 |  2 |  5 |  8 | 11 | 14 | 17 | 20 | 23 | 26 | 29 | 32 | 35 | ROW 2\n" +
             "   |  1 |  4 |  7 | 10 | 13 | 16 | 19 | 22 | 25 | 28 | 31 | 34 | ROW 3\n" +
             "   |LOW  1-18|  EVEN   |  REDS   |  BLACK  |  ODDS   |19-36 HIGH|";
-//change 1-18 to have LOW in the block, and 19-36 to have HIGH for clarity
+
     public RouletteGame() {
     }
 
     private void runGame() {
+        welcomeMessage();
         while (playGame) {
-            tableLayout();
+            printTableLayout();
             while (addBets) {
                 makeBets();
                 askToConfirmBets();
@@ -36,26 +37,31 @@ public class RouletteGame {
         }
     }
 
-    //opening message/display of board?
+
+    public void welcomeMessage() {
+        System.out.println("Welcome to Roulette!");
+        //make a boolean so players can leave from here just in case?
+    }
 
     public String getTableLayout() {
         return rouletteTable;
     }
 
-    private void tableLayout() {
+    public void printTableLayout() {
         System.out.println(rouletteTable);
     }
 
-    private void makeBets() {
+    public void makeBets() {
         //prompt user to select betType, for now only have single number
 
     }
 
-    private boolean askToConfirmBets() {
-        boolean makeMoreBets = true;
+    public boolean askToConfirmBets() {
         //ask user if they want to continue making bets, if yes then return true, if no return false;
-        return this.addBets = makeMoreBets;
+        return addBets;
     }
+
+
 
     public void spinWheel() {
         this.currentSpinVal = random.nextInt(37); //may need to set origin to -1, will test to be sure
