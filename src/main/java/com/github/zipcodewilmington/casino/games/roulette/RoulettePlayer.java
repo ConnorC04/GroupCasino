@@ -9,10 +9,10 @@ import java.util.ArrayList;
 public class RoulettePlayer {
     //vars from superclass CasinoAccount needed? - accountName, playerWallet
     //instance vars - currentGuess (only single number for now,
-    ArrayList<Integer> currentGuess;
+    //private ArrayList<Integer> currentGuess;
     // will need to account for both inside bets like splits, streets, or corners,
     // and outside bets like first or last 18, red or black, even or odd, or first/second/third dozen later on)
-    double currentBets; //(total amt player has bet)
+    //private double currentBets; //(total amt player has bet)
 
 
     //methods - getGuess (prompts player to make a guess),

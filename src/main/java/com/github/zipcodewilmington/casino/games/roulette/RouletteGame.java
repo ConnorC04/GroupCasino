@@ -3,45 +3,63 @@ import java.util.Random;
 
 
 public class RouletteGame {
-    private Random rand = new Random();
-    //var from superclass casino needed? - casinoWallet
-    private int currentNum;
+    private static Random random = new Random(); //var from superclass casino needed? - casinoWallet
+    private int currentSpinVal;
     private String currentColor;
     private String oddOrEven;
-    private double currentBet;
+    //private ??? currentBets; //need to decide what type of hashmap would be best for storing bets
     private boolean playGame = true;
-    private String[][] rouletteTable = {{"  ", "|    ", "   1-", "-12  ", "     ", "|    ", "  13-", "-24  ", "     ", "|    ", "  25-", "-36  \n"},
-            {"  ", "|  3 ", "|  6 ", "|  9 ", "| 12 ", "| 15 ", "| 18 ", "| 21 ", "| 24 ", "| 27 ", "| 30 ", "| 33 ", "| 36 ", "|2 to 1\n"},
-            {" 0", "|  2 ", "|  5 ", "|  8 ", "| 11 ", "| 14 ", "| 17 ", "| 20 ", "| 23 ", "| 26 ", "| 29 ", "| 32 ", "| 35 ", "|2 to 1\n"},
-            {"  ", "|  1 ", "|  4 ", "|  7 ", "| 10 ", "| 13 ", "| 16 ", "| 19 ", "| 22 ", "| 25 ", "| 28 ", "| 31 ", "| 34 ", "|2 to 1\n"},
-            {"  ", "|  1-", "-18  ", "|  EV", "EN   ", "|  RE", "DS   ", "|  BL", "ACK  ", "|  OD", "DS   ", "| 19-", "-36  |"}};
+    private enum betTypes{}
+    private boolean addBets = true;
+    private double betAmount;
+    private String rouletteTable = "   |        1-12       |       13-24       |      25--36  \n" +
+            "   |  3 |  6 |  9 | 12 | 15 | 18 | 21 | 24 | 27 | 30 | 33 | 36 |2 to 1\n" +
+            " 0 |  2 |  5 |  8 | 11 | 14 | 17 | 20 | 23 | 26 | 29 | 32 | 35 |2 to 1\n" +
+            "   |  1 |  4 |  7 | 10 | 13 | 16 | 19 | 22 | 25 | 28 | 31 | 34 |2 to 1\n" +
+            "   |   1-18  |  EVEN   |  REDS   |  BLACK  |  ODDS   |  19-36  |";
 
     public RouletteGame() {
     }
 
     private void runGame() {
-        //holds order of methods when game is running
-//        while (playGame) {
-//
-//
-//
-//        }
+        while (playGame) {
+            tableLayout();
+            while (addBets) {
+                makeBets();
+                askToConfirmBets();
+            }
+            spinWheel();
+
+
+        }
     }
 
     //opening message/display of board?
 
-    private String getTableLayout() {
-        return rouletteTable.toString();
+    public String getTableLayout() {
+        return rouletteTable;
     }
 
     private void tableLayout() {
-        //add 2d array of the board, hardcode it in?
+        System.out.println(rouletteTable);
     }
-    private void spinWheel() {
-        this.currentNum = rand.nextInt(0, 37); //may need to set origin to -1, will test to be sure
+
+    private void makeBets() {
+        //prompt user to select betType, for now only have single number
+
     }
-    private int getCurrentNum() {
-        return this.currentNum;
+
+    private boolean askToConfirmBets() {
+        boolean makeMoreBets = true;
+        //ask user if they want to continue making bets, if yes then return true, if no return false;
+        return this.addBets = makeMoreBets;
+    }
+
+    public void spinWheel() {
+        this.currentSpinVal = random.nextInt(37); //may need to set origin to -1, will test to be sure
+    }
+    public int getCurrentNum() {
+        return currentSpinVal;
     }
     private void isOddOrEven(int randomNumber) {
         if (randomNumber == 0) {
@@ -53,7 +71,7 @@ public class RouletteGame {
         }
     }
     private String getOddOrEven() {
-        return this.oddOrEven;
+        return oddOrEven;
     }
     private void isRedOrBlack(int randomNumber) {
         if (randomNumber % 2 == 0) {
@@ -69,7 +87,7 @@ public class RouletteGame {
         }
     }
     private String getCurrentColor() {
-        return this.currentColor;
+        return currentColor;
     }
     //matchingNum (checks if currentNum matches user's guess),
     //exitGame (closes game)
