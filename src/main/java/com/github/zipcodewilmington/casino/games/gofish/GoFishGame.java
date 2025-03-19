@@ -33,6 +33,10 @@ public class GoFishGame {
         return sc.nextLine();
     }
 
+    public void updatePlayer(String string){
+        System.out.println();
+    }
+
     //give 7 cards to each player and bank the rest.
     public void dealDeck() {
         for (int i = 0; i < currentDeck.size(); i++) {
@@ -58,12 +62,27 @@ public class GoFishGame {
         while (playerTurn) {
             //player asks for number
             String userInput = getUserInput("What card do you want from dealer");
+            int count = 0;
             for (int i = 0; i < dealerHand.size(); i++) {
                 if (Objects.equals(dealerHand.get(i).split("")[0], userInput)) {
-                    System.out.println(dealerHand.get(i));
+                    dealerHand.remove(dealerHand.get(i));
+                    count++;
+                    System.out.println(dealerHand);
+                } else {
+                    updatePlayer("No match - go Fish");
+                    goFish(drawStack);
                 }
             }
+            updatePlayer("you got " + count + " Cards from dealer");
+           // playerTurn
         }
+
+    }
+
+    public void goFish(ArrayList<String> drawStack){
+        playerHand.set(playerHand.size(), drawStack.get(0));
+        drawStack.remove(drawStack.get(0));
+        System.out.println(playerHand);
     }
 
 
