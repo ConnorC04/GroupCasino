@@ -1,6 +1,7 @@
 package com.github.zipcodewilmington.casino.games.roulette;
 import java.util.Random;
 
+
 public class RouletteGame {
     Random rand = new Random();
     //var from superclass casino needed? - casinoWallet
@@ -10,30 +11,29 @@ public class RouletteGame {
     double currentBet;
     boolean playGame = true;
 
-    void runGame() {
-        while (playGame) {
-
-
-
-        }
+    public void runGame() {
+//        holds order of methods when game is running
+//        while (playGame) {
+//
+//
+//
+//        }
     }
 
-
-    //opening message/display of board
-
-
-    //methods - spinWheel (sets currentNum to randomly generated num between -1 and 37),
+    //opening message/display of board?
+    private void boardLayout() {
+        //add 2d array of the board, hardcode it in?
+    }
     private void spinWheel() {
-        this.currentNum = rand.nextInt(-1, 37);
+        this.currentNum = rand.nextInt(0, 37); //may need to set origin to -1, will test to be sure
     }
     private int getCurrentNum() {
-        return currentNum;
+        return this.currentNum;
     }
-    //oddOrEven (check if number is odd or even),
-    private void isOddOrEven() {
-        if (this.currentNum == 0) {
+    private void isOddOrEven(int randomNumber) {
+        if (randomNumber == 0) {
             this.oddOrEven = "Neither";
-        } else if (this.currentNum % 2 == 0) {
+        } else if (randomNumber % 2 == 0) {
             this.oddOrEven = "Even";
         } else {
             this.oddOrEven = "Odd";
@@ -42,14 +42,13 @@ public class RouletteGame {
     private String getOddOrEven() {
         return this.oddOrEven;
     }
-    //redOrBlack (uses vals from oddOrEven and randomNum to determine if red or black),
-    private void isRedOrBlack() {
-        if (this.currentNum % 2 == 0) {
-            if (this.currentNum > 0 && this.currentNum < 11 ||
-                    this.currentNum > 18 && this.currentNum < 29) {
+    private void isRedOrBlack(int randomNumber) {
+        if (randomNumber % 2 == 0) {
+            if (randomNumber > 0 && randomNumber < 11 ||
+                    randomNumber > 18 && randomNumber < 29) {
                 this.currentColor = "Black";
-            } else if (this.currentNum > 10 && this.currentNum < 19 ||
-                    this.currentNum > 28 && this.currentNum < 37) {
+            } else if (randomNumber > 10 && randomNumber < 19 ||
+                    randomNumber > 28 && randomNumber < 37) {
                 this.currentColor = "Red";
             } else {
                 this.currentColor = "Green";
@@ -61,5 +60,6 @@ public class RouletteGame {
     }
     //matchingNum (checks if currentNum matches user's guess),
     //exitGame (closes game)
+
 
 }
