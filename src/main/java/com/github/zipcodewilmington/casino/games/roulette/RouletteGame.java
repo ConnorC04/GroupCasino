@@ -10,9 +10,14 @@ public class RouletteGame {
     String oddOrEven;
     double currentBet;
     boolean playGame = true;
+    String[][] rouletteTable = {{"  ", "|    ", "   1-", "-12  ", "     ", "|    ", "  13-", "-24  ", "     ", "|    ", "  25-", "-36  "},
+            {"  ", "|  3 ", "|  6 ", "|  9 ", "| 12 ", "| 15 ", "| 18 ", "| 21 ", "| 24 ", "| 27 ", "| 30 ", "| 33 ", "| 36 ", "|2 to 1"},
+            {" 0", "|  2 ", "|  5 ", "|  8 ", "| 11 ", "| 14 ", "| 17 ", "| 20 ", "| 23 ", "| 26 ", "| 29 ", "| 32 ", "| 35 ", "|2 to 1"},
+            {"  ", "|  1 ", "|  4 ", "|  7 ", "| 10 ", "| 13 ", "| 16 ", "| 19 ", "| 22 ", "| 25 ", "| 28 ", "| 31 ", "| 34 ", "|2 to 1"},
+            {"  ", "|  1-", "-18  ", "|  EV", "EN   ", "|  RE", "DS   ", "|  BL", "ACK  ", "|  OD", "DS   ", "| 19-", "-36  "}};
 
     public void runGame() {
-//        holds order of methods when game is running
+        //holds order of methods when game is running
 //        while (playGame) {
 //
 //
@@ -21,7 +26,8 @@ public class RouletteGame {
     }
 
     //opening message/display of board?
-    private void boardLayout() {
+    private void tableLayout() {
+        System.out.println(rouletteTable);
         //add 2d array of the board, hardcode it in?
     }
     private void spinWheel() {
