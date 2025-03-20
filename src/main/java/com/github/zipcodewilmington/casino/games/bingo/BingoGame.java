@@ -8,6 +8,7 @@ public class BingoGame {
 
     private int numberChosen;
     private ArrayList<Integer> numbers;
+    private int counter;
 
     public BingoGame() {}
 
@@ -86,11 +87,66 @@ public class BingoGame {
         return randomNumber;
     }
 
-    public int checkFiveInARow(){
-        int counter = 0;
-
-
-
+    public int checkFiveInARow(int[][] board){
+        // Checks the rows
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board.length; j++) {
+                if (board[i][j] == 0) {
+                    counter++;
+                }
+            }
+            if (counter == 5) {
+                break;
+            } else {
+                counter = 0;
+            }
+        }
+        // Checks the columns
+        if (counter == 0){
+            for (int i = 0; i < board.length; i++) {
+                for (int j = 0; j < board.length; j++) {
+                    if (board[j][i] == 0) {
+                        counter++;
+                    }
+                }
+                if (counter == 5) {
+                    break;
+                } else {
+                    counter = 0;
+                }
+            }
+        }
+        // Checks the topLeft to bottomRight diagonal
+        if (counter == 0){
+            for (int i = 0; i < board.length; i++) {
+                for (int j = 0; j < board.length; j++) {
+                    if (board[j][j] == 0) {
+                        counter++;
+                    }
+                }
+                if (counter == 5) {
+                    break;
+                } else {
+                    counter = 0;
+                }
+            }
+        }
+        // Checks the topRight to bottomLeft diagonal
+        if (counter == 0){
+            for (int i = 4; i >= 0; i--) {
+                for (int j = 0; j < board.length; j++) {
+                    if (board[i][j] == 0) {
+                        counter++;
+                    }
+                    i--;
+                }
+                if (counter == 5) {
+                    break;
+                } else {
+                    counter = 0;
+                }
+            }
+        }
         return counter;
     }
 
@@ -111,6 +167,6 @@ public class BingoGame {
     }
 
     public boolean playerWins(){
-        return checkFiveInARow() == 5;
+        return counter == 5;
     }
 }

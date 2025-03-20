@@ -2,16 +2,11 @@ package com.github.zipcodewilmington;
 
 import com.github.zipcodewilmington.casino.games.bingo.BingoGame;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class BingoTest {
-
-
-
 
     @Test
     public void testResetNumbers(){
@@ -51,8 +46,118 @@ public class BingoTest {
     }
 
     @Test
-    public void testRandomChoice(){
+    public void testColumnChecker(){
         BingoGame bingoGame = new BingoGame();
-
+        int[][] firstColumn = {
+                {0, 1, 1, 1, 1},
+                {0, 1, 1, 1, 1},
+                {0, 1, 1, 1, 1},
+                {0, 1, 1, 1, 1},
+                {0, 1, 1, 1, 1}
+        };
+        int[][] secondColumn = {
+                {1, 0, 1, 1, 1},
+                {1, 0, 1, 1, 1},
+                {1, 0, 1, 1, 1},
+                {1, 0, 1, 1, 1},
+                {1, 0, 1, 1, 1}
+        };
+        int[][] thirdColumn = {
+                {1, 1, 0, 1, 1},
+                {1, 1, 0, 1, 1},
+                {1, 1, 0, 1, 1},
+                {1, 1, 0, 1, 1},
+                {1, 1, 0, 1, 1}
+        };
+        int[][] fourthColumn = {
+                {1, 1, 1, 0, 1},
+                {1, 1, 1, 0, 1},
+                {1, 1, 1, 0, 1},
+                {1, 1, 1, 0, 1},
+                {1, 1, 1, 0, 1}
+        };
+        int[][] fifthColumn = {
+                {1, 1, 1, 1, 0},
+                {1, 1, 1, 1, 0},
+                {1, 1, 1, 1, 0},
+                {1, 1, 1, 1, 0},
+                {1, 1, 1, 1, 0}
+        };
+        Assert.assertEquals(5, bingoGame.checkFiveInARow(firstColumn));
+        Assert.assertEquals(5, bingoGame.checkFiveInARow(secondColumn));
+        Assert.assertEquals(5, bingoGame.checkFiveInARow(thirdColumn));
+        Assert.assertEquals(5, bingoGame.checkFiveInARow(fourthColumn));
+        Assert.assertEquals(5, bingoGame.checkFiveInARow(fifthColumn));
     }
+
+    @Test
+    public void testRowChecker(){
+        BingoGame bingoGame = new BingoGame();
+        int[][] firstRow = {
+                {0, 0, 0, 0, 0},
+                {1, 1, 1, 1, 1},
+                {1, 1, 1, 1, 1},
+                {1, 1, 1, 1, 1},
+                {1, 1, 1, 1, 1}
+        };
+        int[][] secondRow = {
+                {1, 1, 1, 1, 1},
+                {0, 0, 0, 0, 0},
+                {1, 1, 1, 1, 1},
+                {1, 1, 1, 1, 1},
+                {1, 1, 1, 1, 1}
+        };
+        int[][] thirdRow = {
+                {1, 1, 1, 1, 1},
+                {1, 1, 1, 1, 1},
+                {0, 0, 0, 0, 0},
+                {1, 1, 1, 1, 1},
+                {1, 1, 1, 1, 1}
+        };
+        int[][] fourthRow = {
+                {1, 1, 1, 1, 1},
+                {1, 1, 1, 1, 1},
+                {1, 1, 1, 1, 1},
+                {0, 0, 0, 0, 0},
+                {1, 1, 1, 1, 1}
+        };
+        int[][] fifthRow = {
+                {1, 1, 1, 1, 1},
+                {1, 1, 1, 1, 1},
+                {1, 1, 1, 1, 1},
+                {1, 1, 1, 1, 1},
+                {0, 0, 0, 0, 0}
+        };
+        Assert.assertEquals(5, bingoGame.checkFiveInARow(firstRow));
+        Assert.assertEquals(5, bingoGame.checkFiveInARow(secondRow));
+        Assert.assertEquals(5, bingoGame.checkFiveInARow(thirdRow));
+        Assert.assertEquals(5, bingoGame.checkFiveInARow(fourthRow));
+        Assert.assertEquals(5, bingoGame.checkFiveInARow(fifthRow));
+    }
+
+    @Test
+    public void testDiagonalChecker(){
+        BingoGame bingoGame = new BingoGame();
+        int[][] firstDiagonal = {
+                {0, 1, 1, 1, 1},
+                {1, 0, 1, 1, 1},
+                {1, 1, 0, 1, 1},
+                {1, 1, 1, 0, 1},
+                {1, 1, 1, 1, 0}
+        };
+        int[][] secondDiagonal = {
+                {1, 1, 1, 1, 0},
+                {1, 1, 1, 0, 1},
+                {1, 1, 0, 1, 1},
+                {1, 0, 1, 1, 1},
+                {0, 1, 1, 1, 1}
+        };
+        Assert.assertEquals(5, bingoGame.checkFiveInARow(firstDiagonal));
+        Assert.assertEquals(5, bingoGame.checkFiveInARow(secondDiagonal));
+    }
+//    @Test
+//    public void testRandomChoice(){
+//        BingoGame bingoGame = new BingoGame();
+//
+//    }
 }
