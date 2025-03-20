@@ -1,4 +1,5 @@
 package com.github.zipcodewilmington.casino.games.roulette;
+import java.util.HashMap;
 import java.util.InputMismatchException;
 import java.util.Random;
 import java.util.Scanner;
@@ -10,9 +11,8 @@ public class RouletteGame {
     private int currentSpinVal;
     private String currentColor;
     private String oddOrEven;
-    //private ??? currentBets; //need to decide what type of hashmap would be best for storing bets
+    private HashMap<Enum, Double> currentBets = new HashMap<>(); //need to decide what type of hashmap would be best for storing bets
     private boolean playGame = true;
-    //private enum betTypes{INSIDE, OUTSIDE}
     private enum insideBets{STRAIGHT, SPLIT, STREET, CORNER}
     private enum outsideBets{RED, BLACK, ODD, EVEN, LOW, HIGH, DOZEN1, DOZEN2, DOZEN3, ROW1, ROW2, ROW3}
     private boolean addBets = true;
@@ -37,6 +37,7 @@ public class RouletteGame {
             spinWheel();
 
 
+         exitGame();
         }
     }
 
@@ -79,22 +80,22 @@ public class RouletteGame {
     }
 
     public void makeBets() {
-        //System.out.println("What kind of bet would you like to make: ( INSIDE ) ( OUTSIDE )");
         String betType = getString("What kind of bet would you like to make: ( INSIDE ) ( OUTSIDE )");
 
         if (betType.equalsIgnoreCase("Inside")) {
-            //System.out.println("Which type of inside bet would you like to make: ( STRAIGHT ) ( SPLIT ) ( STREET ) ( CORNER )");
             String insideBet = getString("Which type of inside bet would you like to make: ( STRAIGHT ) ( SPLIT ) ( STREET ) ( CORNER )");
         } else if (betType.equalsIgnoreCase("Outside")) {
             String outsideBet = getString("Which type of outside bet would you like to make:\n( RED ) ( BLACK ) ( ODD ) ( EVEN ) ( LOW ) ( HIGH )\n" +
                     "( FIRST DOZEN ) ( SECOND DOZEN ) ( THIRD DOZEN )\n( ROW 1 ) ( ROW 2 ) ( ROW 3 )");
         }
         //prompt user to select betType, for now only have single number
-
     }
 
     public boolean askToConfirmBets() {
-        //ask user if they want to continue making bets, if yes then return true, if no return false;
+        String betAgain = getString("Would you like to place another bet? ( YES ) ( NO )");
+        if (betAgain.equalsIgnoreCase("No")) {
+            addBets = false;
+        }
         return addBets;
     }
 
@@ -134,6 +135,13 @@ public class RouletteGame {
     }
     //matchingNum (checks if currentNum matches user's guess),
     //exitGame (closes game)
+    public boolean exitGame() {
+        String askPlayAgain = getString("Would you like to play again? ( YES ) ( NO )");
+        if (askPlayAgain.equalsIgnoreCase("No")) {
+            playGame = false;
+        }
+        return playGame;
+    }
 
 
 }
