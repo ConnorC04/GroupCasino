@@ -1,80 +1,73 @@
 package com.github.zipcodewilmington;
 
+import com.github.zipcodewilmington.casino.games.Card;
 import com.github.zipcodewilmington.casino.games.blackjack.BlackjackGame;
-import org.junit.Assert;
-import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import java.util.ArrayList;
+import java.util.Arrays;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class BlackjackTest {
     private BlackjackGame game;
+
     @BeforeEach
-    public void setUp(){
-        game= new BlackjackGame();
-    }
-    @Test
-    public void testDrawCardReturnsValidValue() {
-        BlackjackGame game = new BlackjackGame();
-        int card = game.drawCard();
+    public void setUp() {
+        game = new BlackjackGame();
 
-        Integer[] validCards = {2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10};
-        assertTrue(java.util.Arrays.asList(validCards).contains(card));
     }
 
     @Test
-    public void testDealerTotalInValidRange() {
-        BlackjackGame game = new BlackjackGame();
+    public void handSinAces() {
+        // Given:
+        ArrayList<Card> hand = new ArrayList<>();
+        hand.add(new Card(Card.Rank.EIGHT, Card.Suit.CLUBS));
+        hand.add(new Card(Card.Rank.SEVEN, Card.Suit.HEARTS));
+        hand.add(new Card(Card.Rank.FOUR, Card.Suit.DIAMONDS));
 
-        int dealerCard1 = game.drawCard();
-        int dealerCard2 = game.drawCard();
-        int dealerTotal = dealerCard1 + dealerCard2;
+        // When:
+        int value = game.handValue(hand);
 
-        assertTrue(dealerTotal >= 4 && dealerTotal <= 20);
+        // Then
+        assertEquals(19, value, "Hand value should sum without Ace adjustments");
+    }
+    @Test
+    public void handWithAces() {
+        // Given
+        ArrayList<Card> hand = new ArrayList<>();
+        hand.add(new Card(Card.Rank.ACE, Card.Suit.CLUBS));
+        hand.add(new Card(Card.Rank.SEVEN, Card.Suit.HEARTS));
+        hand.add(new Card(Card.Rank.FOUR, Card.Suit.DIAMONDS));
+
+        // WHEN
+        int value = game.handValue(hand);
+
+        //then
+        assertEquals(12, value, "Hand value should sum with Ace adjustments");
     }
 
     @Test
-    public void testPlayerTotalInValidRange() {
-        BlackjackGame game = new BlackjackGame();
+    public void testPlayerBust() {
+        // Test to ensure player busts when total exceeds 21
+        game.getPlayerHand().clear();
+        game.getPlayerHand().add(new Card(Card.Rank.TEN, Card.Suit.HEARTS));
+        game.getPlayerHand().add(new Card(Card.Rank.SEVEN, Card.Suit.SPADES));
+        game.getPlayerHand().add(new Card(Card.Rank.SIX, Card.Suit.CLUBS));
 
-        int playerCard1 = game.drawCard();
-        int playerCard2 = game.drawCard();
-        int playerTotal = playerCard1 + playerCard2;
-
-        assertTrue(playerTotal >= 4 && playerTotal <= 20);
+        boolean playerBusted = game.handValue(game.getPlayerHand()) > 21;
+        assertTrue(playerBusted, "Player's hand should bust over 21.");
     }
+
     @Test
-    public void testPlayerBust(){
-        BlackjackGame game = new BlackjackGame();
+    public void testDealerBust() {
+        // Test to ensure dealer busts when total exceeds 21
+        game.getDealerHand().clear();
+        game.getDealerHand().add(new Card(Card.Rank.TEN, Card.Suit.HEARTS));
+        game.getDealerHand().add(new Card(Card.Rank.SEVEN, Card.Suit.SPADES));
+        game.getDealerHand().add(new Card(Card.Rank.SIX, Card.Suit.CLUBS));
 
-        //Given
-        game.setPlayerHand(15);
-        game.getHit(10);
-        //When
-        boolean playerBusted = game.getPlayerTotal() > 21;
-        //Then
-        assertTrue(playerBusted,"Player's hand is over 21");
+        boolean dealerBusted = game.handValue(game.getDealerHand()) > 21;
+        assertTrue(dealerBusted, "Dealer's hand should bust over 21.");
     }
-    @Test
-    public void testDealerBust(){
-        BlackjackGame game = new BlackjackGame();
-
-        //Given
-        game.setDealerHand(15);
-        game.getHit(10);
-        //When
-        boolean dealerBusted = game.getDealerTotal() > 21;
-        //Then
-        assertTrue(dealerBusted,"Dealer's hand is over 21");
-    }
-
-//    @Test Need to check this tomorrow!!!!
-//    public void playerHands(){
-//        int playerCard1 = game.drawCard();
-//        int playerCard2 = game.drawCard();
-//        int expectedTotal = playerCard1 + playerCard2;
-//        assertEquals(expectedTotal,playerCard1+playerCard2);
-//    }
-
 }

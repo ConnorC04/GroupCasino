@@ -1,81 +1,152 @@
 package com.github.zipcodewilmington.casino.games.blackjack;
+import com.github.zipcodewilmington.casino.Hand;
+import com.github.zipcodewilmington.casino.games.Card;
 
+import java.awt.*;
+import java.util.*;
 
-import java.util.Random;
-import java.util.Scanner;
 
 public class BlackjackGame {
-    private int dealerCard1;
-    private int dealerCard2;
-    private int playerCard1;
-    private int playerCard2;
-    private int playerHand;
-    private int dealerHand;
-    private int newCard;
+    private ArrayList<Card> deck;
+    private ArrayList<Card> playerHand;
+    private ArrayList<Card> dealerHand;
     private Scanner input;
-    private Random random;
-    private Integer[] deck;
+
 
     public BlackjackGame() {
         input = new Scanner(System.in);
-        random = new Random();
-        deck = new Integer[]{2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 11}; // 11 represents Ace
+        deck = new ArrayList<>();
+        playerHand = new ArrayList<>();
+        dealerHand = new ArrayList<>();
+        Random random;
+        intitializeDeck();
+    }
+
+//    public static void main(String[] args) {
+//        Scanner scanner = new Scanner(System.in);
+//        boolean playAgain = true;
+//
+//        while (playAgain) {
+//            BlackjackGame game = new BlackjackGame();
+//            game.playBlackJack();
+//
+//            // Ask if the player wants to play again
+//            System.out.print("\nDo you want to play again? (yes/no): ");
+//            String response = scanner.nextLine().trim().toLowerCase();
+//
+//            if (!response.equals("yes")) {
+//                playAgain = false;
+//                System.out.println("Thanks for playing! Goodbye (Door slamming sound plays.");
+//            }
+//        }
+//        scanner.close();
+//    }
+
+    private void intitializeDeck() {
+        for (Card.Suit suit : Card.Suit.values()) {
+            for (Card.Rank rank : Card.Rank.values()) {
+                deck.add(new Card(rank, suit));
+            }
+
+        }
+        Collections.shuffle(deck, new Random());
+    }
+
+    public int handValue(ArrayList<Card> hand) {
+        int total = 0;
+        int aceCount = 0;
+        for (Card card : hand) {
+            total += card.getValue();
+            if (card.rank == Card.Rank.ACE) {
+                aceCount++;
+            }
+        }
+        while (total > 21 && aceCount > 0) {
+            total -= 10;
+            aceCount--;
+        }
+        return total;
     }
 
     public void playBlackJack() {
         intro();
         //Drawing cards
-        dealerCard1= drawCard();
-        dealerCard2= drawCard();
-        dealerHand = dealerCard1+dealerCard2;
+        playerHand.add(drawCard());
+        playerHand.add(drawCard());
+        dealerHand.add(drawCard());
+        dealerHand.add(drawCard());
 
-        playerCard1= drawCard();
-        playerCard2= drawCard();
-        playerHand = (playerCard1+playerCard2);
 
-        System.out.println("Dealer is showing: " + dealerCard1+", ?");
-        System.out.println("Your hand is: " +playerCard1+playerCard2+ " your total: "+playerHand);
+        int playerTotal = handValue(playerHand);
+        int dealerTotal = handValue(dealerHand);
 
-        while(playerHand<21){
-            String decision=userInput();
-            if(decision.equals("hit")) {
-                int newCard = drawCard();
-                playerHand += newCard;
-                System.out.println("You drew: " + newCard);
-                System.out.println("New total = " + (newCard + playerHand));
-                if (playerHand > 21) {
-                    System.out.println("Bust, over 21 Dealer wins");
-                }
-            }else{
-                break;
+
+        System.out.println("Dealer is showing: " + dealerHand.get(0) + ", ?");
+
+        System.out.println("Your hand is: " + playerHand + playerHand + " your total: " + playerTotal);
+
+        if (dealerTotal == 21) {
+            System.out.println("Dealer hand: " + dealerHand + "Total: 21");
+            System.out.println("Dealer has Blackjack!");
+
+            if (playerTotal == 21) {
+                System.out.println("It's a push!");
+            } else {
+                System.out.println("Dealer wins. . .");
+            }
+            return;
         }
-    }
-        while(dealerHand<17){
-            int newCard = drawCard();
-            dealerHand+=newCard;
-            System.out.println("Dealer drew: " + newCard);
-            System.out.println("New total = " + (newCard + dealerHand));
-            if(playerHand>dealerHand){
-                System.out.println("Winner winner chicken dinner");
-            } else if (playerHand<dealerHand){
-                System.out.println("Loser loser pay up!");
-            } else if (playerHand==dealerHand) {
-                System.out.println("Push keep your bet");
+        while (playerTotal < 21) {
+            String decision = userInput();
+
+            if (decision.equals("hit")) {
+                Card newCard = drawCard();
+                playerHand.add(newCard);
+                playerTotal = handValue(playerHand);
+                System.out.println("You drew: " + newCard);
+                System.out.println("New total = " + playerTotal);
+
+                if (playerTotal > 21) {
+                    System.out.println("Bust! Over 21. Dealer wins.");
+                    break;
+                }
+            } else if (decision.equals("stay")) {
+                break;
             }
         }
+        System.out.println("Dealer reveals their hand " + dealerHand + "Total: " + dealerTotal);
+
+        while (dealerTotal < 17) {  // Dealer must draw until their total is at least 17
+            Card newCard = drawCard();
+            dealerHand.add(newCard);
+            dealerTotal = handValue(dealerHand);
+
+            System.out.println("Dealer drew: " + newCard);
+            System.out.println("New total = " + dealerTotal);
+
+            if (dealerTotal > 21) {
+                System.out.println("Dealer busts! You win.");
+                return;  // Ends game if dealer busts
+            }
+        }
+
+        // Determine winner
+        if (playerTotal > dealerTotal) {
+            System.out.println("Winner, winner, chicken dinner!");//add in currentbet*2
+        } else if (playerTotal < dealerTotal) {
+            System.out.println("Loser, loser, pay up!");//subtract bet from total
+        } else {
+            System.out.println("Push, keep your bet.");//give money back
+        }
     }
+
     private void intro() {
         System.out.println("Welcome to BlackJack!");
     }
-    public int drawCard() {
-        return deck[random.nextInt(deck.length)];
-    }
 
-
-
-    public void getHit(int newCard){
-        this.playerHand+=newCard;
-        this.dealerHand+=newCard;
+    public Card drawCard() {
+        Random random = new Random();
+        return deck.get(random.nextInt(deck.size()));
     }
 
     private String userInput() {
@@ -90,18 +161,25 @@ public class BlackjackGame {
         }
     }
 
-    public int getPlayerTotal() {
+    public ArrayList<Card> getPlayerHand() {
         return playerHand;
     }
 
-    public void setDealerHand(int dealerHand) {
-        this.dealerHand=dealerHand;
-    }
-
-    public int getDealerTotal() {
+    public ArrayList<Card> getDealerHand() {
         return dealerHand;
     }
-    public void setPlayerHand(int playerHand) {
-        this.playerHand = playerHand;
-    }
+
 }
+//private void placeBet(){
+//    while(true){
+//        System.out.println("Enter your bet amount: $");
+//        currentBet=Double.parseDouble(input.nextline());
+//        if(currentBet>playerBalance){
+//            System.out.println("Get your money up, not your funny up");
+//        }else if (currentBet<=0){
+//            System.out.println("Bet must be greater than zero, take your monopoly money somewhere else.");
+//        }else{
+//            break;
+//        }
+//    }
+//}
