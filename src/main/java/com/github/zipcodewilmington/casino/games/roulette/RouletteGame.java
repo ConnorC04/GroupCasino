@@ -12,6 +12,8 @@ public class RouletteGame {
     private String currentColor;
     private String oddOrEven;
     private HashMap<Enum, Double> currentBets = new HashMap<>(); //need to decide what type of hashmap would be best for storing bets
+    private HashMap<insideBets, Double> insideOdds = new HashMap<>();
+    private HashMap<outsideBets, Double> outsideOdds = new HashMap<>();
     private boolean playGame = true;
     private enum insideBets{STRAIGHT, SPLIT, STREET, CORNER}
     private enum outsideBets{RED, BLACK, ODD, EVEN, LOW, HIGH, DOZEN1, DOZEN2, DOZEN3, ROW1, ROW2, ROW3}
@@ -24,6 +26,22 @@ public class RouletteGame {
             "   |LOW  1-18|  EVEN   |  REDS   |  BLACK  |  ODDS   |19-36 HIGH|";
 
     public RouletteGame() {
+        insideOdds.put(insideBets.STRAIGHT, 35.0);
+        insideOdds.put(insideBets.SPLIT, 17.0);
+        insideOdds.put(insideBets.STREET, 11.0);
+        insideOdds.put(insideBets.CORNER, 8.0);
+        outsideOdds.put(outsideBets.RED, 1.0);
+        outsideOdds.put(outsideBets.BLACK, 1.0);
+        outsideOdds.put(outsideBets.ODD, 1.0);
+        outsideOdds.put(outsideBets.EVEN, 1.0);
+        outsideOdds.put(outsideBets.LOW, 1.0);
+        outsideOdds.put(outsideBets.HIGH, 1.0);
+        outsideOdds.put(outsideBets.DOZEN1, 2.0);
+        outsideOdds.put(outsideBets.DOZEN2, 2.0);
+        outsideOdds.put(outsideBets.DOZEN3, 2.0);
+        outsideOdds.put(outsideBets.ROW1, 2.0);
+        outsideOdds.put(outsideBets.ROW2, 2.0);
+        outsideOdds.put(outsideBets.ROW3, 2.0);
     }
 
     private void runGame() {
@@ -83,13 +101,14 @@ public class RouletteGame {
         String betType = getString("What kind of bet would you like to make: ( INSIDE ) ( OUTSIDE )");
 
         if (betType.equalsIgnoreCase("Inside")) {
-            String insideBet = getString("Which type of inside bet would you like to make: ( STRAIGHT ) ( SPLIT ) ( STREET ) ( CORNER )");
+            String inside = getString("Which type of inside bet would you like to make: ( STRAIGHT ) ( SPLIT ) ( STREET ) ( CORNER )");
         } else if (betType.equalsIgnoreCase("Outside")) {
-            String outsideBet = getString("Which type of outside bet would you like to make:\n( RED ) ( BLACK ) ( ODD ) ( EVEN ) ( LOW ) ( HIGH )\n" +
+            String outside = getString("Which type of outside bet would you like to make:\n( RED ) ( BLACK ) ( ODD ) ( EVEN ) ( LOW ) ( HIGH )\n" +
                     "( FIRST DOZEN ) ( SECOND DOZEN ) ( THIRD DOZEN )\n( ROW 1 ) ( ROW 2 ) ( ROW 3 )");
         }
         //prompt user to select betType, for now only have single number
     }
+
 
     public boolean askToConfirmBets() {
         String betAgain = getString("Would you like to place another bet? ( YES ) ( NO )");
