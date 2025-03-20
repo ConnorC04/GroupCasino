@@ -13,7 +13,8 @@ public class GoFishGame {
     Scanner sc = new Scanner(System.in);
     boolean playersTurn = true;
     boolean dealersTurn = false;
-    int currentCard;
+    int player4KingCount;
+    int dealer4KingCount;
     ArrayList<String> playerHand = new ArrayList<>();
     ArrayList<String> dealerHand = new ArrayList<>();
     ArrayList<String> drawStack = new ArrayList<>();
@@ -63,96 +64,87 @@ public class GoFishGame {
     public void playerTurns() {
         while (playersTurn) {
             //player asks for number
-            String userInput = getUserInput("What card do you want from dealer");
+            String userInput = getUserInput("What card do you want from dealer").toLowerCase();
             int count = 0;
             for (int i = 0; i < dealerHand.size(); i++) {
-                if (Objects.equals(dealerHand.get(i).split("")[0], userInput)) {
+                System.out.println(dealerHand.get(i).split(" ")[0]);
+                if (Objects.deepEquals(dealerHand.get(i).split("")[0].toLowerCase(), userInput)) {
                     playerHand.add(dealerHand.get(i));
                     dealerHand.remove(dealerHand.get(i));
                     count++;
-                    //System.out.println(dealerHand.get(i).split("")[0]);
-                } else {
-                    playersTurn = false;
-                    dealersTurn = true;
-                    //goFish(drawStack);
-                    updatePlayer("No match - go Fish");
-                    // goFish(drawStack);
                 }
+
+            }
+            player4KingCount = countFourOfAKind(dealerHand, userInput)? player4KingCount++ : player4KingCount;
+            updatePlayer("you got " + count + " Cards from dealer");
+            if (count== 0){
+                playersTurn = false;
+                dealersTurn = true;
+                updatePlayer("No match - go Fish");
+                goFish("player");
+                dealerTurns();
                 break;
             }
-            // playersTurn = false;
-//                dealerTurn = true;
-            updatePlayer("you got " + count + " Cards from dealer");
+          count = 0;
         }
-//            playerTurn = false;
-//            dealerTurn = true;
-//            updatePlayer("No match - go Fish");
-//            goFish(drawStack);
-        // updatePlayer("you got " + count + " Cards from dealer");
-        // playerTurn
-//            break;
-//        }
-        //updatePlayer("No match - go Fish");
-        goFish("player");
+
     }
 
     private void dealerTurns() {
+
         while (dealersTurn) {
             String[] ranks = {"Ace", "2", "3", "4", "5", "6", "7", "8", "9", "Jack", "Queen", "King"};
             int num = rand.nextInt(ranks.length);
+            String stringToMatch = ranks[num];
             //dealer asks for number
-            updatePlayer("Dealer is asking for an " + ranks[num] + " card ");
+            updatePlayer("Dealer is asking for an " + stringToMatch + " card ");
             String userInput = getUserInput("[1] - Yes, [2] - No");
             int count = 0;
             if (userInput.equals("1")) {
-                userInput = getUserInput("How many " + ranks[num] + " cards are you giving up?");
+                userInput = getUserInput("How many " + stringToMatch + " cards are you giving up?");
                 count = Integer.parseInt(userInput);
                 for (int i = 0; i < playerHand.size(); i++) {
-                    if (Objects.equals(playerHand.get(i).split("")[0], ranks[num])) {
+                    if (Objects.equals(playerHand.get(i).split("")[0].toLowerCase(), stringToMatch.toLowerCase())) {
                         dealerHand.add(playerHand.get(i));
                         playerHand.remove(playerHand.get(i));
-
-                        //System.out.println(dealerHand.get(i).split("")[0]);
                     }
                 }
-
-//            for (int i = 0; i < playerHand.size(); i++) {
-//                if (Objects.equals(playerHand.get(i).split("")[0], ranks[num])) {
-//                    dealerHand.add(playerHand.get(i));
-//                    playerHand.remove(playerHand.get(i));
-//
-                //System.out.println(dealerHand.get(i).split("")[0]);
-            } else {
-                dealersTurn = false;
-                playersTurn = true;
-                updatePlayer("No match - go Fish");
-                // goFish(drawStack);
+                countFourOfAKind(dealerHand, stringToMatch);
+                updatePlayer("you got " + count + " Cards from player");
+                if (count == 0) {
+                    dealersTurn = false;
+                    playersTurn = true;
+                    updatePlayer("No match - go Fish");
+                    goFish("dealer");
+                    playerTurns();
+                    break;
+                }
             }
-            updatePlayer("you got " + count + " Cards from player");
-            break;
         }
-//            playersTurn = false;
-//            dealersTurn = true;
-        goFish("dealer");
     }
-//            playerTurn = false;
-//            dealerTurn = true;
-//            updatePlayer("No match - go Fish");
-//            goFish(drawStack);
-//            updatePlayer("you got " + count + " Cards from dealer");
-    // playerTurn
 
 
     public void goFish(String s) {
         if (s.equals("player")) {
             playerHand.add(drawStack.get(0));
             drawStack.remove(drawStack.get(0));
-        } if (s.equals("dealer")) {
+        }
+        if (s.equals("dealer")) {
             dealerHand.add(drawStack.get(0));
             drawStack.remove(drawStack.get(0));
         }
         System.out.println(playerHand);
         System.out.println(dealerHand);
+    }
+
+    public boolean countFourOfAKind(ArrayList<String> array, String string) {
+        int count = 0;
+        for (int i = 0; i < array.size(); i++) {
+            if (Objects.equals(array.get(i).split("")[0], string)) {
+                count++;
+            }
+        }
+        return count == 4;
     }
 
 
