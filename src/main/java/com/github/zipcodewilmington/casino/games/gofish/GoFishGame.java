@@ -22,13 +22,14 @@ public class GoFishGame {
 
     public void startGame() {
         currentDeck = newDeck.createDeck();
-        System.out.println(newDeck.getRank());
-        System.out.println(newDeck.shuffleDeck(currentDeck));
+//        System.out.println(newDeck.getRank());
+//        System.out.println(newDeck.shuffleDeck(currentDeck));
         dealDeck();
-        printPlayerHand();
+        printHand(playerHand);
         playerTurns();
         dealerTurns();
     }
+
 
 
     public String getUserInput(String string) {
@@ -52,11 +53,12 @@ public class GoFishGame {
             }
         }
 
+
     }
 
-    public void printPlayerHand() {
-        for (int i = 0; i < playerHand.size(); i++) {
-            System.out.println(playerHand.get(i));
+    public void printHand(ArrayList<String> currentHand) {
+        for (int i = 0; i < currentHand.size(); i++) {
+            System.out.println("|" + currentHand.get(i) + " | ");
         }
 
     }
@@ -67,7 +69,7 @@ public class GoFishGame {
             String userInput = getUserInput("What card do you want from dealer").toLowerCase();
             int count = 0;
             for (int i = 0; i < dealerHand.size(); i++) {
-                System.out.println(dealerHand.get(i).split(" ")[0]);
+               // System.out.println(dealerHand.get(i).split(" ")[0]);
                 if (Objects.deepEquals(dealerHand.get(i).split("")[0].toLowerCase(), userInput)) {
                     playerHand.add(dealerHand.get(i));
                     dealerHand.remove(dealerHand.get(i));
@@ -133,14 +135,14 @@ public class GoFishGame {
             dealerHand.add(drawStack.get(0));
             drawStack.remove(drawStack.get(0));
         }
-        System.out.println(playerHand);
-        System.out.println(dealerHand);
+//        printHand(playerHand);
+//        printHand(dealerHand);
     }
 
     public boolean countFourOfAKind(ArrayList<String> array, String string) {
         int count = 0;
         for (int i = 0; i < array.size(); i++) {
-            if (Objects.equals(array.get(i).split("")[0], string)) {
+            if (Objects.equals(array.get(i).split("")[0].toLowerCase(), string.toLowerCase())) {
                 count++;
             }
         }

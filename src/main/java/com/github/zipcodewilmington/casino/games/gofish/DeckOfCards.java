@@ -45,7 +45,7 @@ public class DeckOfCards {
                 this.rank = i;
                 this.suit = j;
                 DeckOfCards newDeck = new DeckOfCards(i,j);
-                deckOfCards.add(ranks[i] + newDeck.toString());
+                deckOfCards.add(newDeck.toString());
             }
         }
         return deckOfCards;
