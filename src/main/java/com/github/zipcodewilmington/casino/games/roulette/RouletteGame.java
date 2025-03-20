@@ -1,17 +1,20 @@
 package com.github.zipcodewilmington.casino.games.roulette;
+import java.util.InputMismatchException;
 import java.util.Random;
+import java.util.Scanner;
 
 
 public class RouletteGame {
     private static Random random = new Random(); //var from superclass casino needed? - casinoWallet
+    private static Scanner scan = new Scanner(System.in);
     private int currentSpinVal;
     private String currentColor;
     private String oddOrEven;
     //private ??? currentBets; //need to decide what type of hashmap would be best for storing bets
     private boolean playGame = true;
-    private enum betTypes{INSIDE, OUTSIDE}
-    private enum insideBets{SINGLE}
-    private enum outsideBets{RED, BLACK, ODD, EVEN}
+    //private enum betTypes{INSIDE, OUTSIDE}
+    private enum insideBets{STRAIGHT, SPLIT, STREET, CORNER}
+    private enum outsideBets{RED, BLACK, ODD, EVEN, LOW, HIGH, DOZEN1, DOZEN2, DOZEN3, ROW1, ROW2, ROW3}
     private boolean addBets = true;
     private double betAmount;
     private String rouletteTable = "   |        1-12       |       13-24       |      25--36  \n" +
@@ -37,6 +40,30 @@ public class RouletteGame {
         }
     }
 
+    String getString(String message) {
+        while (true) {
+            System.out.print(message);
+            try {
+                return scan.next();
+            }
+            catch (InputMismatchException e) {
+                System.out.println("\"" + scan.next() + "\" isn't a valid answer");
+            }
+        }
+    }
+
+    double getDouble(String message) {
+        while (true) {
+            System.out.println(message);
+            try {
+                return scan.nextDouble();
+            }
+            catch (InputMismatchException e) {
+                System.out.println("\"" + scan.nextDouble() + "\" isn't a valid bet");
+            }
+        }
+    }
+
 
     public void welcomeMessage() {
         System.out.println("Welcome to Roulette!");
@@ -52,6 +79,16 @@ public class RouletteGame {
     }
 
     public void makeBets() {
+        //System.out.println("What kind of bet would you like to make: ( INSIDE ) ( OUTSIDE )");
+        String betType = getString("What kind of bet would you like to make: ( INSIDE ) ( OUTSIDE )");
+
+        if (betType.equalsIgnoreCase("Inside")) {
+            //System.out.println("Which type of inside bet would you like to make: ( STRAIGHT ) ( SPLIT ) ( STREET ) ( CORNER )");
+            String insideBet = getString("Which type of inside bet would you like to make: ( STRAIGHT ) ( SPLIT ) ( STREET ) ( CORNER )");
+        } else if (betType.equalsIgnoreCase("Outside")) {
+            String outsideBet = getString("Which type of outside bet would you like to make:\n( RED ) ( BLACK ) ( ODD ) ( EVEN ) ( LOW ) ( HIGH )\n" +
+                    "( FIRST DOZEN ) ( SECOND DOZEN ) ( THIRD DOZEN )\n( ROW 1 ) ( ROW 2 ) ( ROW 3 )");
+        }
         //prompt user to select betType, for now only have single number
 
     }
@@ -61,10 +98,8 @@ public class RouletteGame {
         return addBets;
     }
 
-
-
     public void spinWheel() {
-        this.currentSpinVal = random.nextInt(37); //may need to set origin to -1, will test to be sure
+        this.currentSpinVal = random.nextInt(37);
     }
     public int getCurrentNum() {
         return currentSpinVal;
