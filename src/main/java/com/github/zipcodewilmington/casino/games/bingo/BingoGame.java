@@ -87,7 +87,11 @@ public class BingoGame {
     }
 
     public int checkFiveInARow(){
-        return 0;
+        int counter = 0;
+
+
+
+        return counter;
     }
 
     public int[][] updateBoard(){
@@ -104,5 +108,9 @@ public class BingoGame {
 
     public String outputBoard(){
         return null;
+    }
+
+    public boolean playerWins(){
+        return checkFiveInARow() == 5;
     }
 }
