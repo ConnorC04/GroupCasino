@@ -160,14 +160,4 @@ public class RouletteTest {
         assertEquals(roulette.currentAmtBet, expectedAmount, 0.001);
     }
 
-    @Test
-    public void test4MakeBet() {
-
-    }
-
-    @Test
-    public void test5MakeBet() {
-
-    }
-
 }

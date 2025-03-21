@@ -1,4 +1,7 @@
 package com.github.zipcodewilmington.casino.games.roulette;
+
+import com.github.zipcodewilmington.casino.GameInterface;
+
 import java.util.*;
 
 
@@ -7,7 +10,7 @@ public class RouletteGame {
     private static Scanner scan = new Scanner(System.in);
     private boolean playGame = true;
     private boolean addBets = true;
-    private int currentSpinVal;
+    private int currentSpin;
     private String currentColor;
     private String oddOrEven;
     //private HashMap<BetsAvailable, Double> allBetsMade = new HashMap<>(); //need to decide what type of hashmap would be best for storing bets
@@ -16,7 +19,8 @@ public class RouletteGame {
     public BetsAvailable currentBet;
     private int currentNumBetOn;
     public double currentAmtBet;
-    public enum BetsAvailable {STRAIGHT, SPLIT, STREET, CORNER, RED, BLACK, ODD, EVEN, LOW, HIGH, DOZEN1, DOZEN2, DOZEN3, ROW1, ROW2, ROW3};
+    public enum BetsAvailable {STRAIGHT, SPLIT, STREET, CORNER, RED, BLACK, ODD, EVEN,
+        LOW, HIGH, DOZEN1, DOZEN2, DOZEN3, ROW1, ROW2, ROW3};
 
     private Double betAmount;
     private String rouletteTable = "   |        1-12       |       13-24       |      25--36  \n" +
@@ -24,6 +28,7 @@ public class RouletteGame {
             " 0 |  2 |  5 |  8 | 11 | 14 | 17 | 20 | 23 | 26 | 29 | 32 | 35 | ROW1 2\n" +
             "   |  1 |  4 |  7 | 10 | 13 | 16 | 19 | 22 | 25 | 28 | 31 | 34 | ROW1 3\n" +
             "   |LOW  1-18|  EVEN   |  REDS   |  BLACK  |  ODDS   |19-36 HIGH|";
+
 
     public RouletteGame() {
         betOdds.put(BetsAvailable.STRAIGHT, 35.0);
@@ -44,7 +49,7 @@ public class RouletteGame {
         betOdds.put(BetsAvailable.ROW3, 2.0);
     }
 
-    public void runGame() {
+    public void run() {
         welcomeMessage();
         while (playGame) {
             //allBetsMade.clear();
@@ -57,14 +62,14 @@ public class RouletteGame {
                 askToConfirmBets();
             }
             spinWheel();
-            printSpinSummary(this.currentSpinVal, this.oddOrEven, this.currentColor);
+            printSpinSummary(this.currentSpin, this.oddOrEven, this.currentColor);
             checkBets(this.currentBet, this.currentNumBetOn);
-            calcChanges(this.currentSpinVal);
+            calcChanges(this.currentSpin);
             exitGame();
         }
     }
 
-    private String getString(String message) {
+    public String getString(String message) {
         while (true) {
             System.out.print(message);
             try {
@@ -76,7 +81,7 @@ public class RouletteGame {
         }
     }
 
-    private double getDouble(String message) {
+    public double getDouble(String message) {
         while (true) {
             System.out.println(message);
             try {
@@ -88,7 +93,7 @@ public class RouletteGame {
         }
     }
 
-    private int getInteger(String message) {
+    public int getInteger(String message) {
         while (true) {
             System.out.println(message);
             try {
@@ -206,7 +211,7 @@ public class RouletteGame {
         return true;
     }
 
-    private boolean askForNextNumber() {
+    public boolean askForNextNumber() {
         int number = getInteger("Which number would you like to bet on?");
         if (number > 36 || number < 0) {
             number = getInteger("That is not a valid number");
@@ -223,11 +228,11 @@ public class RouletteGame {
     }
 
     public void spinWheel() {
-        this.currentSpinVal = random.nextInt(37);
+        this.currentSpin = random.nextInt(37);
 
     }
     public int getCurrentNum() {
-        return currentSpinVal;
+        return currentSpin;
     }
 
     public void isOddOrEven(int randomNumber) {
@@ -268,64 +273,52 @@ public class RouletteGame {
 
     //check inside and outside bets against number from spin
     public boolean checkBets(BetsAvailable bet, int guess) {
-        if (bet == BetsAvailable.STRAIGHT && this.currentSpinVal == guess) return true;
-        if (bet == BetsAvailable.SPLIT && this.currentSpinVal == guess) return true;
-        if (bet == BetsAvailable.STREET && this.currentSpinVal == guess) return true;
-        if (bet == BetsAvailable.CORNER && this.currentSpinVal == guess) return true;
+        if (bet == BetsAvailable.STRAIGHT && this.currentSpin == guess) return true;
+        if (bet == BetsAvailable.SPLIT && this.currentSpin == guess) return true;
+        if (bet == BetsAvailable.STREET && this.currentSpin == guess) return true;
+        if (bet == BetsAvailable.CORNER && this.currentSpin == guess) return true;
         if (bet == BetsAvailable.EVEN && this.oddOrEven.equals("Even")) return true;
         if (bet == BetsAvailable.ODD && this.oddOrEven.equals("Odd")) return true;
         if (bet == BetsAvailable.RED && this.currentColor.equals("Red")) return true;
         if (bet == BetsAvailable.BLACK && this.currentColor.equals("Black")) return true;
-        if (bet == BetsAvailable.LOW && this.currentSpinVal < 19 && this.currentSpinVal != 0) return true;
-        if (bet == BetsAvailable.HIGH && this.currentSpinVal > 18) return true;
-        if (bet == BetsAvailable.DOZEN1 && this.currentSpinVal < 13 && this.currentSpinVal != 0) return true;
-        if (bet == BetsAvailable.DOZEN2 && this.currentSpinVal > 12 && this.currentSpinVal < 25) return true;
-        if (bet == BetsAvailable.DOZEN3 && this.currentSpinVal > 24) return true;
-        if (bet == BetsAvailable.ROW1 && this.currentSpinVal % 3 == 0) return true;
-        if (bet == BetsAvailable.ROW2 && this.currentSpinVal % 3 == 2) return true;
-        if (bet == BetsAvailable.ROW3 && this.currentSpinVal % 3 == 1) return true;
+        if (bet == BetsAvailable.LOW && this.currentSpin < 19 && this.currentSpin != 0) return true;
+        if (bet == BetsAvailable.HIGH && this.currentSpin > 18) return true;
+        if (bet == BetsAvailable.DOZEN1 && this.currentSpin < 13 && this.currentSpin != 0) return true;
+        if (bet == BetsAvailable.DOZEN2 && this.currentSpin > 12 && this.currentSpin < 25) return true;
+        if (bet == BetsAvailable.DOZEN3 && this.currentSpin > 24) return true;
+        if (bet == BetsAvailable.ROW1 && this.currentSpin % 3 == 0 && this.currentSpin != 0) return true;
+        if (bet == BetsAvailable.ROW2 && this.currentSpin % 3 == 2) return true;
+        if (bet == BetsAvailable.ROW3 && this.currentSpin % 3 == 1) return true;
         return false;
     }
 
-    //calculate winnings/losses
-
     public Double calcWinnings(BetsAvailable bet, Double amount) {
         return (this.getBetOdds(bet) * amount);
-
     }
 
-    private Double calcChanges(int randNum) {
+    public Double calcChanges(int randNum) {
         Double total = 0.0;
-        if (this.checkBets(this.currentBet, this.currentSpinVal)) {
+        if (this.checkBets(this.currentBet, randNum)) {
             total += this.calcWinnings(this.currentBet, this.currentAmtBet);
+            System.out.println(String.format("Your total winnings are: %.2f", total));
         } else {
             total -= this.currentAmtBet;
+            System.out.println(String.format("You lost: %.2f", total));
         }
-//        for (Map.Entry<Enum, Double> entry : allBetsMade.entrySet()) {
-//            Enum bet = entry.getKey();
-//            Double amount = entry.getValue();
-//            int guess = this.currentNumBetOn;
-//            if (this.checkBets((BetsAvailable) bet, guess)) {
-//                total += this.calcWinnings(bet, amount);
-//            } else {
-//                total -= amount;
-//            }
-//        }
         return total;
     }
 
-    private void printSpinSummary(int number, String modValue, String color) {
+    public void printSpinSummary(int number, String modValue, String color) {
         System.out.println(String.format("The lucky number was...%s!", number));
         System.out.println(String.format("%s is %s, and the color is %s.", number, modValue, color));
     }
 
-    private boolean exitGame() {
+    public boolean exitGame() {
         String askPlayAgain = getString("Would you like to play again? ( YES ) ( NO )");
         if (askPlayAgain.equalsIgnoreCase("No")) {
             playGame = false;
         }
         return playGame;
     }
-
-
 }
+
