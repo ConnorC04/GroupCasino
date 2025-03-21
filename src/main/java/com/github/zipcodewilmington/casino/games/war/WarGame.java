@@ -37,10 +37,14 @@ class WarGame {
     public void playGame() {
         System.out.println("Welcome to the war game!");
         System.out.println("Press enter to draw a card and play.");
-        while (playerDeck.size() > 1 && dealerDeck.size() > 1){
-            System.out.println ("Press enter to continue..");
-            scanner.nextLine(); //command for player input
-            drawCard();
+        while ( !dealerDeck.isEmpty()) {
+            System.out.println("Enter you card(2-14):");
+            int playerCard = getUserCard();
+           if (playerCard == -1) {
+               System.out.println("Wrong Input");
+           }
+                //command for player input
+            drawCard(playerCard);
         }
         System.out.println(declareWinner());
     }
@@ -49,10 +53,23 @@ class WarGame {
         return 0;
     }
 
+    //get input
+    private int getUserCard() {
+        try {
+            int card = Integer.parseInt(scanner.nextLine());
+            if (card >= 2 && card <= 14) {
+                return card;
+            }
+        } catch (NumberFormatException e)  {
+
+        }
+        return -1;
+    }
+
     //draw cards for both
-    private void drawCard() {
-        if (playerDeck.isEmpty() || dealerDeck.isEmpty()) return;
-        int playerCard = playerDeck.poll();
+    private void drawCard(int playerCard) {
+        if (dealerDeck.isEmpty()) return;
+
         int dealerCard = dealerDeck.poll();
 
         System.out.println("You Draw :" + cardName (playerCard));
