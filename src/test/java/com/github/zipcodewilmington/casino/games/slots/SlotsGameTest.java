@@ -1,10 +1,10 @@
-package com.github.zipcodewilmington.casino.games.slots;
+//package com.github.zipcodewilmington.casino.games.slots;
 
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class SlotsGameTest {
+//class SlotsGameTest {
 
 //    @Test
 //    void testBalanceAfterBet() {
@@ -13,9 +13,5 @@ class SlotsGameTest {
 //        String actual = slotsGame.getUserInput("Yes");
 //        assertEquals(expected, actual);
 //    }
-
-
-
-
-}
+//}
 

@@ -34,17 +34,17 @@ public class SlotsGame implements GameInterface {
         sg.play();
     }
 
-        public String getUserInput(String s){
-            System.out.println(s);
-            Scanner response = new Scanner(System.in);
-            return response.nextLine();
-        }
+    public String getUserInput(String s){
+        System.out.println(s);
+        Scanner response = new Scanner(System.in);
+        return response.nextLine();
+    }
 
-        public void play(){
-            boolean readyPlayer = true;
-            String userInput = getUserInput("Are You ready to play?");
-            runGame(userInput, readyPlayer);
-        }
+    public void play(){
+        boolean readyPlayer = true;
+        String userInput = getUserInput("Are You ready to play?");
+        runGame(userInput, readyPlayer);
+    }
 
     public void runGame(String userInput, boolean readyPlayer) {
         String choiceToPlayAgain;
@@ -71,12 +71,12 @@ public class SlotsGame implements GameInterface {
         }
     }
 
-        public double bet(double balance){
-            double amountToBet = Double.parseDouble(getUserInput("How much would you like to bet?"));
-            double balanceAfterBet = balance - amountToBet;
-            pullTrigger();
-            return checkForWinOrLose(amountToBet, balanceAfterBet);
-        }
+    public double bet(double balance){
+        double amountToBet = Double.parseDouble(getUserInput("How much would you like to bet?"));
+        double balanceAfterBet = balance - amountToBet;
+        pullTrigger();
+        return checkForWinOrLose(amountToBet, balanceAfterBet);
+    }
 
     public double checkForWinOrLose(double amountToBet, double balanceAfterBet) {
         double winnings;
@@ -115,8 +115,8 @@ public class SlotsGame implements GameInterface {
             System.out.println(Arrays.toString(column));
         }
 
-        public int randomColumn () {
-            Random rand = new Random();
-            return rand.nextInt(10);
-        }
+    public int randomColumn () {
+        Random rand = new Random();
+        return rand.nextInt(10);
     }
+}
