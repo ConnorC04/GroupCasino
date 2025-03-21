@@ -91,7 +91,6 @@ public class Casino implements Runnable {
 
     private void play(Object gameObject, Object playerObject) {
         GameInterface game = (GameInterface) gameObject;
-        //BlackjackGame blackJack = (BlackjackGame)gameObject;
         PlayerInterface player = (PlayerInterface) playerObject;
         game.add(player);
         game.run();
