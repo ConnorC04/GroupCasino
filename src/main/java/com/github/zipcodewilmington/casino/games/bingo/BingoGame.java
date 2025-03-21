@@ -2,17 +2,49 @@ package com.github.zipcodewilmington.casino.games.bingo;
 
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Scanner;
 
 public class BingoGame {
 
 
     private int numberChosen;
-    private ArrayList<Integer> numbers;
-    private int counter;
+    private ArrayList<Integer> numbers = new ArrayList<>();
+
 
     public BingoGame() {}
 
-    public void runGame(){}
+    public void runGame(){
+        Scanner scan = new Scanner(System.in);
+
+        BingoGame bingoGame = new BingoGame();
+        int [][] playerBoard = bingoGame.makeBoard();
+        int fiveInARow = 0;
+        System.out.println("Your current board is:");
+        bingoGame.outputBoard(playerBoard);
+        playerBoard[2][2] = 0;
+        System.out.println("You get one free space in the middle! Any space occupied with a space you \"stamped\" " +
+                "will be represented with a 0. ");
+        bingoGame.outputBoard(playerBoard);
+        System.out.println("Ok, we are now going to play. At this time, you can choose how many " +
+                "random numbers get picked before the game is over. Good luck!\n");
+//        System.out.println("Please choose a number between 4 and 35: ");
+//        int roundsToPlay = scan.nextInt();
+        for (int i = 0; i < 100; i++){
+            int randomNumber = bingoGame.chooseRandomNumber();
+            System.out.println("The number randomly selected was: " + formatChosenNumber(randomNumber));
+            bingoGame.updateBoard(playerBoard, randomNumber);
+            System.out.println("Your board now looks like this: ");
+            bingoGame.outputBoard(playerBoard);
+            fiveInARow = bingoGame.checkFiveInARow(playerBoard);
+            if (playerWins(fiveInARow)){
+                System.out.println("Bingo! You won!");
+                break;
+            }
+        }
+        if (!playerWins(fiveInARow)){
+            System.out.println("Womp womp.");
+        }
+    }
 
     public void setNumbers(ArrayList<Integer> num, int start, int end) {
         for (int i = start; i < end; i++) {
@@ -46,31 +78,31 @@ public class BingoGame {
                 if (i == 0){
                     randomIndex = random.nextInt(firstColumn.size());
                     numberForSlot = firstColumn.get(randomIndex);
-                    board[i][j] = numberForSlot;
+                    board[j][i] = numberForSlot;
                     firstColumn.remove(randomIndex);
                 }
                 if (i == 1){
                     randomIndex = random.nextInt(secondColumn.size());
                     numberForSlot = secondColumn.get(randomIndex);
-                    board[i][j] = numberForSlot;
+                    board[j][i] = numberForSlot;
                     secondColumn.remove(randomIndex);
                 }
                 if (i == 2){
                     randomIndex = random.nextInt(thirdColumn.size());
                     numberForSlot = thirdColumn.get(randomIndex);
-                    board[i][j] = numberForSlot;
+                    board[j][i] = numberForSlot;
                     thirdColumn.remove(randomIndex);
                 }
                 if (i == 3){
                     randomIndex = random.nextInt(fourthColumn.size());
                     numberForSlot = fourthColumn.get(randomIndex);
-                    board[i][j] = numberForSlot;
+                    board[j][i] = numberForSlot;
                     fourthColumn.remove(randomIndex);
                 }
                 if (i == 4){
                     randomIndex = random.nextInt(fifthColumn.size());
                     numberForSlot = fifthColumn.get(randomIndex);
-                    board[i][j] = numberForSlot;
+                    board[j][i] = numberForSlot;
                     fifthColumn.remove(randomIndex);
                 }
             }
@@ -80,8 +112,9 @@ public class BingoGame {
 
     public int chooseRandomNumber(){
         BingoGame bingoGame = new BingoGame();
+        Random random = new Random();
         bingoGame.setNumbers(numbers, 1, 75);
-        int randomIndex = numbers.size();
+        int randomIndex = random.nextInt(numbers.size());
         int randomNumber = numbers.get(randomIndex);
         numbers.remove(randomIndex);
         return randomNumber;
@@ -89,6 +122,7 @@ public class BingoGame {
 
     public int checkFiveInARow(int[][] board){
         // Checks the rows
+        int counter = 0;
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board.length; j++) {
                 if (board[i][j] == 0) {
@@ -150,23 +184,48 @@ public class BingoGame {
         return counter;
     }
 
-    public int[][] updateBoard(){
-        return null;
+    public int[][] updateBoard(int[][] board, int numberChosen){
+        int[][] updatedBoard = board;
+        for (int i = 0; i < 5; i++){
+            for (int j = 0; j < 5; j++){
+                if (board[i][j] == numberChosen){
+                    updatedBoard[i][j] = 0;
+                }
+            }
+        }
+        return updatedBoard;
     }
 
-    public String formatChosenNumber(){
-        return null;
+    public String formatChosenNumber(int numberChosen){
+        if (numberChosen < 16){
+            return "B-" + numberChosen;
+        }
+        if (numberChosen > 15 && numberChosen < 31){
+            return "I-" + numberChosen;
+        }
+        if (numberChosen > 30 && numberChosen < 46){
+            return "N-" + numberChosen;
+        }
+        if (numberChosen > 45 && numberChosen < 61){
+            return "G-" + numberChosen;
+        }
+        if (numberChosen > 60 && numberChosen < 76){
+            return "O-" + numberChosen;
+        }
+        return "Unreachable statement?";
     }
 
-    public int freeSpace(){
-        return 0;
+    public void outputBoard(int[][] board){
+
+        for (int i = 0; i < 5; i++){
+            for (int j = 0; j < 5; j++){
+                System.out.print(board[i][j] + "  ");
+            }
+            System.out.println("");
+        }
     }
 
-    public String outputBoard(){
-        return null;
-    }
-
-    public boolean playerWins(){
-        return counter == 5;
+    public boolean playerWins(int winningCombo){
+        return winningCombo == 5;
     }
 }
