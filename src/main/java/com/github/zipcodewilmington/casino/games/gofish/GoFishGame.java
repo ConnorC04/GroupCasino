@@ -1,11 +1,24 @@
 package com.github.zipcodewilmington.casino.games.gofish;
 
 
+import com.github.zipcodewilmington.casino.CasinoAccount;
 import com.github.zipcodewilmington.casino.Deck;
+import com.github.zipcodewilmington.casino.GameInterface;
+import com.github.zipcodewilmington.casino.PlayerInterface;
 
 import java.util.*;
 
-public class GoFishGame {
+public class GoFishGame implements PlayerInterface, GameInterface {
+
+    @Override
+    public CasinoAccount getArcadeAccount() {
+        return null;
+    }
+
+    @Override
+    public <SomeReturnType> SomeReturnType play() {
+        return null;
+    }
 
     //DeckOfCards newDeck = new DeckOfCards();
     Deck newDeck = new Deck();
@@ -46,9 +59,6 @@ public class GoFishGame {
     }
 
     public void startGame() {
-        // currentDeck = newDeck.createDeck();
-//        System.out.println(newDeck.getRank());
-//        System.out.println(newDeck.shuffleDeck(currentDeck));
         dealDeck();
         printHand(playerHand);
         playerTurns();
@@ -183,12 +193,27 @@ public class GoFishGame {
         return count == 4;
     }
 
+//    public void runGame() {
+//        GoFishGame gf = new GoFishGame();
+//        gf.updatePlayer("Welcome to Go - Fish");
+//        gf.startGame();
+//    }
 
-    public static void main(String[] args) {
+    @Override
+    public void add(PlayerInterface player) {
+
+    }
+
+    @Override
+    public void remove(PlayerInterface player) {
+
+    }
+
+    @Override
+    public void run() {
         GoFishGame gf = new GoFishGame();
         gf.updatePlayer("Welcome to Go - Fish");
         gf.startGame();
     }
-
 }
 
