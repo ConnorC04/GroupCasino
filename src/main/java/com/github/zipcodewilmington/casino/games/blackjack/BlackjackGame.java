@@ -1,12 +1,14 @@
 package com.github.zipcodewilmington.casino.games.blackjack;
+import com.github.zipcodewilmington.casino.GameInterface;
 import com.github.zipcodewilmington.casino.Hand;
+import com.github.zipcodewilmington.casino.PlayerInterface;
 import com.github.zipcodewilmington.casino.games.Card;
 
 import java.awt.*;
 import java.util.*;
 
 
-public class BlackjackGame {
+public class BlackjackGame implements GameInterface {
     private ArrayList<Card> deck;
     private ArrayList<Card> playerHand;
     private ArrayList<Card> dealerHand;
@@ -22,25 +24,35 @@ public class BlackjackGame {
         intitializeDeck();
     }
 
-//    public static void main(String[] args) {
-//        Scanner scanner = new Scanner(System.in);
-//        boolean playAgain = true;
-//
-//        while (playAgain) {
-//            BlackjackGame game = new BlackjackGame();
-//            game.playBlackJack();
-//
-//            // Ask if the player wants to play again
-//            System.out.print("\nDo you want to play again? (yes/no): ");
-//            String response = scanner.nextLine().trim().toLowerCase();
-//
-//            if (!response.equals("yes")) {
-//                playAgain = false;
-//                System.out.println("Thanks for playing! Goodbye (Door slamming sound plays.");
-//            }
-//        }
-//        scanner.close();
-//    }
+    @Override
+    public void add(PlayerInterface player) {
+
+    }
+
+    @Override
+    public void remove(PlayerInterface player) {
+
+    }
+
+    public void run() {
+        Scanner scanner = new Scanner(System.in);
+        boolean playAgain = true;
+
+        while (playAgain) {
+            BlackjackGame game = new BlackjackGame();
+            game.playBlackJack();
+
+            // Ask if the player wants to play again
+            System.out.print("\nDo you want to play again? (yes/no): ");
+            String response = scanner.nextLine().trim().toLowerCase();
+
+            if (!response.equals("yes")) {
+                playAgain = false;
+                System.out.println("Thanks for playing! Goodbye (Door slamming sound plays.");
+            }
+        }
+        scanner.close();
+    }
 
     private void intitializeDeck() {
         for (Card.Suit suit : Card.Suit.values()) {
@@ -53,14 +65,17 @@ public class BlackjackGame {
     }
 
     public int handValue(ArrayList<Card> hand) {
+        //checks to hand for amount of aces
         int total = 0;
         int aceCount = 0;
         for (Card card : hand) {
             total += card.getValue();
+            //counts the amount of aces in the players hand
             if (card.rank == Card.Rank.ACE) {
                 aceCount++;
             }
         }
+        //If ace is in hand and the hand total is greater than 21, amount will be adjusted.
         while (total > 21 && aceCount > 0) {
             total -= 10;
             aceCount--;
@@ -107,6 +122,7 @@ public class BlackjackGame {
                 System.out.println("New total = " + playerTotal);
 
                 if (playerTotal > 21) {
+                    //If player is over 21 they lose and the loop ends
                     System.out.println("Bust! Over 21. Dealer wins.");
                     break;
                 }
@@ -126,12 +142,13 @@ public class BlackjackGame {
 
             if (dealerTotal > 21) {
                 System.out.println("Dealer busts! You win.");
-                return;  // Ends game if dealer busts
+                return;
             }
         }
 
         // Determine winner
         if (playerTotal > dealerTotal) {
+            //when player total is more than dealer total
             System.out.println("Winner, winner, chicken dinner!");//add in currentbet*2
         } else if (playerTotal < dealerTotal) {
             System.out.println("Loser, loser, pay up!");//subtract bet from total
@@ -148,6 +165,26 @@ public class BlackjackGame {
         Random random = new Random();
         return deck.get(random.nextInt(deck.size()));
     }
+
+    private void blackJack() {
+        Scanner scanner = new Scanner(System.in);
+        boolean playAgain = true;
+
+        while (playAgain) {
+            BlackjackGame game = new BlackjackGame();
+            game.playBlackJack();
+
+            System.out.print("\nDo you want to play again? (yes/no): ");
+            String response = scanner.nextLine().trim().toLowerCase();
+
+            if (!response.equals("yes")) {
+                playAgain = false;
+                System.out.println("Thanks for playing! Goodbye (Door slamming sound plays.");
+            }
+        }
+        scanner.close();
+    }
+
 
     private String userInput() {
         while (true) {
