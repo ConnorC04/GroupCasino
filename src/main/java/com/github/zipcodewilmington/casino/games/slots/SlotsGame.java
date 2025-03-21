@@ -1,5 +1,8 @@
 package com.github.zipcodewilmington.casino.games.slots;
 
+import com.github.zipcodewilmington.casino.GameInterface;
+import com.github.zipcodewilmington.casino.PlayerInterface;
+
 import java.util.Arrays;
 import java.util.Scanner;
 import java.util.Random;
@@ -9,12 +12,22 @@ import java.util.Random;
 /**
  * Created by leon on 7/21/2020.
  */
-public class SlotsGame {
+public class SlotsGame implements GameInterface {
     double currentBalance = 1000.00;
     int slot1 = 0;
     int slot2 = 0;
     int slot3 = 0;
     Scanner scanner = new Scanner(System.in);
+
+    @Override
+    public void add(PlayerInterface player) {
+
+    }
+
+    @Override
+    public void remove(PlayerInterface player) {
+
+    }
 
     public void run() {
         SlotsGame sg = new SlotsGame();
