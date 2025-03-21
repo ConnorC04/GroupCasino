@@ -3,7 +3,7 @@ package com.github.zipcodewilmington.casino.games.war;
 import java.util.*;
 
 
-class WarGame {
+public class WarGame {
     private List<Integer> deck;
     private Queue<Integer> playerDeck;
     private Queue<Integer> dealerDeck;
@@ -16,12 +16,13 @@ class WarGame {
         dealCards();
     }
 //creating 1 deck of 52 cards, values 2-14 and 2 to Ace
-    private List<Integer> createdDeck() {
+    public List<Integer> createdDeck() {
         List<Integer> deck = new ArrayList<>();
-        for (int i = 2; i <= 14;i++ ){
-            for(int j = 0; j <4; j++) {
+        for (int i = 2; i <= 14;i++ ) {
+            for (int j = 0; j < 4; j++) {
                 deck.add(i);
-            }}
+            }
+        }
         Collections.shuffle(deck);
         return deck;
             }
@@ -37,13 +38,13 @@ class WarGame {
     }
     //playing game until winner is decided and no more cards are left
     public void playGame() {
-        System.out.println("Welcome to the war game!");
+        System.out.println("Welcome King to the war game!");
         System.out.println("Press enter to draw a card and play.");
         while ( !dealerDeck.isEmpty()) {
             System.out.println("Enter you card(2-14):");
             int playerCard = getUserCard();
            if (playerCard == -1) {
-               System.out.println("Wrong Input");
+               System.out.println("I think I told you to put numbers from 2-14 so do that");
            }
                 //command for player input
             drawCard(playerCard);
@@ -79,11 +80,11 @@ class WarGame {
         if (playerCard > dealerCard) {
             playerDeck.add(playerCard);
             playerDeck.add(dealerCard);
-            System.out.println("Player wins!"); }
+            System.out.println("you won but don't be overconfident!"); }
         else if  (dealerCard > playerCard) {
             dealerDeck.add(dealerCard);
             dealerDeck.add(playerCard);
-            System.out.println("Dealer wins");
+            System.out.println("You lost the game boo!");
         } else { System.out.println ("It is a tie");
 
         }
