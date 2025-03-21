@@ -111,12 +111,6 @@ public class RouletteTest {
         assertTrue(expected.equals(actual));
     }
 
-//    @Test
-//    public void test1CheckBets() {
-//        roulette.checkBets(RouletteGame.BetsAvailable.STRAIGHT, 15);
-//
-//    }
-
     @Test
     public void testGetOdd() {
         double[] odds = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
@@ -141,12 +135,16 @@ public class RouletteTest {
 
     @Test
     public void test1MakeInsideBets() {
-        //roulette.makeInsideBets();
+        roulette.makeBet(RouletteGame.BetsAvailable.STRAIGHT, 1.0);
+        RouletteGame.BetsAvailable expectedBet = RouletteGame.BetsAvailable.STRAIGHT;
+        double expectedAmount = 1.0;
+        assertEquals(roulette.currentBet, expectedBet);
+        assertEquals(roulette.currentAmtBet, expectedAmount, 0.001);
     }
 
     @Test
     public void test2MakeInsideBets() {
-
+        //roulette.makeBet(RouletteGame.BetsAvailable.)
     }
 
     @Test

@@ -13,9 +13,9 @@ public class RouletteGame {
     //private HashMap<BetsAvailable, Double> allBetsMade = new HashMap<>(); //need to decide what type of hashmap would be best for storing bets
     private HashMap<BetsAvailable, Double> betOdds = new HashMap<>();
     //private ArrayList<Integer> currentNumsBetOn = new ArrayList<>();
-    private BetsAvailable currentBet;
+    public BetsAvailable currentBet;
     private int currentNumBetOn;
-    private double currentAmtBet;
+    public double currentAmtBet;
     public enum BetsAvailable {STRAIGHT, SPLIT, STREET, CORNER, RED, BLACK, ODD, EVEN, LOW, HIGH, DOZEN1, ROW1};
 
     private Double betAmount;
@@ -110,8 +110,8 @@ public class RouletteGame {
 
     public boolean makeBet(BetsAvailable bet, double amount) {
         //allBetsMade.put(bet, amount);
-        currentBet = bet;
-        currentAmtBet = amount;
+        this.currentBet = bet;
+        this.currentAmtBet = amount;
         return true;
     }
 
@@ -253,7 +253,9 @@ public class RouletteGame {
         if (bet == BetsAvailable.ODD && this.oddOrEven.equals("Odd")) return true;
         if (bet == BetsAvailable.RED && this.currentColor.equals("Red")) return true;
         if (bet == BetsAvailable.BLACK && this.currentColor.equals("Black")) return true;
-        if (bet == BetsAvailable.DOZEN1 && this.currentSpinVal < 13) return true;
+        if (bet == BetsAvailable.LOW && this.currentSpinVal < 19 && this.currentSpinVal != 0) return true;
+        if (bet == BetsAvailable.HIGH && this.currentSpinVal > 18) return true;
+        if (bet == BetsAvailable.DOZEN1 && this.currentSpinVal < 13 && this.currentSpinVal != 0) return true;
         if (bet == BetsAvailable.ROW1 && this.currentSpinVal % 3 == 0) return true;
         return false;
     }
