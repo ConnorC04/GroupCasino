@@ -13,12 +13,12 @@ public class SlotsPlayer {
     "Are you ready? Pull the trigger to begin!!!" --> SlotsGame class becomes active
     */
 
-    public void player(){
-        Scanner scanner = new Scanner(System.in);
-        double walletBalance = wallet linked to player account.
-        double moneyToPLaySlots = walletBalance - moneyFromWallet(walletBalance);
-        Transfer to SlotsGame.java
-    }
+//    public void player(){
+//        Scanner scanner = new Scanner(System.in);
+//        double walletBalance = wallet linked to player account.
+//        double moneyToPLaySlots = walletBalance - moneyFromWallet(walletBalance);
+//        Transfer to SlotsGame.java
+//    }
 
     public String getUserInput(String s){
         System.out.println(s);
