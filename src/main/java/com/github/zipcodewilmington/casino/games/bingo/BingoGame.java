@@ -1,5 +1,6 @@
 package com.github.zipcodewilmington.casino.games.bingo;
 
+import com.github.zipcodewilmington.casino.CasinoAccountManager;
 import com.github.zipcodewilmington.casino.GameInterface;
 import com.github.zipcodewilmington.casino.PlayerInterface;
 
@@ -7,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
-public class BingoGame implements GameInterface {
+public class BingoGame extends CasinoAccountManager implements GameInterface {
 
 
     private ArrayList<Integer> numbers = new ArrayList<>();
@@ -15,7 +16,8 @@ public class BingoGame implements GameInterface {
 
     public BingoGame() {}
 
-    public void runGame(){
+    @Override
+    public void run(){
         Scanner scan = new Scanner(System.in);
 
         BingoGame bingoGame = new BingoGame();
@@ -251,8 +253,5 @@ public class BingoGame implements GameInterface {
 
     }
 
-    @Override
-    public void run() {
 
-    }
 }
