@@ -16,7 +16,7 @@ public class SlotsGame {
     int slot3 = 0;
     Scanner scanner = new Scanner(System.in);
 
-    public static void main(String[] args) {
+    public void run() {
         SlotsGame sg = new SlotsGame();
         sg.play();
     }
