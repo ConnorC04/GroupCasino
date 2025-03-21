@@ -16,6 +16,8 @@ import com.github.zipcodewilmington.casino.games.slots.SlotsGame;
 import com.github.zipcodewilmington.casino.games.slots.SlotsPlayer;
 import com.github.zipcodewilmington.casino.games.roulette.RouletteGame;
 import com.github.zipcodewilmington.casino.games.roulette.RoulettePlayer;
+import com.github.zipcodewilmington.casino.games.war.WarGame;
+import com.github.zipcodewilmington.casino.games.war.WarPlayer;
 import com.github.zipcodewilmington.utils.AnsiColor;
 import com.github.zipcodewilmington.utils.IOConsole;
 
@@ -41,8 +43,8 @@ public class Casino implements Runnable {
                     String gameSelectionInput = getGameSelectionInput().toUpperCase();
                     if (gameSelectionInput.equals("SLOTS")) {
                         play(new SlotsGame(), new SlotsPlayer());
-                    } else if (gameSelectionInput.equals("NUMBERGUESS")) {
-                        play(new NumberGuessGame(), new NumberGuessPlayer());
+                    } else if (gameSelectionInput.equals("WAR")) {
+                        play(new WarGame(), new WarPlayer());
                     } else if (gameSelectionInput.equals("GOFISH")) {
                         play(new GoFishGame(), new GoFishPlayer());
                     } else if (gameSelectionInput.equals("BLACKJACK")) {

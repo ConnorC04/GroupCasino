@@ -4,13 +4,15 @@ import java.util.*;
 
 
 public class WarGame {
+    //class variables
     private List<Integer> deck;
     private Queue<Integer> playerDeck;
     private Queue<Integer> dealerDeck;
     private Scanner scanner;
+    //constructor
     public WarGame() {
-        scanner = new Scanner (System.in);
-        deck = createdDeck();
+        scanner = new Scanner (System.in); //console
+        deck = createdDeck(); // shuffle
         playerDeck = new LinkedList<>();
         dealerDeck = new LinkedList<>();
         dealCards();
@@ -91,19 +93,13 @@ public class WarGame {
         }
         //now making readable string
     private String cardName (int value) {
-        switch (value) {
-            case 11:
-                return "Jack";
-            case 12:
-                return "Queen";
-            case 13:
-                return "King";
-            case 14:
-                return "Ace";
-            default:
-                return
-                        String.valueOf(value);
-        }
+        return switch (value) {
+            case 11 -> "Jack";
+            case 12 -> "Queen";
+            case 13 -> "King";
+            case 14 -> "Ace";
+            default -> String.valueOf(value);
+        };
     }
 
     //start the game
