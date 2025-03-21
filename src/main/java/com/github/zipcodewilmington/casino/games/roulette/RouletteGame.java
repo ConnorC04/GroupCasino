@@ -48,10 +48,14 @@ public class RouletteGame {
             currentNumsBetOn.clear();
             printTableLayout();
             while (addBets) {
-                //makeBets();
+                askForBets();
+                askForAmountBet();
+                askForNextNumber();
                 askToConfirmBets();
             }
             spinWheel();
+            //check all bets made against number from wheel
+            //calculate wins/losses
             exitGame();
         }
     }
@@ -180,14 +184,9 @@ public class RouletteGame {
         return true;
     }
 
-    private boolean setNumBetOn() {
-        int number = this.askForNextNumber();
-        return addToNumsBetOn(number);
-    }
-
-    private int askForNextNumber() {
+    private boolean askForNextNumber() {
         int number = getInteger("Which number would you like to bet on?");
-        return number;
+        return addToNumsBetOn(number);
     }
 
     public boolean askToConfirmBets() {
@@ -200,10 +199,12 @@ public class RouletteGame {
 
     public void spinWheel() {
         this.currentSpinVal = random.nextInt(37);
+
     }
     public int getCurrentNum() {
         return currentSpinVal;
     }
+
     public void isOddOrEven(int randomNumber) {
         if (randomNumber == 0) {
             this.oddOrEven = "Neither odd, nor even";
@@ -213,9 +214,11 @@ public class RouletteGame {
             this.oddOrEven = "Odd";
         }
     }
+
     public String getOddOrEven() {
         return oddOrEven;
     }
+
     public void isRedOrBlack(int randomNumber) {
         if (randomNumber % 2 == 0) {
             if (randomNumber > 0 && randomNumber < 11 ||
@@ -229,30 +232,32 @@ public class RouletteGame {
             }
         }
     }
+
     public String getCurrentColor() {
         return currentColor;
     }
 
-    //check inside bets against number from spin
+    //check inside and outside bets against number from spin
+    public boolean checkBets(betsAvailable bet, int number, ArrayList<Integer> array) {
+        for (int numbers : array) {
+            if (bet == betsAvailable.STRAIGHT && number == numbers) return true;
+            if (bet == betsAvailable.SPLIT && number == numbers) return true;
+            if (bet == betsAvailable.STREET && number == numbers) return true;
+            if (bet == betsAvailable.CORNER && number == numbers) return true;
+        }
+        if (bet == betsAvailable.EVEN && this.oddOrEven.equals("Even")) return true;
+        if (bet == betsAvailable.ODD && this.oddOrEven.equals("Odd")) return true;
+        if (bet == betsAvailable.RED && this.currentColor.equals("Red")) return true;
+        if (bet == betsAvailable.BLACK && this.currentColor.equals("Black")) return true;
+        return false;
+    }
 
-    //check outside bets against number from spin
-
-    //
+    //calculate winnings/losses
 
     public void printSpinSummary(int number, String modValue, String color) {
         System.out.println(String.format("The lucky number was...%s!", number));
         System.out.println(String.format("%s is %s, and the color is %s.", number, modValue, color));
     }
-
-//    public void printWinsAndLosses(ArrayList<Integer> array) {
-//        System.out.println("The results of your wager(s) are: ");
-//        for (int numbers : array) {
-//            //need to check elements in array against the result of the spin
-//            //if they match, calculate the winnings
-//            //if they don't calculate the losses
-//            //print each wager and the result from it
-//        }
-//    }
 
     public boolean exitGame() {
         String askPlayAgain = getString("Would you like to play again? ( YES ) ( NO )");
