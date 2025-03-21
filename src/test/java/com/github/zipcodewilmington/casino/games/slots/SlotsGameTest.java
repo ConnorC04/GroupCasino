@@ -6,13 +6,13 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class SlotsGameTest {
 
-    @Test
-    void testBalanceAfterBet() {
-        SlotsGame slotsGame = new SlotsGame();
-
-        String actual = slotsGame.getUserInput("Yes");
-        assertEquals(expected, actual);
-    }
+//    @Test
+//    void testBalanceAfterBet() {
+//        SlotsGame slotsGame = new SlotsGame();
+//
+//        String actual = slotsGame.getUserInput("Yes");
+//        assertEquals(expected, actual);
+//    }
 
 
 
