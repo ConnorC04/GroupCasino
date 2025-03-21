@@ -16,7 +16,7 @@ public class RouletteGame {
     private BetsAvailable currentBet;
     private int currentNumBetOn;
     private double currentAmtBet;
-    private enum BetsAvailable {STRAIGHT, SPLIT, STREET, CORNER, RED, BLACK, ODD, EVEN, LOW, HIGH, DOZEN, ROW};
+    public enum BetsAvailable {STRAIGHT, SPLIT, STREET, CORNER, RED, BLACK, ODD, EVEN, LOW, HIGH, DOZEN, ROW};
 
     private Double betAmount;
     private String rouletteTable = "   |        1-12       |       13-24       |      25--36  \n" +
@@ -40,7 +40,7 @@ public class RouletteGame {
         betOdds.put(BetsAvailable.ROW, 2.0);
     }
 
-    private void runGame() {
+    public void runGame() {
         welcomeMessage();
         while (playGame) {
             //allBetsMade.clear();
@@ -115,13 +115,13 @@ public class RouletteGame {
         return true;
     }
 
-    private boolean askForBets() {
+    public boolean askForBets() {
         BetsAvailable bet = this.askWhichBet();
         Double amount = this.askForAmountBet();
         return makeBet(bet, amount);
     }
 
-    private BetsAvailable askWhichBet() {
+    public BetsAvailable askWhichBet() {
         String askBetType = getString("What kind of bet would you like to make: ( INSIDE ) ( OUTSIDE )");
         BetsAvailable betType = null;
         if (askBetType.equalsIgnoreCase("Inside")) {
@@ -175,7 +175,7 @@ public class RouletteGame {
         return betType;
     }
 
-    private Double askForAmountBet() {
+    public Double askForAmountBet() {
         Double amount = getDouble("How much would you like to wager?");
         return amount;
     }
@@ -258,7 +258,7 @@ public class RouletteGame {
 
     //calculate winnings/losses
 
-    public double calcWinnings(BetsAvailable bet, double amount) {
+    public Double calcWinnings(BetsAvailable bet, Double amount) {
         return (this.getBetOdds(bet) * amount);
 
     }

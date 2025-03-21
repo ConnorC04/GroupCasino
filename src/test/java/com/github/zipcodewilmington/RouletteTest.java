@@ -111,22 +111,31 @@ public class RouletteTest {
         assertTrue(expected.equals(actual));
     }
 
+//    @Test
+//    public void test1CheckBets() {
+//        roulette.checkBets(RouletteGame.BetsAvailable.STRAIGHT, 15);
+//
+//    }
+
     @Test
     public void testGetOdd() {
-
-//        int[] odds = {35, 17, 11, 8, 1, 1, 1, 1, 1, 1, 2, 2};
-//        odds[0] = (int) roulette.getBetOdds(insideBets.STRAIGHT, 35.0);
-//        odds[1];
-//        odds[2];
-//        odds[3];
-//        odds[4];
-//        odds[5];
-//        odds[6];
-//        odds[7];
-//        odds[8];
-//        odds[9];
-//        odds[10] = (int) roulette.getBetOdds(outsideBets.DOZEN, 2.0);
-//        odds[11] = (int) roulette.getBetOdds(outsideBets.ROW, 2.0);
+        double[] odds = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+        odds[0] = roulette.calcWinnings(RouletteGame.BetsAvailable.STRAIGHT, 1.0);
+        odds[1] = roulette.calcWinnings(RouletteGame.BetsAvailable.SPLIT, 1.0);
+        odds[2] = roulette.calcWinnings(RouletteGame.BetsAvailable.STREET, 1.0);
+        odds[3] = roulette.calcWinnings(RouletteGame.BetsAvailable.CORNER, 1.0);
+        odds[4] = roulette.calcWinnings(RouletteGame.BetsAvailable.EVEN, 1.0);
+        odds[5] = roulette.calcWinnings(RouletteGame.BetsAvailable.ODD, 1.0);
+        odds[6] = roulette.calcWinnings(RouletteGame.BetsAvailable.RED, 1.0);
+        odds[7] = roulette.calcWinnings(RouletteGame.BetsAvailable.BLACK, 1.0);
+        odds[8] = roulette.calcWinnings(RouletteGame.BetsAvailable.LOW, 1.0);
+        odds[9] = roulette.calcWinnings(RouletteGame.BetsAvailable.HIGH, 1.0);
+        odds[10] = roulette.calcWinnings(RouletteGame.BetsAvailable.DOZEN, 1.0);
+        odds[11] = roulette.calcWinnings(RouletteGame.BetsAvailable.ROW, 1.0);
+        double[] expected = {35, 17, 11, 8, 1, 1, 1, 1, 1, 1, 2, 2};
+        for (int i = 0; i < odds.length; i++) {
+            assertEquals(expected[i], odds[i], 0.001);
+        }
     }
 
 
