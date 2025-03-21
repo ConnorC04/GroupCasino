@@ -6,11 +6,12 @@ import java.util.Collections;
 public class DeckOfCards {
 
     public static void main(String[] args) {
-            DeckOfCards card = new DeckOfCards();
+        DeckOfCards cards = new DeckOfCards();
+        ArrayList<String> deck = cards.createDeck();
+        System.out.println(deck);
+        cards.shuffleDeck(deck);
+        System.out.println(deck.size());
 
-        System.out.println(card.createDeck());
-        System.out.println(card.shuffleDeck(card.getDeckOfCards()));
-        System.out.println(card.getRank());
     }
 
 
@@ -18,7 +19,7 @@ public class DeckOfCards {
     private int suit;
     private ArrayList<String> deckOfCards = new ArrayList<>();
     String[] suits = {"Clubs", "Diamonds", "Hearts", "Spades"};
-    String [] ranks = {"Ace", "2", "3", "4", "5", "6", "7", "8","9", "Jack", "Queen", "King"};
+    String[] ranks = {"Ace", "2", "3", "4", "5", "6", "7", "8", "9","10", "Jack", "Queen", "King"};
 
     public DeckOfCards(int rank, int suit, ArrayList<String> deck) {
         this.rank = rank;
@@ -34,30 +35,25 @@ public class DeckOfCards {
 
     }
 
-    public String toString(){
-        return ranks[this.rank] + " of " + suits[this.suit];
+    public String buildCard(int rank, int suit) {
+        return ranks[rank] + " of " + suits[suit];
     }
 
-    public ArrayList<String> createDeck(){
-
-        for (int i = 0; i < ranks.length; i++) {
-            for (int j = 0; j < suits.length; j++) {
-                this.rank = i;
-                this.suit = j;
-                DeckOfCards newDeck = new DeckOfCards(i,j);
-                deckOfCards.add(newDeck.toString());
+    public ArrayList<String> createDeck() {
+        for (int rank = 0; rank < ranks.length; rank++) {
+            for (int suit = 0; suit < suits.length; suit++) {
+                String card= buildCard(rank,suit);
+                deckOfCards.add(card);
             }
         }
+        shuffleDeck(deckOfCards);
         return deckOfCards;
     }
-    public ArrayList<String> shuffleDeck(ArrayList<String> deck){
-        DeckOfCards newDeck = new DeckOfCards();
-        Collections.shuffle(deckOfCards);;
-//        while (shuffledDeck.size() >0) {
-//            Random index = new Random(deckOfCards.size());
-//            shuffledDeck.add(deckOfCards[index]);
-//        }
-        return deck;
+
+    public void shuffleDeck(ArrayList<String> deck) {
+       // DeckOfCards newDeck = new DeckOfCards();
+        Collections.shuffle(deck);
+
     }
 
     public ArrayList<String> getDeckOfCards() {

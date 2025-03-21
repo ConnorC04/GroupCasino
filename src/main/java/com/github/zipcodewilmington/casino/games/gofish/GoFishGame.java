@@ -1,10 +1,7 @@
 package com.github.zipcodewilmington.casino.games.gofish;
 
 
-import java.util.ArrayList;
-import java.util.Objects;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 
 public class GoFishGame {
 
@@ -13,15 +10,38 @@ public class GoFishGame {
     Scanner sc = new Scanner(System.in);
     boolean playersTurn = true;
     boolean dealersTurn = false;
-    int player4KingCount;
-    int dealer4KingCount;
+    int player4KindCount;
+    int dealer4KindCount;
     ArrayList<String> playerHand = new ArrayList<>();
     ArrayList<String> dealerHand = new ArrayList<>();
     ArrayList<String> drawStack = new ArrayList<>();
     ArrayList<String> currentDeck = new ArrayList<>();
 
-    public void startGame() {
+    public GoFishGame(){
         currentDeck = newDeck.createDeck();
+    }
+
+    public GoFishGame(ArrayList<String> array){
+        currentDeck = array;
+    }
+
+    public ArrayList<String> getPlayerHand() {
+        return playerHand;
+    }
+
+    public ArrayList<String> getDealerHand() {
+        return dealerHand;
+    }
+
+    public ArrayList<String> getDrawStack() {
+        return drawStack;
+    }
+
+
+
+
+    public void startGame() {
+       // currentDeck = newDeck.createDeck();
 //        System.out.println(newDeck.getRank());
 //        System.out.println(newDeck.shuffleDeck(currentDeck));
         dealDeck();
@@ -45,22 +65,33 @@ public class GoFishGame {
     public void dealDeck() {
         for (int i = 0; i < currentDeck.size(); i++) {
             if (i < 7) {
-                playerHand.add(currentDeck.get(i));
-            } else if (i < 14) {
                 dealerHand.add(currentDeck.get(i));
+            } else if (i < 14) {
+                playerHand.add(currentDeck.get(i));
             } else {
                 drawStack.add(currentDeck.get(i));
             }
         }
-
-
     }
 
     public void printHand(ArrayList<String> currentHand) {
         for (int i = 0; i < currentHand.size(); i++) {
             System.out.println("|" + currentHand.get(i) + " | ");
+            playerHand.get(i).split(" ")[0].toLowerCase();
         }
+    }
 
+    public int checkDealerDeckForCard(String userInput){
+        int count = 0;
+        ArrayList<String> copyOfDealerHand = new ArrayList<>(dealerHand);
+        for (int i = 0; i < copyOfDealerHand.size(); i++) {
+            if (Objects.equals(copyOfDealerHand.get(i).split(" ")[0].toLowerCase(), userInput)) {
+                playerHand.add(copyOfDealerHand.get(i));
+                dealerHand.remove(copyOfDealerHand.get(i));
+                count++;
+            }
+        }
+        return count;
     }
 
     public void playerTurns() {
@@ -68,16 +99,10 @@ public class GoFishGame {
             //player asks for number
             String userInput = getUserInput("What card do you want from dealer").toLowerCase();
             int count = 0;
-            for (int i = 0; i < dealerHand.size(); i++) {
-               // System.out.println(dealerHand.get(i).split(" ")[0]);
-                if (Objects.deepEquals(dealerHand.get(i).split("")[0].toLowerCase(), userInput)) {
-                    playerHand.add(dealerHand.get(i));
-                    dealerHand.remove(dealerHand.get(i));
-                    count++;
-                }
-
+            count = checkDealerDeckForCard(userInput);
+            if (isFourOfAKind(playerHand, userInput)) {
+                ++player4KindCount;
             }
-            player4KingCount = countFourOfAKind(dealerHand, userInput)? player4KingCount++ : player4KingCount;
             updatePlayer("you got " + count + " Cards from dealer");
             if (count== 0){
                 playersTurn = false;
@@ -87,7 +112,7 @@ public class GoFishGame {
                 dealerTurns();
                 break;
             }
-          count = 0;
+            System.out.println(dealerHand);
         }
 
     }
@@ -106,21 +131,23 @@ public class GoFishGame {
                 userInput = getUserInput("How many " + stringToMatch + " cards are you giving up?");
                 count = Integer.parseInt(userInput);
                 for (int i = 0; i < playerHand.size(); i++) {
-                    if (Objects.equals(playerHand.get(i).split("")[0].toLowerCase(), stringToMatch.toLowerCase())) {
+                    if (Objects.equals(playerHand.get(i).split(" ")[0].toLowerCase(), stringToMatch.toLowerCase())) {
                         dealerHand.add(playerHand.get(i));
                         playerHand.remove(playerHand.get(i));
                     }
                 }
-                countFourOfAKind(dealerHand, stringToMatch);
-                updatePlayer("you got " + count + " Cards from player");
-                if (count == 0) {
-                    dealersTurn = false;
-                    playersTurn = true;
-                    updatePlayer("No match - go Fish");
-                    goFish("dealer");
-                    playerTurns();
-                    break;
+                if (isFourOfAKind(dealerHand, userInput)) {
+                    ++player4KindCount;
                 }
+                updatePlayer("you got " + count + " Cards from player");
+            }
+            if (count == 0) {
+                dealersTurn = false;
+                playersTurn = true;
+                updatePlayer("No match - go Fish");
+                goFish("dealer");
+                playerTurns();
+                break;
             }
         }
     }
@@ -137,12 +164,14 @@ public class GoFishGame {
         }
 //        printHand(playerHand);
 //        printHand(dealerHand);
+        System.out.println(playerHand);
+        System.out.println(dealerHand);
     }
 
-    public boolean countFourOfAKind(ArrayList<String> array, String string) {
+    public boolean isFourOfAKind(ArrayList<String> array, String string) {
         int count = 0;
         for (int i = 0; i < array.size(); i++) {
-            if (Objects.equals(array.get(i).split("")[0].toLowerCase(), string.toLowerCase())) {
+            if (Objects.equals(array.get(i).split(" ")[0].toLowerCase(), string.toLowerCase())) {
                 count++;
             }
         }
@@ -152,6 +181,7 @@ public class GoFishGame {
 
     public static void main(String[] args) {
         GoFishGame gf = new GoFishGame();
+        gf.updatePlayer("Welcome to Go - Fish");
         gf.startGame();
     }
 
