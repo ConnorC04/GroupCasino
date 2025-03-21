@@ -12,6 +12,10 @@ public interface PlayerInterface {
      */
     CasinoAccount getArcadeAccount();
 
+   String getAccountName();
+    String  getAccountPassword();
+    Double  getAccountBalance();
+
     /**
      * Defines how a specific implementation of `PlayerInterface` plays their respective game.
      * @param <SomeReturnType> specify any return type you would like here
