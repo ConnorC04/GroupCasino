@@ -20,7 +20,7 @@ public class GoFishGame {
     private ArrayList<String> drawStack = new ArrayList<>();
     private ArrayList<String> currentDeck = new ArrayList<>();
 
-    public GoFishGame(){
+    public GoFishGame() {
         System.out.println(newDeck.size());
         newDeck.shuffle();
         for (int i = 0; i < 52; i++) {
@@ -29,7 +29,7 @@ public class GoFishGame {
         System.out.println(currentDeck.toString());
     }
 
-    public GoFishGame(ArrayList<String> array){
+    public GoFishGame(ArrayList<String> array) {
         currentDeck = array;
     }
 
@@ -45,11 +45,8 @@ public class GoFishGame {
         return drawStack;
     }
 
-
-
-
     public void startGame() {
-       // currentDeck = newDeck.createDeck();
+        // currentDeck = newDeck.createDeck();
 //        System.out.println(newDeck.getRank());
 //        System.out.println(newDeck.shuffleDeck(currentDeck));
         dealDeck();
@@ -57,8 +54,6 @@ public class GoFishGame {
         playerTurns();
         dealerTurns();
     }
-
-
 
     public String getUserInput(String string) {
         System.out.println(string);
@@ -89,7 +84,7 @@ public class GoFishGame {
         }
     }
 
-    public int checkDealerDeckForCard(String userInput){
+    public int checkDealerDeckForCard(String userInput) {
         int count = 0;
         ArrayList<String> copyOfDealerHand = new ArrayList<>(dealerHand);
         for (int i = 0; i < copyOfDealerHand.size(); i++) {
@@ -102,7 +97,7 @@ public class GoFishGame {
         return count;
     }
 
-    public int checkPlayerDeckForCard(String userInput){
+    public int checkPlayerDeckForCard(String userInput) {
         int count = 0;
         ArrayList<String> copyOfDealerHand = new ArrayList<>(playerHand);
         for (int i = 0; i < copyOfDealerHand.size(); i++) {
@@ -124,8 +119,8 @@ public class GoFishGame {
             if (isFourOfAKind(playerHand, userInput)) {
                 ++player4KindCount;
             }
-            updatePlayer("you got " + count + " Cards from dealer");
-            if (count== 0){
+            updatePlayer("You got " + count + " Cards from dealer");
+            if (count == 0) {
                 playersTurn = false;
                 dealersTurn = true;
                 updatePlayer("No match - player goes Fishing");
@@ -135,13 +130,11 @@ public class GoFishGame {
             }
             System.out.println(dealerHand);
         }
-
     }
 
     private void dealerTurns() {
-
         while (dealersTurn) {
-            String[] ranks = {"Ace", "2", "3", "4", "5", "6", "7", "8", "9", "Jack", "Queen", "King"};
+            String[] ranks = {"Ace", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Jack", "Queen", "King"};
             int num = rand.nextInt(ranks.length);
             String stringToMatch = ranks[num];
             //dealer asks for number
@@ -149,22 +142,16 @@ public class GoFishGame {
             String userInput = getUserInput("[1] - Yes, [2] - No");
             int count = 0;
             if (userInput.equals("1")) {
-                count = checkDealerDeckForCard(stringToMatch);
-//                for (int i = 0; i < playerHand.size(); i++) {
-//                    if (Objects.equals(playerHand.get(i).split(" ")[0].toLowerCase(), stringToMatch.toLowerCase())) {
-//                        dealerHand.add(playerHand.get(i));
-//                        playerHand.remove(playerHand.get(i));
-//                    }
-//                }
+                count = checkPlayerDeckForCard(stringToMatch);
                 if (isFourOfAKind(dealerHand, userInput)) {
                     ++player4KindCount;
                 }
-                updatePlayer("you got " + count + " Cards from player");
+                updatePlayer("You got " + count + " Cards from player ");
             }
             if (count == 0) {
                 dealersTurn = false;
                 playersTurn = true;
-                updatePlayer("No match - go Fish");
+                updatePlayer("No match - goes Fishing");
                 goFish("dealer");
                 playerTurns();
                 break;
@@ -182,8 +169,6 @@ public class GoFishGame {
             dealerHand.add(drawStack.get(0));
             drawStack.remove(drawStack.get(0));
         }
-//        printHand(playerHand);
-//        printHand(dealerHand);
         System.out.println(playerHand);
         System.out.println(dealerHand);
     }
