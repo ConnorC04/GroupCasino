@@ -149,6 +149,27 @@ public class BlackjackGame {
         return deck.get(random.nextInt(deck.size()));
     }
 
+    private void blackJack() {
+        Scanner scanner = new Scanner(System.in);
+        boolean playAgain = true;
+
+        while (playAgain) {
+            BlackjackGame game = new BlackjackGame();
+            game.playBlackJack();
+
+            // Ask if the player wants to play again
+            System.out.print("\nDo you want to play again? (yes/no): ");
+            String response = scanner.nextLine().trim().toLowerCase();
+
+            if (!response.equals("yes")) {
+                playAgain = false;
+                System.out.println("Thanks for playing! Goodbye (Door slamming sound plays.");
+            }
+        }
+        scanner.close();
+    }
+
+
     private String userInput() {
         while (true) {
             System.out.print("Would you like to Hit or Stay? Type 'Hit' or 'Stay': ");

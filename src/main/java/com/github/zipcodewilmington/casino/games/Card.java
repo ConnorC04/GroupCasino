@@ -17,7 +17,7 @@ public class Card {
         TEN,
         JACK,
         QUEEN,
-        KING, //Three; this three was making the cards deck 56 not 52; Isaac.
+        KING,
     }
 
     public enum Suit {
