@@ -1,11 +1,12 @@
 package com.github.zipcodewilmington.casino.games.roulette;
 
 import com.github.zipcodewilmington.casino.GameInterface;
+import com.github.zipcodewilmington.casino.PlayerInterface;
 
 import java.util.*;
 
 
-public class RouletteGame {
+public class RouletteGame implements GameInterface{
     private static Random random = new Random(); //var from superclass casino needed? - casinoWallet
     private static Scanner scan = new Scanner(System.in);
     private boolean playGame = true;
@@ -47,6 +48,16 @@ public class RouletteGame {
         betOdds.put(BetsAvailable.ROW1, 2.0);
         betOdds.put(BetsAvailable.ROW2, 2.0);
         betOdds.put(BetsAvailable.ROW3, 2.0);
+    }
+
+    @Override
+    public void add(PlayerInterface player){
+
+    }
+
+    @Override
+    public void remove(PlayerInterface player){
+
     }
 
     public void run() {
