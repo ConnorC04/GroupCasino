@@ -16,13 +16,13 @@ public class RouletteGame {
     private BetsAvailable currentBet;
     private int currentNumBetOn;
     private double currentAmtBet;
-    public enum BetsAvailable {STRAIGHT, SPLIT, STREET, CORNER, RED, BLACK, ODD, EVEN, LOW, HIGH, DOZEN, ROW};
+    public enum BetsAvailable {STRAIGHT, SPLIT, STREET, CORNER, RED, BLACK, ODD, EVEN, LOW, HIGH, DOZEN1, ROW1};
 
     private Double betAmount;
     private String rouletteTable = "   |        1-12       |       13-24       |      25--36  \n" +
-            "   |  3 |  6 |  9 | 12 | 15 | 18 | 21 | 24 | 27 | 30 | 33 | 36 | ROW 1\n" +
-            " 0 |  2 |  5 |  8 | 11 | 14 | 17 | 20 | 23 | 26 | 29 | 32 | 35 | ROW 2\n" +
-            "   |  1 |  4 |  7 | 10 | 13 | 16 | 19 | 22 | 25 | 28 | 31 | 34 | ROW 3\n" +
+            "   |  3 |  6 |  9 | 12 | 15 | 18 | 21 | 24 | 27 | 30 | 33 | 36 | ROW1 1\n" +
+            " 0 |  2 |  5 |  8 | 11 | 14 | 17 | 20 | 23 | 26 | 29 | 32 | 35 | ROW1 2\n" +
+            "   |  1 |  4 |  7 | 10 | 13 | 16 | 19 | 22 | 25 | 28 | 31 | 34 | ROW1 3\n" +
             "   |LOW  1-18|  EVEN   |  REDS   |  BLACK  |  ODDS   |19-36 HIGH|";
 
     public RouletteGame() {
@@ -36,8 +36,8 @@ public class RouletteGame {
         betOdds.put(BetsAvailable.EVEN, 1.0);
         betOdds.put(BetsAvailable.LOW, 1.0);
         betOdds.put(BetsAvailable.HIGH, 1.0);
-        betOdds.put(BetsAvailable.DOZEN, 2.0);
-        betOdds.put(BetsAvailable.ROW, 2.0);
+        betOdds.put(BetsAvailable.DOZEN1, 2.0);
+        betOdds.put(BetsAvailable.ROW1, 2.0);
     }
 
     public void runGame() {
@@ -144,7 +144,7 @@ public class RouletteGame {
         } else if (askBetType.equalsIgnoreCase("Outside")) {
             String outside = getString("Which type of outside bet would you like to make:\n" +
                 "( 1-RED ) ( 2-BLACK ) ( 3-ODD ) ( 4-EVEN )\n" +
-                    "( 5-LOW ) ( 6-HIGH ) ( 7-DOZEN ) ( 8-ROW )");
+                    "( 5-LOW ) ( 6-HIGH ) ( 7-DOZEN1 ) ( 8-ROW1 )");
             switch(outside) {
                 case("1"):
                     betType = BetsAvailable.RED;
@@ -165,10 +165,10 @@ public class RouletteGame {
                     betType = BetsAvailable.HIGH;
                     break;
                 case("7"):
-                    betType = BetsAvailable.DOZEN;
+                    betType = BetsAvailable.DOZEN1;
                     break;
                 case("8"):
-                    betType = BetsAvailable.ROW;
+                    betType = BetsAvailable.ROW1;
                     break;
             }
         }
@@ -253,6 +253,8 @@ public class RouletteGame {
         if (bet == BetsAvailable.ODD && this.oddOrEven.equals("Odd")) return true;
         if (bet == BetsAvailable.RED && this.currentColor.equals("Red")) return true;
         if (bet == BetsAvailable.BLACK && this.currentColor.equals("Black")) return true;
+        if (bet == BetsAvailable.DOZEN1 && this.currentSpinVal < 13) return true;
+        if (bet == BetsAvailable.ROW1 && this.currentSpinVal % 3 == 0) return true;
         return false;
     }
 

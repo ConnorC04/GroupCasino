@@ -20,9 +20,9 @@ public class RouletteTest {
     @Test
     public void testRouletteTableLayout() {
         String expected = "   |        1-12       |       13-24       |      25--36  \n" +
-                "   |  3 |  6 |  9 | 12 | 15 | 18 | 21 | 24 | 27 | 30 | 33 | 36 | ROW 1\n" +
-                " 0 |  2 |  5 |  8 | 11 | 14 | 17 | 20 | 23 | 26 | 29 | 32 | 35 | ROW 2\n" +
-                "   |  1 |  4 |  7 | 10 | 13 | 16 | 19 | 22 | 25 | 28 | 31 | 34 | ROW 3\n" +
+                "   |  3 |  6 |  9 | 12 | 15 | 18 | 21 | 24 | 27 | 30 | 33 | 36 | ROW1 1\n" +
+                " 0 |  2 |  5 |  8 | 11 | 14 | 17 | 20 | 23 | 26 | 29 | 32 | 35 | ROW1 2\n" +
+                "   |  1 |  4 |  7 | 10 | 13 | 16 | 19 | 22 | 25 | 28 | 31 | 34 | ROW1 3\n" +
                 "   |LOW  1-18|  EVEN   |  REDS   |  BLACK  |  ODDS   |19-36 HIGH|";
         String actual = roulette.getTableLayout();
         assertTrue(expected.equals(actual));
@@ -130,8 +130,8 @@ public class RouletteTest {
         odds[7] = roulette.calcWinnings(RouletteGame.BetsAvailable.BLACK, 1.0);
         odds[8] = roulette.calcWinnings(RouletteGame.BetsAvailable.LOW, 1.0);
         odds[9] = roulette.calcWinnings(RouletteGame.BetsAvailable.HIGH, 1.0);
-        odds[10] = roulette.calcWinnings(RouletteGame.BetsAvailable.DOZEN, 1.0);
-        odds[11] = roulette.calcWinnings(RouletteGame.BetsAvailable.ROW, 1.0);
+        odds[10] = roulette.calcWinnings(RouletteGame.BetsAvailable.DOZEN1, 1.0);
+        odds[11] = roulette.calcWinnings(RouletteGame.BetsAvailable.ROW1, 1.0);
         double[] expected = {35, 17, 11, 8, 1, 1, 1, 1, 1, 1, 2, 2};
         for (int i = 0; i < odds.length; i++) {
             assertEquals(expected[i], odds[i], 0.001);
