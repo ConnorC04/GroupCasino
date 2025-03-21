@@ -1,10 +1,14 @@
 package com.github.zipcodewilmington.casino.games.bingo;
 
+import com.github.zipcodewilmington.casino.GameInterface;
+import com.github.zipcodewilmington.casino.PlayerInterface;
+
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
-public class BingoGame {
+public class BingoGame implements GameInterface {
+
 
     private ArrayList<Integer> numbers = new ArrayList<>();
 
@@ -235,5 +239,20 @@ public class BingoGame {
 
     public boolean playerWins(int winningCombo){
         return winningCombo == 5;
+    }
+
+    @Override
+    public void add(PlayerInterface player) {
+
+    }
+
+    @Override
+    public void remove(PlayerInterface player) {
+
+    }
+
+    @Override
+    public void run() {
+
     }
 }
