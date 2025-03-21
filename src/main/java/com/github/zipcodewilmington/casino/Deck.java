@@ -36,6 +36,10 @@ public class Deck {
         return cards.size();
     }
 
-    //added getter and took it out. trying to figure out why I am getting 56 cards
+    //added getter and took it out added a main. trying to figure out why I am getting 56 cards
+//    public static void main(String[] args) {
+//        Deck newDeck = new Deck();
+//        System.out.println(newDeck.size());
+//    }
 }
 

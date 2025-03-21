@@ -23,10 +23,10 @@ public class GoFishGame {
     public GoFishGame(){
         System.out.println(newDeck.size());
         newDeck.shuffle();
-        for (int i = 0; i < newDeck.size(); i++) {
-            currentDeck.add(String.valueOf(newDeck));
+        for (int i = 0; i < 52; i++) {
+            currentDeck.add(String.valueOf(newDeck.drawCard()));
         }
-        System.out.println(currentDeck.size());
+        System.out.println(currentDeck.toString());
     }
 
     public GoFishGame(ArrayList<String> array){
@@ -102,6 +102,19 @@ public class GoFishGame {
         return count;
     }
 
+    public int checkPlayerDeckForCard(String userInput){
+        int count = 0;
+        ArrayList<String> copyOfDealerHand = new ArrayList<>(playerHand);
+        for (int i = 0; i < copyOfDealerHand.size(); i++) {
+            if (Objects.equals(copyOfDealerHand.get(i).split(" ")[0].toLowerCase(), userInput)) {
+                dealerHand.add(copyOfDealerHand.get(i));
+                playerHand.remove(copyOfDealerHand.get(i));
+                count++;
+            }
+        }
+        return count;
+    }
+
     public void playerTurns() {
         while (playersTurn) {
             //player asks for number
@@ -115,7 +128,7 @@ public class GoFishGame {
             if (count== 0){
                 playersTurn = false;
                 dealersTurn = true;
-                updatePlayer("No match - go Fish");
+                updatePlayer("No match - player goes Fishing");
                 goFish("player");
                 dealerTurns();
                 break;
@@ -136,14 +149,13 @@ public class GoFishGame {
             String userInput = getUserInput("[1] - Yes, [2] - No");
             int count = 0;
             if (userInput.equals("1")) {
-                userInput = getUserInput("How many " + stringToMatch + " cards are you giving up?");
-                count = Integer.parseInt(userInput);
-                for (int i = 0; i < playerHand.size(); i++) {
-                    if (Objects.equals(playerHand.get(i).split(" ")[0].toLowerCase(), stringToMatch.toLowerCase())) {
-                        dealerHand.add(playerHand.get(i));
-                        playerHand.remove(playerHand.get(i));
-                    }
-                }
+                count = checkDealerDeckForCard(stringToMatch);
+//                for (int i = 0; i < playerHand.size(); i++) {
+//                    if (Objects.equals(playerHand.get(i).split(" ")[0].toLowerCase(), stringToMatch.toLowerCase())) {
+//                        dealerHand.add(playerHand.get(i));
+//                        playerHand.remove(playerHand.get(i));
+//                    }
+//                }
                 if (isFourOfAKind(dealerHand, userInput)) {
                     ++player4KindCount;
                 }
