@@ -8,17 +8,7 @@ import com.github.zipcodewilmington.casino.PlayerInterface;
 
 import java.util.*;
 
-public class GoFishGame implements PlayerInterface, GameInterface {
-
-    @Override
-    public CasinoAccount getArcadeAccount() {
-        return null;
-    }
-
-    @Override
-    public <SomeReturnType> SomeReturnType play() {
-        return null;
-    }
+public class GoFishGame implements GameInterface {
 
     //DeckOfCards newDeck = new DeckOfCards();
     Deck newDeck = new Deck();
@@ -34,12 +24,12 @@ public class GoFishGame implements PlayerInterface, GameInterface {
     private ArrayList<String> currentDeck = new ArrayList<>();
 
     public GoFishGame() {
-        System.out.println(newDeck.size());
+       // System.out.println(newDeck.size());
         newDeck.shuffle();
         for (int i = 0; i < 52; i++) {
             currentDeck.add(String.valueOf(newDeck.drawCard()));
         }
-        System.out.println(currentDeck.toString());
+        //System.out.println(currentDeck.toString());
     }
 
     public GoFishGame(ArrayList<String> array) {
