@@ -1,24 +1,32 @@
 package com.github.zipcodewilmington.casino.games.gofish;
 
 
+import com.github.zipcodewilmington.casino.Deck;
+
 import java.util.*;
 
 public class GoFishGame {
 
-    DeckOfCards newDeck = new DeckOfCards();
-    Random rand = new Random();
-    Scanner sc = new Scanner(System.in);
-    boolean playersTurn = true;
-    boolean dealersTurn = false;
-    int player4KindCount;
-    int dealer4KindCount;
-    ArrayList<String> playerHand = new ArrayList<>();
-    ArrayList<String> dealerHand = new ArrayList<>();
-    ArrayList<String> drawStack = new ArrayList<>();
-    ArrayList<String> currentDeck = new ArrayList<>();
+    //DeckOfCards newDeck = new DeckOfCards();
+    Deck newDeck = new Deck();
+    private Random rand = new Random();
+    private Scanner sc = new Scanner(System.in);
+    private boolean playersTurn = true;
+    private boolean dealersTurn = false;
+    private int player4KindCount;
+    private int dealer4KindCount;
+    private ArrayList<String> playerHand = new ArrayList<>();
+    private ArrayList<String> dealerHand = new ArrayList<>();
+    private ArrayList<String> drawStack = new ArrayList<>();
+    private ArrayList<String> currentDeck = new ArrayList<>();
 
     public GoFishGame(){
-        currentDeck = newDeck.createDeck();
+        System.out.println(newDeck.size());
+        newDeck.shuffle();
+        for (int i = 0; i < newDeck.size(); i++) {
+            currentDeck.add(String.valueOf(newDeck));
+        }
+        System.out.println(currentDeck.size());
     }
 
     public GoFishGame(ArrayList<String> array){
