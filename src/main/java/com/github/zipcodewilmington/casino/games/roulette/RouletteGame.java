@@ -16,7 +16,7 @@ public class RouletteGame {
     public BetsAvailable currentBet;
     private int currentNumBetOn;
     public double currentAmtBet;
-    public enum BetsAvailable {STRAIGHT, SPLIT, STREET, CORNER, RED, BLACK, ODD, EVEN, LOW, HIGH, DOZEN1, ROW1};
+    public enum BetsAvailable {STRAIGHT, SPLIT, STREET, CORNER, RED, BLACK, ODD, EVEN, LOW, HIGH, DOZEN1, DOZEN2, DOZEN3, ROW1, ROW2, ROW3};
 
     private Double betAmount;
     private String rouletteTable = "   |        1-12       |       13-24       |      25--36  \n" +
@@ -37,7 +37,11 @@ public class RouletteGame {
         betOdds.put(BetsAvailable.LOW, 1.0);
         betOdds.put(BetsAvailable.HIGH, 1.0);
         betOdds.put(BetsAvailable.DOZEN1, 2.0);
+        betOdds.put(BetsAvailable.DOZEN2, 2.0);
+        betOdds.put(BetsAvailable.DOZEN3, 2.0);
         betOdds.put(BetsAvailable.ROW1, 2.0);
+        betOdds.put(BetsAvailable.ROW2, 2.0);
+        betOdds.put(BetsAvailable.ROW3, 2.0);
     }
 
     public void runGame() {
@@ -54,7 +58,7 @@ public class RouletteGame {
             }
             spinWheel();
             printSpinSummary(this.currentSpinVal, this.oddOrEven, this.currentColor);
-            checkBets(this.currentBet, this.currentNumBetOn);//check all bets made against number from wheel
+            checkBets(this.currentBet, this.currentNumBetOn);
             calcChanges(this.currentSpinVal);
             exitGame();
         }
@@ -143,8 +147,9 @@ public class RouletteGame {
             }
         } else if (askBetType.equalsIgnoreCase("Outside")) {
             String outside = getString("Which type of outside bet would you like to make:\n" +
-                "( 1-RED ) ( 2-BLACK ) ( 3-ODD ) ( 4-EVEN )\n" +
-                    "( 5-LOW ) ( 6-HIGH ) ( 7-DOZEN1 ) ( 8-ROW1 )");
+                "( 1-RED ) ( 2-BLACK ) ( 3-ODD ) ( 4-EVEN ) ( 5-LOW ) ( 6-HIGH )\n" +
+                    "( 7-FIRST DOZEN ) ( 8-SECOND DOZEN ) ( 9-THIRD DOZEN )\n" +
+                    "( 10-FIRST ROW ) ( 11-SECOND ROW ) ( 12-THIRD ROW )");
             switch(outside) {
                 case("1"):
                     betType = BetsAvailable.RED;
@@ -168,7 +173,19 @@ public class RouletteGame {
                     betType = BetsAvailable.DOZEN1;
                     break;
                 case("8"):
+                    betType = BetsAvailable.DOZEN2;
+                    break;
+                case("9"):
+                    betType = BetsAvailable.DOZEN3;
+                    break;
+                case("10"):
                     betType = BetsAvailable.ROW1;
+                    break;
+                case("11"):
+                    betType = BetsAvailable.ROW2;
+                    break;
+                case("12"):
+                    betType = BetsAvailable.ROW3;
                     break;
             }
         }
@@ -177,17 +194,23 @@ public class RouletteGame {
 
     public Double askForAmountBet() {
         Double amount = getDouble("How much would you like to wager?");
+        if (amount < 0) {
+            amount = getDouble("Please use a positive value");
+        }
         return amount;
     }
 
     public boolean addToNumsBetOn(int number) {
         //currentNumsBetOn.add(number);
-        currentNumBetOn = number;
+        this.currentNumBetOn = number;
         return true;
     }
 
     private boolean askForNextNumber() {
         int number = getInteger("Which number would you like to bet on?");
+        if (number > 36 || number < 0) {
+            number = getInteger("That is not a valid number");
+        }
         return addToNumsBetOn(number);
     }
 
@@ -256,7 +279,11 @@ public class RouletteGame {
         if (bet == BetsAvailable.LOW && this.currentSpinVal < 19 && this.currentSpinVal != 0) return true;
         if (bet == BetsAvailable.HIGH && this.currentSpinVal > 18) return true;
         if (bet == BetsAvailable.DOZEN1 && this.currentSpinVal < 13 && this.currentSpinVal != 0) return true;
+        if (bet == BetsAvailable.DOZEN2 && this.currentSpinVal > 12 && this.currentSpinVal < 25) return true;
+        if (bet == BetsAvailable.DOZEN3 && this.currentSpinVal > 24) return true;
         if (bet == BetsAvailable.ROW1 && this.currentSpinVal % 3 == 0) return true;
+        if (bet == BetsAvailable.ROW2 && this.currentSpinVal % 3 == 2) return true;
+        if (bet == BetsAvailable.ROW3 && this.currentSpinVal % 3 == 1) return true;
         return false;
     }
 

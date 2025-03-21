@@ -134,7 +134,7 @@ public class RouletteTest {
 
 
     @Test
-    public void test1MakeInsideBets() {
+    public void test1MakeBet() {
         roulette.makeBet(RouletteGame.BetsAvailable.STRAIGHT, 1.0);
         RouletteGame.BetsAvailable expectedBet = RouletteGame.BetsAvailable.STRAIGHT;
         double expectedAmount = 1.0;
@@ -143,22 +143,30 @@ public class RouletteTest {
     }
 
     @Test
-    public void test2MakeInsideBets() {
-        //roulette.makeBet(RouletteGame.BetsAvailable.)
+    public void test2MakeBet() {
+        roulette.makeBet(RouletteGame.BetsAvailable.SPLIT, 1.0);
+        RouletteGame.BetsAvailable expectedBet = RouletteGame.BetsAvailable.SPLIT;
+        double expectedAmount = 1.0;
+        assertEquals(roulette.currentBet, expectedBet);
+        assertEquals(roulette.currentAmtBet, expectedAmount, 0.001);
     }
 
     @Test
-    public void test3MakeInsideBets() {
+    public void test3MakeBet() {
+        roulette.makeBet(RouletteGame.BetsAvailable.STREET, 1.0);
+        RouletteGame.BetsAvailable expectedBet = RouletteGame.BetsAvailable.STREET;
+        double expectedAmount = 1.0;
+        assertEquals(roulette.currentBet, expectedBet);
+        assertEquals(roulette.currentAmtBet, expectedAmount, 0.001);
+    }
+
+    @Test
+    public void test4MakeBet() {
 
     }
 
     @Test
-    public void test4MakeInsideBets() {
-
-    }
-
-    @Test
-    public void test5MakeInsideBets() {
+    public void test5MakeBet() {
 
     }
 
