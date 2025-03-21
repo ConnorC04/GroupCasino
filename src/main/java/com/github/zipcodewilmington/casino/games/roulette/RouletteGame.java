@@ -9,16 +9,16 @@ import java.util.Scanner;
 public class RouletteGame {
     private static Random random = new Random(); //var from superclass casino needed? - casinoWallet
     private static Scanner scan = new Scanner(System.in);
+    private boolean playGame = true;
+    private boolean addBets = true;
     private int currentSpinVal;
     private String currentColor;
     private String oddOrEven;
-    private HashMap<Enum, Double> currentBets = new HashMap<>(); //need to decide what type of hashmap would be best for storing bets
+    private HashMap<Enum, Double> allBetsMade = new HashMap<>(); //need to decide what type of hashmap would be best for storing bets
     private HashMap<Enum, Double> betOdds = new HashMap<>();
-    private boolean playGame = true;
-    private ArrayList<Integer> currentNums = new ArrayList<>();
-    private enum insideBets{STRAIGHT, SPLIT, STREET, CORNER}
-    private enum outsideBets{RED, BLACK, ODD, EVEN, LOW, HIGH, DOZEN1, DOZEN2, DOZEN3, ROW1, ROW2, ROW3}
-    private boolean addBets = true;
+    private ArrayList<Integer> currentNumsBetOn = new ArrayList<>();
+    private enum betsAvailable {STRAIGHT, SPLIT, STREET, CORNER, RED, BLACK, ODD, EVEN, LOW, HIGH, DOZEN, ROW}
+
     private Double betAmount;
     private String rouletteTable = "   |        1-12       |       13-24       |      25--36  \n" +
             "   |  3 |  6 |  9 | 12 | 15 | 18 | 21 | 24 | 27 | 30 | 33 | 36 | ROW 1\n" +
@@ -27,36 +27,32 @@ public class RouletteGame {
             "   |LOW  1-18|  EVEN   |  REDS   |  BLACK  |  ODDS   |19-36 HIGH|";
 
     public RouletteGame() {
-        betOdds.put(insideBets.STRAIGHT, 35.0);
-        betOdds.put(insideBets.SPLIT, 17.0);
-        betOdds.put(insideBets.STREET, 11.0);
-        betOdds.put(insideBets.CORNER, 8.0);
-        betOdds.put(outsideBets.RED, 1.0);
-        betOdds.put(outsideBets.BLACK, 1.0);
-        betOdds.put(outsideBets.ODD, 1.0);
-        betOdds.put(outsideBets.EVEN, 1.0);
-        betOdds.put(outsideBets.LOW, 1.0);
-        betOdds.put(outsideBets.HIGH, 1.0);
-        betOdds.put(outsideBets.DOZEN1, 2.0);
-        betOdds.put(outsideBets.DOZEN2, 2.0);
-        betOdds.put(outsideBets.DOZEN3, 2.0);
-        betOdds.put(outsideBets.ROW1, 2.0);
-        betOdds.put(outsideBets.ROW2, 2.0);
-        betOdds.put(outsideBets.ROW3, 2.0);
+        betOdds.put(betsAvailable.STRAIGHT, 35.0);
+        betOdds.put(betsAvailable.SPLIT, 17.0);
+        betOdds.put(betsAvailable.STREET, 11.0);
+        betOdds.put(betsAvailable.CORNER, 8.0);
+        betOdds.put(betsAvailable.RED, 1.0);
+        betOdds.put(betsAvailable.BLACK, 1.0);
+        betOdds.put(betsAvailable.ODD, 1.0);
+        betOdds.put(betsAvailable.EVEN, 1.0);
+        betOdds.put(betsAvailable.LOW, 1.0);
+        betOdds.put(betsAvailable.HIGH, 1.0);
+        betOdds.put(betsAvailable.DOZEN, 2.0);
+        betOdds.put(betsAvailable.ROW, 2.0);
     }
 
     private void runGame() {
         welcomeMessage();
         while (playGame) {
+            allBetsMade.clear();
+            currentNumsBetOn.clear();
             printTableLayout();
             while (addBets) {
-                makeBets();
+                //makeBets();
                 askToConfirmBets();
             }
             spinWheel();
-
-
-         exitGame();
+            exitGame();
         }
     }
 
@@ -79,7 +75,19 @@ public class RouletteGame {
                 return scan.nextDouble();
             }
             catch (InputMismatchException e) {
-                System.out.println("\"" + scan.nextDouble() + "\" isn't a valid bet");
+                System.out.println("\"" + scan.next() + "\" isn't a valid wager");
+            }
+        }
+    }
+
+    int getInteger(String message) {
+        while (true) {
+            System.out.println(message);
+            try {
+                return scan.nextInt();
+            }
+            catch (InputMismatchException e) {
+                System.out.println("\"" + scan.next() + "\" isn't a valid number to bet on");
             }
         }
     }
@@ -97,29 +105,90 @@ public class RouletteGame {
         System.out.println(rouletteTable);
     }
 
-    public void makeBets() {
-        String betType = getString("What kind of bet would you like to make: ( INSIDE ) ( OUTSIDE )");
-        if (betType.equalsIgnoreCase("Inside")) {
-            String inside = getString("Which type of inside bet would you like to make:\n" +
-                    "( 1-STRAIGHT ) ( 2-SPLIT ) ( 3-STREET ) ( 4-CORNER )");
-            betAmount = getDouble("How much would you like to wager?");
-            switch(inside) {
-                case("1"):
-                    currentBets.put(insideBets.STRAIGHT, betAmount);
-
-
-            }
-
-        } else if (betType.equalsIgnoreCase("Outside")) {
-            String outside = getString("Which type of outside bet would you like to make:\n" +
-                    "( 1-RED ) ( 2-BLACK ) ( 3-ODD ) ( 4-EVEN ) ( 5-LOW ) ( 6-HIGH )\n" +
-                    "( 7-FIRST DOZEN ) ( 8-SECOND DOZEN ) ( 9-THIRD DOZEN )\n" +
-                    "( 10-ROW 1 ) ( 11-ROW 2 ) ( 12-ROW 3 )");
-            betAmount = getDouble("How much would you like to wager?");
-        }
-        //prompt user to select betType, for now only have single number
+    public boolean makeBet(betsAvailable bet, double amount) {
+        allBetsMade.put(bet, amount);
+        return true;
     }
 
+    private boolean askForBets() {
+        betsAvailable bet = this.askWhichBet();
+        Double amount = this.askForAmountBet();
+        return makeBet(bet, amount);
+    }
+
+    private betsAvailable askWhichBet() {
+        String askBetType = getString("What kind of bet would you like to make: ( INSIDE ) ( OUTSIDE )");
+        betsAvailable betType = null;
+        if (askBetType.equalsIgnoreCase("Inside")) {
+            String inside = getString("Which type of inside bet would you like to make:\n" +
+                "( 1-STRAIGHT ) ( 2-SPLIT VERTICAL ) ( 3-STREET ) ( 4-CORNER )");
+            switch(inside) {
+                case("1"):
+                    betType = betsAvailable.STRAIGHT;
+                    break;
+                case("2"):
+                    betType = betsAvailable.SPLIT;
+                    break;
+                case("3"):
+                    betType = betsAvailable.STREET;
+                    break;
+                case("4"):
+                    betType = betsAvailable.CORNER;
+                    break;
+            }
+        } else if (askBetType.equalsIgnoreCase("Outside")) {
+            String outside = getString("Which type of outside bet would you like to make:\n" +
+                "( 1-RED ) ( 2-BLACK ) ( 3-ODD ) ( 4-EVEN )\n" +
+                    "( 5-LOW ) ( 6-HIGH ) ( 7-DOZEN ) ( 8-ROW )");
+            switch(outside) {
+                case("1"):
+                    betType = betsAvailable.RED;
+                    break;
+                case("2"):
+                    betType = betsAvailable.BLACK;
+                    break;
+                case("3"):
+                    betType = betsAvailable.ODD;
+                    break;
+                case("4"):
+                    betType = betsAvailable.EVEN;
+                    break;
+                case("5"):
+                    betType = betsAvailable.LOW;
+                    break;
+                case("6"):
+                    betType = betsAvailable.HIGH;
+                    break;
+                case("7"):
+                    betType = betsAvailable.DOZEN;
+                    break;
+                case("8"):
+                    betType = betsAvailable.ROW;
+                    break;
+            }
+        }
+        return betType;
+    }
+
+    private Double askForAmountBet() {
+        Double amount = getDouble("How much would you like to wager?");
+        return amount;
+    }
+
+    public boolean addToNumsBetOn(int number) {
+        currentNumsBetOn.add(number);
+        return true;
+    }
+
+    private boolean setNumBetOn() {
+        int number = this.askForNextNumber();
+        return addToNumsBetOn(number);
+    }
+
+    private int askForNextNumber() {
+        int number = getInteger("Which number would you like to bet on?");
+        return number;
+    }
 
     public boolean askToConfirmBets() {
         String betAgain = getString("Would you like to place another bet? ( YES ) ( NO )");
@@ -137,7 +206,7 @@ public class RouletteGame {
     }
     public void isOddOrEven(int randomNumber) {
         if (randomNumber == 0) {
-            this.oddOrEven = "Neither";
+            this.oddOrEven = "Neither odd, nor even";
         } else if (randomNumber % 2 == 0) {
             this.oddOrEven = "Even";
         } else {
@@ -163,8 +232,28 @@ public class RouletteGame {
     public String getCurrentColor() {
         return currentColor;
     }
-    //matchingNum (checks if currentNum matches user's guess),
-    //exitGame (closes game)
+
+    //check inside bets against number from spin
+
+    //check outside bets against number from spin
+
+    //
+
+    public void printSpinSummary(int number, String modValue, String color) {
+        System.out.println(String.format("The lucky number was...%s!", number));
+        System.out.println(String.format("%s is %s, and the color is %s.", number, modValue, color));
+    }
+
+//    public void printWinsAndLosses(ArrayList<Integer> array) {
+//        System.out.println("The results of your wager(s) are: ");
+//        for (int numbers : array) {
+//            //need to check elements in array against the result of the spin
+//            //if they match, calculate the winnings
+//            //if they don't calculate the losses
+//            //print each wager and the result from it
+//        }
+//    }
+
     public boolean exitGame() {
         String askPlayAgain = getString("Would you like to play again? ( YES ) ( NO )");
         if (askPlayAgain.equalsIgnoreCase("No")) {

@@ -66,7 +66,7 @@ public class RouletteTest {
     @Test
     public void test1OddOrEven() {
         roulette.isOddOrEven(0);
-        String expected = "Neither";
+        String expected = "Neither odd, nor even";
         String actual = roulette.getOddOrEven();
         assertTrue(expected.equals(actual));
     }
@@ -109,6 +109,50 @@ public class RouletteTest {
         String expected = "Black";
         String actual = roulette.getCurrentColor();
         assertTrue(expected.equals(actual));
+    }
+
+    @Test
+    public void testGetOdd() {
+
+//        int[] odds = {35, 17, 11, 8, 1, 1, 1, 1, 1, 1, 2, 2};
+//        odds[0] = (int) roulette.getBetOdds(insideBets.STRAIGHT, 35.0);
+//        odds[1];
+//        odds[2];
+//        odds[3];
+//        odds[4];
+//        odds[5];
+//        odds[6];
+//        odds[7];
+//        odds[8];
+//        odds[9];
+//        odds[10] = (int) roulette.getBetOdds(outsideBets.DOZEN, 2.0);
+//        odds[11] = (int) roulette.getBetOdds(outsideBets.ROW, 2.0);
+    }
+
+
+    @Test
+    public void test1MakeInsideBets() {
+        //roulette.makeInsideBets();
+    }
+
+    @Test
+    public void test2MakeInsideBets() {
+
+    }
+
+    @Test
+    public void test3MakeInsideBets() {
+
+    }
+
+    @Test
+    public void test4MakeInsideBets() {
+
+    }
+
+    @Test
+    public void test5MakeInsideBets() {
+
     }
 
 }
