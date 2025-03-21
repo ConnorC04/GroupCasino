@@ -19,7 +19,6 @@ public class BingoTest {
         bingo.setNumbers(actual, 1, 75);
         Assert.assertEquals(expected, actual);
     }
-
     @Test
     public void testMakeBoard(){
         BingoGame bingoGame = new BingoGame();
@@ -44,7 +43,6 @@ public class BingoTest {
             }
         }
     }
-
     @Test
     public void testColumnChecker(){
         BingoGame bingoGame = new BingoGame();
@@ -89,7 +87,6 @@ public class BingoTest {
         Assert.assertEquals(5, bingoGame.checkFiveInARow(fourthColumn));
         Assert.assertEquals(5, bingoGame.checkFiveInARow(fifthColumn));
     }
-
     @Test
     public void testRowChecker(){
         BingoGame bingoGame = new BingoGame();
@@ -134,7 +131,6 @@ public class BingoTest {
         Assert.assertEquals(5, bingoGame.checkFiveInARow(fourthRow));
         Assert.assertEquals(5, bingoGame.checkFiveInARow(fifthRow));
     }
-
     @Test
     public void testDiagonalChecker(){
         BingoGame bingoGame = new BingoGame();
@@ -158,6 +154,66 @@ public class BingoTest {
     @Test
     public void testRandomChoice(){
         BingoGame bingoGame = new BingoGame();
-
+        int number = bingoGame.chooseRandomNumber();
+        Assert.assertTrue(number >= 1 && number <= 75);
+    }
+    @Test
+    public void testFormatNumber(){
+        BingoGame bingoGame = new BingoGame();
+        Assert.assertEquals("B-1", bingoGame.formatChosenNumber(1));
+        Assert.assertEquals("I-16", bingoGame.formatChosenNumber(16));
+        Assert.assertEquals("N-31", bingoGame.formatChosenNumber(31));
+        Assert.assertEquals("G-46", bingoGame.formatChosenNumber(46));
+        Assert.assertEquals("O-61", bingoGame.formatChosenNumber(61));
+    }
+    @Test
+    public void testUpdateBoard(){
+        BingoGame bingoGame = new BingoGame();
+        int[][] original = {
+                {10, 1, 1, 1, 1},
+                {1, 1, 1, 1, 1},
+                {1, 1, 1, 1, 1},
+                {1, 1, 1, 1, 1},
+                {1, 1, 1, 1, 1}
+        };
+        int[][] expected = {
+                {0, 1, 1, 1, 1},
+                {1, 1, 1, 1, 1},
+                {1, 1, 1, 1, 1},
+                {1, 1, 1, 1, 1},
+                {1, 1, 1, 1, 1}
+        };
+        Assert.assertEquals(expected, bingoGame.updateBoard(original, 10));
+    }
+    @Test
+    public void testPlayerWins(){
+        BingoGame bingoGame = new BingoGame();
+        int[][] firstColumn = {
+                {0, 1, 1, 1, 1},
+                {0, 1, 1, 1, 1},
+                {0, 1, 1, 1, 1},
+                {0, 1, 1, 1, 1},
+                {0, 1, 1, 1, 1}
+        };
+        int winning = bingoGame.checkFiveInARow(firstColumn);
+        Assert.assertTrue(bingoGame.playerWins(winning));
+    }
+    @Test
+    public void testOutputBoard() {
+        BingoGame bingoGame = new BingoGame();
+        int[][] board = {
+                {0, 1, 1, 1, 1},
+                {0, 1, 1, 1, 1},
+                {0, 1, 1, 1, 1},
+                {0, 1, 1, 1, 1},
+                {0, 1, 1, 1, 1}
+        };
+        bingoGame.outputBoard(board);
+    }
+    @Test
+    public void runGame(){
+        BingoGame bingoGame = new BingoGame();
+        bingoGame.runGame();
     }
 }
+
