@@ -9,7 +9,11 @@ public class RoulettePlayer implements PlayerInterface {
     Double wallet = 1000.00;
     String accountName;
     String accountPassword;
-    RoulettePlayer(String accountName, String accountPassword) {
+
+    public RoulettePlayer() {
+    }
+
+    public RoulettePlayer(String accountName, String accountPassword) {
         this.wallet = wallet;
         this.accountName = accountName;
         this.accountPassword = accountPassword;
