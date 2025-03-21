@@ -157,7 +157,6 @@ public class BlackjackGame {
             BlackjackGame game = new BlackjackGame();
             game.playBlackJack();
 
-            // Ask if the player wants to play again
             System.out.print("\nDo you want to play again? (yes/no): ");
             String response = scanner.nextLine().trim().toLowerCase();
 
