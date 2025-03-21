@@ -16,7 +16,7 @@ public class SlotsGame {
     int slot3 = 0;
     Scanner scanner = new Scanner(System.in);
 
-    public void startGame() {
+    public static void main(String[] args) {
         SlotsGame sg = new SlotsGame();
         sg.play();
     }
@@ -68,13 +68,12 @@ public class SlotsGame {
     public double checkForWinOrLose(double amountToBet, double balanceAfterBet) {
         double winnings;
         double winningMultiplier;
-
         if (slot1 == slot2 || slot1 == slot3 || slot2 == slot3) {
             winningMultiplier = 1.4;
             winnings = (winningMultiplier * amountToBet);
             currentBalance = (winnings + balanceAfterBet);
-            System.out.println(String.format("You've won!! Here's your winnings: %.2f " +
-                    "\nYour new balance is ", winnings, currentBalance));
+            System.out.println((String.format("You've won!! Here's your winnings: %.2f\n", winnings)) +
+                    (String.format("Your new balance is: %.2f ", currentBalance)));
 
             return currentBalance;
         }
@@ -82,8 +81,8 @@ public class SlotsGame {
             winningMultiplier = 2;
             winnings = (winningMultiplier * amountToBet);
             currentBalance = winnings + balanceAfterBet;
-            System.out.println(String.format("You've won!! Here's your winnings: %.2f " +
-                    "Your new balance is %.2f ", winnings, currentBalance));
+            System.out.println((String.format("You've won!! Here's your winnings: %.2f\n", winnings)) +
+                    (String.format("Your new balance is: %.2f ", currentBalance)));
             return currentBalance;
         } else {
             currentBalance = balanceAfterBet;

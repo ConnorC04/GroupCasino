@@ -14,10 +14,10 @@ public class SlotsPlayer {
     */
 
     public void player(){
-        //Scanner scanner = new Scanner(System.in);
-        //double walletBalance = wallet linked to player account.
-        //double moneyToPLaySlots = walletBalance - moneyFromWallet(walletBalance);
-        //Transfer to SlotsGame.java
+        Scanner scanner = new Scanner(System.in);
+        double walletBalance = wallet linked to player account.
+        double moneyToPLaySlots = walletBalance - moneyFromWallet(walletBalance);
+        Transfer to SlotsGame.java
     }
 
     public String getUserInput(String s){
@@ -26,8 +26,8 @@ public class SlotsPlayer {
         return addMoney.nextLine();
     }
 
-    public double moneyFromWallet(/*double walletaccountfromPlayerAfterEnteringfromCasino*/){
-        double moneyFromCasinoPlayerWallet = Double.parseDouble(getUserInput("Hi! Welcome to SLOTS! How much money do you want to play for SLOTS?"));
-        return (moneyFromCasinoPlayerWallet);
+    public double moneyFromWallet(double walletAccountFromPlayer){
+        double slotsPlayerWallet = Double.parseDouble(getUserInput("Hi! Welcome to SLOTS! How much money do you want to play for SLOTS?"));
+        return (slotsPlayerWallet);
     }
 }
