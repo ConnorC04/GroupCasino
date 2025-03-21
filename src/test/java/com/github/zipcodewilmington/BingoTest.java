@@ -155,9 +155,9 @@ public class BingoTest {
         Assert.assertEquals(5, bingoGame.checkFiveInARow(firstDiagonal));
         Assert.assertEquals(5, bingoGame.checkFiveInARow(secondDiagonal));
     }
-//    @Test
-//    public void testRandomChoice(){
-//        BingoGame bingoGame = new BingoGame();
-//
-//    }
+    @Test
+    public void testRandomChoice(){
+        BingoGame bingoGame = new BingoGame();
+
+    }
 }
