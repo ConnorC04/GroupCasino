@@ -5,7 +5,9 @@ class WarGame {
     private List<Integer> deck;
     private Queue<Integer> playerDeck;
     private Queue<Integer> dealerDeck;
+    private Scanner scanner;
     public WarGame() {
+        scanner = new Scanner (System.in);
         deck = createdDeck();
         playerDeck = new LinkedList<>();
         dealerDeck = new LinkedList<>();
@@ -33,7 +35,11 @@ class WarGame {
     }
     //playing game until winner is decided and no more cards are left
     public void playGame() {
+        System.out.println("Welcome to the war game!");
+        System.out.println("Press enter to draw a card and play.");
         while (playerDeck.size() > 1 && dealerDeck.size() > 1){
+            System.out.println ("Press enter to continue..");
+            scanner.nextLine(); //command for player input
             drawCard();
         }
         System.out.println(declareWinner());
@@ -49,7 +55,7 @@ class WarGame {
         int playerCard = playerDeck.poll();
         int dealerCard = dealerDeck.poll();
 
-        System.out.println("Player Draws :" + cardName (playerCard));
+        System.out.println("You Draw :" + cardName (playerCard));
         System.out.println("Dealer Draws:" + cardName(dealerCard));
         if (playerCard > dealerCard) {
             playerDeck.add(playerCard);
