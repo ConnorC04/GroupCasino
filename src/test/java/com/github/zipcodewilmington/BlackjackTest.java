@@ -2,58 +2,64 @@ package com.github.zipcodewilmington;
 
 import com.github.zipcodewilmington.casino.games.Card;
 import com.github.zipcodewilmington.casino.games.blackjack.BlackjackGame;
+import com.github.zipcodewilmington.casino.games.blackjack.BlackjackPlayer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class BlackjackTest {
     private BlackjackGame game;
+    private BlackjackPlayer player;
 
     @BeforeEach
     public void setUp() {
+        // Initialize the game and player with a balance
         game = new BlackjackGame();
-
+        player = new BlackjackPlayer("Player1", "password123", 1000.0);
+        // You might need to set up the player in the game if it's required
     }
 
     @Test
     public void handSinAces() {
-        // Given:
+        // Given: Hand without any Aces
         ArrayList<Card> hand = new ArrayList<>();
         hand.add(new Card(Card.Rank.EIGHT, Card.Suit.CLUBS));
         hand.add(new Card(Card.Rank.SEVEN, Card.Suit.HEARTS));
         hand.add(new Card(Card.Rank.FOUR, Card.Suit.DIAMONDS));
 
-        // When:
+        // When: Calculating hand value
         int value = game.handValue(hand);
 
-        // Then
-        assertEquals(19, value, "Hand value should sum without Ace adjustments");
+        // Then: Assert the total sum of the hand
+        assertEquals(19, value, "Hand value should sum without Ace adjustments.");
     }
+
     @Test
     public void handWithAces() {
-        // Given
+        // Given: Hand with an Ace
         ArrayList<Card> hand = new ArrayList<>();
         hand.add(new Card(Card.Rank.ACE, Card.Suit.CLUBS));
         hand.add(new Card(Card.Rank.SEVEN, Card.Suit.HEARTS));
         hand.add(new Card(Card.Rank.FOUR, Card.Suit.DIAMONDS));
 
-        // WHEN
+        // When: Calculating hand value
         int value = game.handValue(hand);
 
-        //then
-        assertEquals(12, value, "Hand value should sum with Ace adjustments");
+        // Then: Assert the total sum with Ace adjustments
+        assertEquals(12, value, "Hand value should sum with Ace adjustments.");
     }
 
     @Test
     public void testPlayerBust() {
         // Test to ensure player busts when total exceeds 21
+        ArrayList<Card> playerHand = new ArrayList<>();
+        playerHand.add(new Card(Card.Rank.TEN, Card.Suit.HEARTS));
+        playerHand.add(new Card(Card.Rank.SEVEN, Card.Suit.SPADES));
+        playerHand.add(new Card(Card.Rank.SIX, Card.Suit.CLUBS));
         game.getPlayerHand().clear();
-        game.getPlayerHand().add(new Card(Card.Rank.TEN, Card.Suit.HEARTS));
-        game.getPlayerHand().add(new Card(Card.Rank.SEVEN, Card.Suit.SPADES));
-        game.getPlayerHand().add(new Card(Card.Rank.SIX, Card.Suit.CLUBS));
+        game.getPlayerHand().addAll(playerHand);
 
         boolean playerBusted = game.handValue(game.getPlayerHand()) > 21;
         assertTrue(playerBusted, "Player's hand should bust over 21.");
@@ -62,12 +68,25 @@ public class BlackjackTest {
     @Test
     public void testDealerBust() {
         // Test to ensure dealer busts when total exceeds 21
+        ArrayList<Card> dealerHand = new ArrayList<>();
+        dealerHand.add(new Card(Card.Rank.TEN, Card.Suit.HEARTS));
+        dealerHand.add(new Card(Card.Rank.SEVEN, Card.Suit.SPADES));
+        dealerHand.add(new Card(Card.Rank.SIX, Card.Suit.CLUBS));
         game.getDealerHand().clear();
-        game.getDealerHand().add(new Card(Card.Rank.TEN, Card.Suit.HEARTS));
-        game.getDealerHand().add(new Card(Card.Rank.SEVEN, Card.Suit.SPADES));
-        game.getDealerHand().add(new Card(Card.Rank.SIX, Card.Suit.CLUBS));
+        game.getDealerHand().addAll(dealerHand);
 
         boolean dealerBusted = game.handValue(game.getDealerHand()) > 21;
         assertTrue(dealerBusted, "Dealer's hand should bust over 21.");
+    }
+
+    @Test
+    public void testPlaceBet() {
+        // Test that a bet is placed correctly
+        double initialBalance = player.getAccountBalance();
+        double betAmount = 100.0;
+        boolean betPlaced = player.placeBet(betAmount);
+
+        assertTrue(betPlaced, "Bet should be placed successfully.");
+        assertEquals(initialBalance - betAmount, player.getAccountBalance(), "Player's account balance should decrease by the bet amount.");
     }
 }
