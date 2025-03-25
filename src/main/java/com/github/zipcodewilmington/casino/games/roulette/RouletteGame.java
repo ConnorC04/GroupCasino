@@ -68,11 +68,12 @@ public class RouletteGame implements GameInterface{
             printTableLayout();
             while (addBets) {
                 askForBets();
-                askForAmountBet();
-                askForNextNumber();
+                //askForAmountBet();
                 askToConfirmBets();
             }
             spinWheel();
+            isOddOrEven(this.currentSpin);
+            isRedOrBlack(this.currentSpin);
             printSpinSummary(this.currentSpin, this.oddOrEven, this.currentColor);
             checkBets(this.currentBet, this.currentNumBetOn);
             calcChanges(this.currentSpin);
@@ -150,15 +151,19 @@ public class RouletteGame implements GameInterface{
             switch(inside) {
                 case("1"):
                     betType = BetsAvailable.STRAIGHT;
+                    askForNextNumber();
                     break;
                 case("2"):
                     betType = BetsAvailable.SPLIT;
+                    askForNextNumber();
                     break;
                 case("3"):
                     betType = BetsAvailable.STREET;
+                    askForNextNumber();
                     break;
                 case("4"):
                     betType = BetsAvailable.CORNER;
+                    askForNextNumber();
                     break;
             }
         } else if (askBetType.equalsIgnoreCase("Outside")) {
