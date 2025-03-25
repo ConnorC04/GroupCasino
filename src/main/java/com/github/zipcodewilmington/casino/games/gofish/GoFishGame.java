@@ -89,11 +89,11 @@ public class GoFishGame implements GameInterface {
 
     public int checkDealerDeckForCard(String userInput) {
         int count = 0;
-        ArrayList<String> copyOfDealerHand = new ArrayList<>(dealerHand);
-        for (int i = 0; i < copyOfDealerHand.size(); i++) {
-            if (Objects.equals(copyOfDealerHand.get(i).split(" ")[0].toLowerCase(), userInput)) {
-                playerHand.add(copyOfDealerHand.get(i));
-                dealerHand.remove(copyOfDealerHand.get(i));
+        ArrayList<String> copyOfHandToCompare = new ArrayList<>(dealerHand);
+        for (int i = 0; i < copyOfHandToCompare.size(); i++) {
+            if (Objects.equals(copyOfHandToCompare.get(i).split(" ")[0].toLowerCase(), userInput)) {
+                playerHand.add(copyOfHandToCompare.get(i));
+                dealerHand.remove(copyOfHandToCompare.get(i));
                 count++;
             }
         }
@@ -102,11 +102,12 @@ public class GoFishGame implements GameInterface {
 
     public int checkPlayerDeckForCard(String userInput) {
         int count = 0;
-        ArrayList<String> copyOfDealerHand = new ArrayList<>(playerHand);
-        for (int i = 0; i < copyOfDealerHand.size(); i++) {
-            if (Objects.equals(copyOfDealerHand.get(i).split(" ")[0].toLowerCase(), userInput)) {
-                dealerHand.add(copyOfDealerHand.get(i));
-                playerHand.remove(copyOfDealerHand.get(i));
+        ArrayList<String> copyOfHandToCompare = new ArrayList<>(playerHand);
+        for (int i = 0; i < copyOfHandToCompare.size(); i++) {
+            System.out.println(copyOfHandToCompare.get(i).split(" ")[0].toLowerCase());
+            if (Objects.equals(copyOfHandToCompare.get(i).split(" ")[0].toLowerCase(), userInput)) {
+                dealerHand.add(copyOfHandToCompare.get(i));
+                playerHand.remove(copyOfHandToCompare.get(i));
                 count++;
             }
         }
@@ -125,6 +126,7 @@ public class GoFishGame implements GameInterface {
             }
             updatePlayer("You got " + count + " Cards from dealer");
             if (count == 0) {
+                //endGame("player");
                 playersTurn = false;
                 dealersTurn = true;
                 updatePlayer("No match - player goes Fishing");
@@ -140,29 +142,47 @@ public class GoFishGame implements GameInterface {
         while (dealersTurn) {
             String[] ranks = {"Ace", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Jack", "Queen", "King"};
             int num = rand.nextInt(ranks.length);
-            String stringToMatch = ranks[num];
+            String stringToMatch = ranks[num].toLowerCase();
             //dealer asks for number
             updatePlayer("Dealer is asking for an " + stringToMatch + " card ");
             String userInput = getUserInput("[1] - Yes, [2] - No");
             int count = 0;
             if (userInput.equals("1")) {
                 count = checkPlayerDeckForCard(stringToMatch);
-                if (isFourOfAKind(dealerHand, userInput)) {
+                if (isFourOfAKind(dealerHand, stringToMatch)) {
                     ++player4KindCount;
                     dealer4KindCount++;
                 }
                 updatePlayer("You got " + count + " Cards from player ");
-            }
-            if (count == 0) {
-                dealersTurn = false;
-                playersTurn = true;
-                updatePlayer("No match - goes Fishing");
-                goFish("dealer");
-                playerTurns();
+            } else if (userInput.equals("2")) {
+                if (count == 0) {
+                    // endGame("dealer");
+                    //break;
+                    dealersTurn = false;
+                    playersTurn = true;
+                    updatePlayer("No match - goes Fishing");
+                    goFish("dealer");
+                    playerTurns();
+                    break;
+                }
+            } else{
+                endGame();
                 break;
             }
+//            if (count == 0) {
+//           // endGame("dealer");
+//            //break;
+//                dealersTurn = false;
+//                playersTurn = true;
+//                updatePlayer("No match - goes Fishing");
+//                goFish("dealer");
+//                playerTurns();
+//                break;
+//           }
+
         }
     }
+
 
     public void winningHand(){
         if (player4KindCount > dealer4KindCount){
@@ -172,6 +192,21 @@ public class GoFishGame implements GameInterface {
         } else {
             System.out.println("Look like a tie");
         }
+    }
+
+    public void endGame(){
+        String userInput = getUserInput("Do you want to keep playing? [1]- Yes [2]- No");
+        if (userInput.equals("1")) {
+                startGame();
+        }else if (userInput.equals("2")) {
+            winningHand();
+            updatePlayer("Thanks for Playing");
+            System.exit(0);
+        } else {
+            updatePlayer("Wrong button, exit game:");
+            System.exit(0);
+        }
+
     }
 
 
