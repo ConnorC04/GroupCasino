@@ -14,9 +14,12 @@ import java.util.Random;
  */
 public class SlotsGame implements GameInterface {
     double currentBalance = 1000.00;
-    int slot1 = 0;
-    int slot2 = 0;
-    int slot3 = 0;
+//    int slot1 = 0;
+//    int slot2 = 0;
+//    int slot3 = 0;
+    int slots[] = {0 ,0 ,0};
+
+
     Scanner scanner = new Scanner(System.in);
 
     @Override
@@ -74,14 +77,14 @@ public class SlotsGame implements GameInterface {
     public double bet(double balance){
         double amountToBet = Double.parseDouble(getUserInput("How much would you like to bet?"));
         double balanceAfterBet = balance - amountToBet;
-        pullTrigger();
+        pullTrigger(this.slots);
         return checkForWinOrLose(amountToBet, balanceAfterBet);
     }
 
     public double checkForWinOrLose(double amountToBet, double balanceAfterBet) {
         double winnings;
         double winningMultiplier;
-        if (slot1 == slot2 || slot1 == slot3 || slot2 == slot3) {
+        if (slots[0] == slots[1] || slots[0] == slots[2] || slots[1] == slots[2]) {
             winningMultiplier = 1.4;
             winnings = (winningMultiplier * amountToBet);
             currentBalance = (winnings + balanceAfterBet);
@@ -90,7 +93,7 @@ public class SlotsGame implements GameInterface {
 
             return currentBalance;
         }
-        if (slot1 == slot2 && slot2 == slot3) {
+        if (slots[0] == slots[1] && slots[1] == slots[2]) {
             winningMultiplier = 2;
             winnings = (winningMultiplier * amountToBet);
             currentBalance = winnings + balanceAfterBet;
@@ -104,15 +107,15 @@ public class SlotsGame implements GameInterface {
         }
     }
 
-    private void pullTrigger () {
+    private String pullTrigger (int[] s) {
             /*Cycle through a series of unicode to express the characters on the slots*/
             SlotsGame sg = new SlotsGame();
             String[] slotCharacters = new String[]{"\u2660", "\u2665", "\u2663", "\u2666", "\u26C0", "\u26C1", "\u26C2", "\u26C3", "\u265B", "\u277C"};
-            slot1 = sg.randomColumn();
-            slot2 = sg.randomColumn();
-            slot3 = sg.randomColumn();
-            String[] column = new String[]{slotCharacters[slot1], slotCharacters[slot2], slotCharacters[slot3]};
-            System.out.println(Arrays.toString(column));
+            s[0] = sg.randomColumn();
+            s[1] = sg.randomColumn();
+            s[2] = sg.randomColumn();
+            String[] column = new String[]{slotCharacters[s[0]], slotCharacters[s[1]], slotCharacters[s[2]]};
+            return Arrays.toString(column);
         }
 
     public int randomColumn () {
