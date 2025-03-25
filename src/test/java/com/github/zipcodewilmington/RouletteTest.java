@@ -112,7 +112,7 @@ public class RouletteTest {
     }
 
     @Test
-    public void testGetOdd() {
+    public void test1GetOdds() {
         double[] odds = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
         odds[0] = roulette.calcWinnings(RouletteGame.BetsAvailable.STRAIGHT, 1.0);
         odds[1] = roulette.calcWinnings(RouletteGame.BetsAvailable.SPLIT, 1.0);
@@ -131,7 +131,6 @@ public class RouletteTest {
             assertEquals(expected[i], odds[i], 0.001);
         }
     }
-
 
     @Test
     public void test1MakeBet() {
@@ -159,5 +158,7 @@ public class RouletteTest {
         assertEquals(roulette.currentBet, expectedBet);
         assertEquals(roulette.currentAmtBet, expectedAmount, 0.001);
     }
+
+    //add test to check calculations for payout at the end
 
 }

@@ -1,19 +1,22 @@
 package com.github.zipcodewilmington.casino.games.war;
 
+import com.github.zipcodewilmington.casino.GameInterface;
+import com.github.zipcodewilmington.casino.PlayerInterface;
+
 import java.util.*;
 
 
-public class WarGame {
+public class WarGame implements GameInterface {
     //class variables
     private List<Integer> deck;
-    private Queue<Integer> playerDeck;
+    private Queue<Integer> playerDeck; //FIFO
     private Queue<Integer> dealerDeck;
     private Scanner scanner;
     //constructor
     public WarGame() {
         scanner = new Scanner (System.in); //console
         deck = createdDeck(); // shuffle
-        playerDeck = new LinkedList<>();
+        playerDeck = new LinkedList<>();//adding & removing cards from the beginning of the list
         dealerDeck = new LinkedList<>();
         dealCards();
     }
@@ -25,7 +28,7 @@ public class WarGame {
                 deck.add(i);
             }
         }
-        Collections.shuffle(deck);
+        Collections.shuffle(deck);//shuffles the deck randomly
         return deck;
             }
             //splitting the deck between player and computer (dealer)
@@ -103,23 +106,20 @@ public class WarGame {
     }
 
     //start the game
-    public static void main (String [] args) {
+    @Override
+    public void run () {
         WarGame game = new WarGame();
         game.playGame();
-
-
-
-
-
-
-
-
-
-
-
-
     }
 
 
+    @Override
+    public void add(PlayerInterface player) {
 
+    }
+
+    @Override
+    public void remove(PlayerInterface player) {
+
+    }
 }

@@ -53,6 +53,9 @@ public class GoFishGame implements GameInterface {
         printHand(playerHand);
         playerTurns();
         dealerTurns();
+        if (currentDeck.isEmpty()){
+            winningHand();
+        }
     }
 
     public String getUserInput(String string) {
@@ -118,6 +121,7 @@ public class GoFishGame implements GameInterface {
             count = checkDealerDeckForCard(userInput);
             if (isFourOfAKind(playerHand, userInput)) {
                 ++player4KindCount;
+                player4KindCount++;
             }
             updatePlayer("You got " + count + " Cards from dealer");
             if (count == 0) {
@@ -145,6 +149,7 @@ public class GoFishGame implements GameInterface {
                 count = checkPlayerDeckForCard(stringToMatch);
                 if (isFourOfAKind(dealerHand, userInput)) {
                     ++player4KindCount;
+                    dealer4KindCount++;
                 }
                 updatePlayer("You got " + count + " Cards from player ");
             }
@@ -156,6 +161,16 @@ public class GoFishGame implements GameInterface {
                 playerTurns();
                 break;
             }
+        }
+    }
+
+    public void winningHand(){
+        if (player4KindCount > dealer4KindCount){
+            System.out.println("Dealer Wins");
+        } else if (player4KindCount < dealer4KindCount){
+            System.out.println("Player Wins");
+        } else {
+            System.out.println("Look like a tie");
         }
     }
 
@@ -182,12 +197,6 @@ public class GoFishGame implements GameInterface {
         }
         return count == 4;
     }
-
-//    public void runGame() {
-//        GoFishGame gf = new GoFishGame();
-//        gf.updatePlayer("Welcome to Go - Fish");
-//        gf.startGame();
-//    }
 
     @Override
     public void add(PlayerInterface player) {
