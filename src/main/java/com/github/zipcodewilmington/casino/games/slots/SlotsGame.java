@@ -14,6 +14,9 @@ import java.util.Random;
  */
 public class SlotsGame implements GameInterface {
     double currentBalance = 1000.00;
+    SlotsPlayer wb = new SlotsPlayer();
+
+
 //    int slot1 = 0;
 //    int slot2 = 0;
 //    int slot3 = 0;
@@ -54,12 +57,12 @@ public class SlotsGame implements GameInterface {
         if (userInput.equalsIgnoreCase("Yes")) {
             while (readyPlayer) {
                 System.out.println("Let's Play!!");
-                bet(currentBalance);
+                bet(wb.wallet);
                 System.out.println("Do you want to bet again? (Yes/No): ");
                 choiceToPlayAgain = scanner.nextLine();
 
                 if (choiceToPlayAgain.equalsIgnoreCase("Yes")) {
-                    if (currentBalance <= 0){
+                    if (wb.wallet <= 0){
                         System.out.println("Sorry, but you don't have the balance to bet.\n" +
                                 "You will be escorted back to the Casino.");
                         break;
@@ -87,23 +90,23 @@ public class SlotsGame implements GameInterface {
         if (slots[0] == slots[1] || slots[0] == slots[2] || slots[1] == slots[2]) {
             winningMultiplier = 1.4;
             winnings = (winningMultiplier * amountToBet);
-            currentBalance = (winnings + balanceAfterBet);
+            wb.wallet = (winnings + balanceAfterBet);
             System.out.println((String.format("You've won!! Here's your winnings: %.2f\n", winnings)) +
-                    (String.format("Your new balance is: %.2f ", currentBalance)));
+                    (String.format("Your new balance is: %.2f ", wb.wallet)));
 
-            return currentBalance;
+            return wb.wallet;
         }
         if (slots[0] == slots[1] && slots[1] == slots[2]) {
             winningMultiplier = 2;
             winnings = (winningMultiplier * amountToBet);
-            currentBalance = winnings + balanceAfterBet;
+            wb.wallet = winnings + balanceAfterBet;
             System.out.println((String.format("You've won!! Here's your winnings: %.2f\n", winnings)) +
-                    (String.format("Your new balance is: %.2f ", currentBalance)));
-            return currentBalance;
+                    (String.format("Your new balance is: %.2f ", wb.wallet)));
+            return wb.wallet;
         } else {
-            currentBalance = balanceAfterBet;
-            System.out.println(String.format("Sorry, try again. Your current balance is %.2f", currentBalance));
-            return currentBalance;
+            wb.wallet = balanceAfterBet;
+            System.out.println(String.format("Sorry, try again. Your current balance is %.2f", wb.wallet));
+            return wb.wallet;
         }
     }
 

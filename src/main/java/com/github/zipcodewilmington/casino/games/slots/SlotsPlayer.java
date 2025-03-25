@@ -9,16 +9,17 @@ public class SlotsPlayer implements PlayerInterface {
     String accountName;
     String accountPassword;
 
-    public SlotsPlayer() {
+    public SlotsPlayer() {}
 
-    }
-
-    public SlotsPlayer(String accountName, String accountPassword) {
+    public SlotsPlayer(Double wallet, String accountName, String accountPassword) {
         this.wallet = wallet;
         this.accountName = accountName;
         this.accountPassword = accountPassword;
     }
 
+    public SlotsPlayer(Double wallet) {
+        this.wallet = wallet;
+    }
     @Override
     public CasinoAccount getArcadeAccount() {
         return null;
@@ -27,7 +28,6 @@ public class SlotsPlayer implements PlayerInterface {
     @Override
     public String getAccountName() {
         return this.accountName;
-
     }
 
     @Override
