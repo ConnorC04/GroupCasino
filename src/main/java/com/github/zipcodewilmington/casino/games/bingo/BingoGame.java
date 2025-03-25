@@ -18,41 +18,54 @@ public class BingoGame extends CasinoAccountManager implements GameInterface {
 
     @Override
     public void run(){
+        boolean playAgain = true;
         Scanner scan = new Scanner(System.in);
 
         BingoGame bingoGame = new BingoGame();
-        int [][] playerBoard = bingoGame.makeBoard();
-        int fiveInARow = 0;
-        bingoGame.fillNumberArray();
-        System.out.println("Your current board is:");
-        bingoGame.outputBoard(playerBoard);
-        playerBoard[2][2] = 0;
-        System.out.println("You get one free space in the middle! Any space occupied with a space you \"stamped\" " +
-                "will be represented with a 0. ");
-        bingoGame.outputBoard(playerBoard);
-        System.out.println("Ok, we are now going to play. At this time, you can choose how many " +
-                "random numbers get picked before the game is over. Good luck!\n");
-        System.out.println("Please choose a number between 4 and 60: ");
-        int roundsToPlay = scan.nextInt();
-        while ((roundsToPlay < 4) || (60 < roundsToPlay)){
-            System.out.println("You have to select a number between 4 and 60, please try again: ");
-            roundsToPlay = scan.nextInt();
-        }
-        if ((roundsToPlay >= 4) && (60 >= roundsToPlay)) {
-            for (int i = 0; i < roundsToPlay; i++) {
-                int randomNumber = bingoGame.chooseRandomNumber();
-                System.out.println("The number randomly selected was: " + formatChosenNumber(randomNumber));
-                bingoGame.updateBoard(playerBoard, randomNumber);
-                System.out.println("Your board now looks like this: ");
-                bingoGame.outputBoard(playerBoard);
-                fiveInARow = bingoGame.checkFiveInARow(playerBoard);
-                if (playerWins(fiveInARow)) {
-                    System.out.println("Bingo! You won!");
-                    break;
-                }
+        while (playAgain) {
+
+
+            int[][] playerBoard = bingoGame.makeBoard();
+            int fiveInARow = 0;
+            bingoGame.fillNumberArray();
+            System.out.println("Your current board is:");
+            bingoGame.outputBoard(playerBoard);
+            playerBoard[2][2] = 0;
+            System.out.println("You get one free space in the middle! Any space occupied with a space you \"stamped\" " +
+                    "will be represented with a 0. ");
+            bingoGame.outputBoard(playerBoard);
+            System.out.println("Ok, we are now going to play. At this time, you can choose how many " +
+                    "random numbers get picked before the game is over. Good luck!\n");
+            System.out.println("Please choose a number between 4 and 60: ");
+            int roundsToPlay = scan.nextInt();
+            while ((roundsToPlay < 4) || (60 < roundsToPlay)) {
+                System.out.println("You have to select a number between 4 and 60, please try again: ");
+                roundsToPlay = scan.nextInt();
             }
-            if (!playerWins(fiveInARow)) {
-                System.out.println("Womp womp.");
+            if ((roundsToPlay >= 4) && (60 >= roundsToPlay)) {
+                for (int i = 0; i < roundsToPlay; i++) {
+                    int randomNumber = bingoGame.chooseRandomNumber();
+                    System.out.println("The number randomly selected was: " + formatChosenNumber(randomNumber));
+                    bingoGame.updateBoard(playerBoard, randomNumber);
+                    System.out.println("Your board now looks like this: ");
+                    bingoGame.outputBoard(playerBoard);
+                    fiveInARow = bingoGame.checkFiveInARow(playerBoard);
+                    if (playerWins(fiveInARow)) {
+                        System.out.println("Bingo! You won!");
+                        System.out.println("Would you like to play again? ");
+                        if (!scan.nextLine().equalsIgnoreCase("yes")){
+                            playAgain = false;
+                            System.out.println("Too da loo");
+                        }
+                    }
+                }
+                if (!playerWins(fiveInARow)) {
+                    System.out.println("Womp womp.");
+                    if (!scan.nextLine().equalsIgnoreCase("yes")){
+                        playAgain = false;
+                        System.out.println("Too da loo");
+                    }
+                }
             }
         }
     }
