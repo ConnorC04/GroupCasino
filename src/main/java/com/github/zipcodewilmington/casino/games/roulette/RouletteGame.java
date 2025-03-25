@@ -127,6 +127,7 @@ public class RouletteGame implements GameInterface{
 
     public void printTableLayout() {
         System.out.println(rouletteTable);
+        //System.out.println(String.format("You can wager up to: %.2s \n", link player's wallet here));
     }
 
     public boolean makeBet(BetsAvailable bet, double amount) {
@@ -143,11 +144,11 @@ public class RouletteGame implements GameInterface{
     }
 
     public BetsAvailable askWhichBet() {
-        String askBetType = getString("What kind of bet would you like to make: ( INSIDE ) ( OUTSIDE )");
+        String askBetType = getString("What kind of bet would you like to make: ( INSIDE ) ( OUTSIDE )\n");
         BetsAvailable betType = null;
         if (askBetType.equalsIgnoreCase("Inside")) {
             String inside = getString("Which type of inside bet would you like to make:\n" +
-                "( 1-STRAIGHT ) ( 2-SPLIT VERTICAL ) ( 3-STREET ) ( 4-CORNER )");
+                "( 1-STRAIGHT ) ( 2-SPLIT VERTICAL ) ( 3-STREET ) ( 4-CORNER )\n");
             switch(inside) {
                 case("1"):
                     betType = BetsAvailable.STRAIGHT;
@@ -170,7 +171,7 @@ public class RouletteGame implements GameInterface{
             String outside = getString("Which type of outside bet would you like to make:\n" +
                 "( 1-RED ) ( 2-BLACK ) ( 3-ODD ) ( 4-EVEN ) ( 5-LOW ) ( 6-HIGH )\n" +
                     "( 7-FIRST DOZEN ) ( 8-SECOND DOZEN ) ( 9-THIRD DOZEN )\n" +
-                    "( 10-FIRST ROW ) ( 11-SECOND ROW ) ( 12-THIRD ROW )");
+                    "( 10-FIRST ROW ) ( 11-SECOND ROW ) ( 12-THIRD ROW )\n");
             switch(outside) {
                 case("1"):
                     betType = BetsAvailable.RED;
@@ -214,9 +215,9 @@ public class RouletteGame implements GameInterface{
     }
 
     public Double askForAmountBet() {
-        Double amount = getDouble("How much would you like to wager?");
+        Double amount = getDouble("How much would you like to wager?\n");
         if (amount < 0) {
-            amount = getDouble("Please use a positive value");
+            amount = getDouble("Please use a positive value\n");
         }
         return amount;
     }
@@ -228,15 +229,15 @@ public class RouletteGame implements GameInterface{
     }
 
     public boolean askForNextNumber() {
-        int number = getInteger("Which number would you like to bet on?");
+        int number = getInteger("Which number would you like to bet on?\n");
         if (number > 36 || number < 0) {
-            number = getInteger("That is not a valid number");
+            number = getInteger("That is not a valid number\n");
         }
         return addToNumsBetOn(number);
     }
 
     public boolean askToConfirmBets() {
-        String betAgain = getString("Would you like to place another bet? ( YES ) ( NO )");
+        String betAgain = getString("Would you like to place another bet? ( YES ) ( NO )\n");
         if (betAgain.equalsIgnoreCase("No")) {
             addBets = false;
         }
@@ -253,7 +254,7 @@ public class RouletteGame implements GameInterface{
 
     public void isOddOrEven(int randomNumber) {
         if (randomNumber == 0) {
-            this.oddOrEven = "Neither odd, nor even";
+            this.oddOrEven = "neither odd, nor even";
         } else if (randomNumber % 2 == 0) {
             this.oddOrEven = "Even";
         } else {
