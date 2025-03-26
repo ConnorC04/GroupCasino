@@ -23,8 +23,8 @@ public class WarGame implements GameInterface {
 //creating 1 deck of 52 cards, values 2-14 and 2 to Ace
     public List<Integer> createdDeck() {
         List<Integer> deck = new ArrayList<>();
-        for (int i = 2; i <= 14;i++ ) {
-            for (int j = 0; j < 4; j++) {
+        for (int i = 2; i <= 14;i++ ) {    //iterates through card values 2-14
+            for (int j = 0; j < 4; j++) {   // iterates 4 times through suits
                 deck.add(i);
             }
         }
@@ -47,7 +47,7 @@ public class WarGame implements GameInterface {
         System.out.println("Press enter to draw a card and play.");
         while ( !dealerDeck.isEmpty()) {
             System.out.println("Enter you card(2-14):");
-            int playerCard = getUserCard();
+            int playerCard = getUserCard(); //here asking for user input
            if (playerCard == -1) {
                System.out.println("I think I told you to put numbers from 2-14 so do that");
            }
@@ -61,14 +61,15 @@ public class WarGame implements GameInterface {
         return 0;
     }
 
-    //get input
+    //get input and handles errors
     private int getUserCard() {
         try {
             int card = Integer.parseInt(scanner.nextLine());
             if (card >= 2 && card <= 14) {
                 return card;
             }
-        } catch (NumberFormatException e)  {
+        } catch (NumberFormatException e) //something that cannot be converted to integer
+        {
 
         }
         return -1;
@@ -78,7 +79,7 @@ public class WarGame implements GameInterface {
     private void drawCard(int playerCard) {
         if (dealerDeck.isEmpty()) return;
 
-        int dealerCard = dealerDeck.poll();
+        int dealerCard = dealerDeck.poll(); //using fifo
 
         System.out.println("You Draw :" + cardName (playerCard));
         System.out.println("Dealer Draws:" + cardName(dealerCard));
