@@ -95,13 +95,13 @@ public class BlackjackGame implements GameInterface {
         dealerHand.add(drawCard());
         dealerHand.add(drawCard());
 
-
+        //total of cards in hand
         int playerTotal = handValue(playerHand);
         int dealerTotal = handValue(dealerHand);
 
-
+        //shows one of the dealers cards
         System.out.println("Dealer is showing: " + dealerHand.get(0) + ", ?");
-
+        // shows player cards
         System.out.println("Your hand is: " + playerHand + playerHand + " your total: " + playerTotal);
 
         if (dealerTotal == 21) {
@@ -140,7 +140,7 @@ public class BlackjackGame implements GameInterface {
             Card newCard = drawCard();
             dealerHand.add(newCard);
             dealerTotal = handValue(dealerHand);
-
+            //draw cards after hit
             System.out.println("Dealer drew: " + newCard);
             System.out.println("New total = " + dealerTotal);
 
