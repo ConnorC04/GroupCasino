@@ -20,6 +20,7 @@ public class RouletteGame implements GameInterface{
     public BetsAvailable currentBet;
     private int currentNumBetOn;
     public double currentAmtBet;
+    private double currentBalance = 1000.00;
     public enum BetsAvailable {STRAIGHT, SPLIT, STREET, CORNER, RED, BLACK, ODD, EVEN,
         LOW, HIGH, DOZEN1, DOZEN2, DOZEN3, ROW1, ROW2, ROW3};
 
@@ -66,6 +67,7 @@ public class RouletteGame implements GameInterface{
             //allBetsMade.clear();
             //currentNumsBetOn.clear();
             printTableLayout();
+            addBets = true;
             while (addBets) {
                 askForBets();
                 //askForAmountBet();
@@ -77,6 +79,7 @@ public class RouletteGame implements GameInterface{
             printSpinSummary(this.currentSpin, this.oddOrEven, this.currentColor);
             checkBets(this.currentBet, this.currentNumBetOn);
             calcChanges(this.currentSpin);
+            printCurrentBalance();
             exitGame();
         }
     }
@@ -215,7 +218,7 @@ public class RouletteGame implements GameInterface{
     }
 
     public Double askForAmountBet() {
-        Double amount = getDouble("How much would you like to wager?\n");
+        Double amount = getDouble("How much would you like to wager?");
         if (amount < 0) {
             amount = getDouble("Please use a positive value\n");
         }
@@ -322,7 +325,7 @@ public class RouletteGame implements GameInterface{
             total -= this.currentAmtBet;
             System.out.println(String.format("You lost: %.2f", total));
         }
-        return total;
+        return this.currentBalance += total;
     }
 
     public void printSpinSummary(int number, String modValue, String color) {
@@ -336,6 +339,10 @@ public class RouletteGame implements GameInterface{
             playGame = false;
         }
         return playGame;
+    }
+
+    public void printCurrentBalance() {
+        System.out.println(String.format("Your current balance is %.2f", this.currentBalance));
     }
 }
 

@@ -13,6 +13,8 @@ public class BlackjackGame implements GameInterface {
     private ArrayList<Card> playerHand;
     private ArrayList<Card> dealerHand;
     private Scanner input;
+    private double currentBet;
+    private double wallet;
 
 
     public BlackjackGame() {
@@ -22,6 +24,7 @@ public class BlackjackGame implements GameInterface {
         dealerHand = new ArrayList<>();
         Random random;
         intitializeDeck();
+        this.wallet=wallet;
     }
 
     @Override
@@ -85,6 +88,7 @@ public class BlackjackGame implements GameInterface {
 
     public void playBlackJack() {
         intro();
+        placeBet();
         //Drawing cards
         playerHand.add(drawCard());
         playerHand.add(drawCard());
@@ -149,7 +153,7 @@ public class BlackjackGame implements GameInterface {
         // Determine winner
         if (playerTotal > dealerTotal) {
             //when player total is more than dealer total
-            System.out.println("Winner, winner, chicken dinner!");//add in currentbet*2
+            System.out.println("Winner, winner, chicken dinner! you won: "+currentBet);//add in currentbet*2
         } else if (playerTotal < dealerTotal) {
             System.out.println("Loser, loser, pay up!");//subtract bet from total
         } else {
@@ -197,6 +201,39 @@ public class BlackjackGame implements GameInterface {
             }
         }
     }
+    private void placeBet() {
+        while (true) {
+            System.out.print("Enter your bet amount: $");
+            try {
+                double betAmount = Double.parseDouble(input.nextLine().trim());
+
+                if (wallet > betAmount){
+                    System.out.println("Get your money up, not your funny up!");
+                } else if (betAmount <= 0) {
+                    System.out.println("Bet must be greater than zero, take your monopoly money somewhere else.");
+                } else {
+                        wallet-=betAmount;
+                        currentBet = betAmount;
+                    System.out.println("\n bet placed :$");
+                        break;
+                    }
+
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input. Please enter a valid number.");        }
+    }
+}
+
+    public void addWinnings(double amount){
+        wallet+=amount;
+        System.out.println("Winner dinks are on you, your new balance: "+wallet);
+    }
+    public double getWalletBalance(){
+        return wallet;
+
+    }
+
+
+
 
     public ArrayList<Card> getPlayerHand() {
         return playerHand;
@@ -207,16 +244,3 @@ public class BlackjackGame implements GameInterface {
     }
 
 }
-//private void placeBet(){
-//    while(true){
-//        System.out.println("Enter your bet amount: $");
-//        currentBet=Double.parseDouble(input.nextline());
-//        if(currentBet>playerBalance){
-//            System.out.println("Get your money up, not your funny up");
-//        }else if (currentBet<=0){
-//            System.out.println("Bet must be greater than zero, take your monopoly money somewhere else.");
-//        }else{
-//            break;
-//        }
-//    }
-//}

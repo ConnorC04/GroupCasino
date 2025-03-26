@@ -4,44 +4,48 @@ import com.github.zipcodewilmington.casino.CasinoAccount;
 import com.github.zipcodewilmington.casino.PlayerInterface;
 
 public class BlackjackPlayer implements PlayerInterface {
-    Double wallet = 1000000.0;
-    String accountName ;
-    String accountPassword;
-    public BlackjackPlayer(){
+    private Double wallet;
+    private String accountName;
+    private String accountPassword;
 
+    // Default constructor
+    public BlackjackPlayer() {
+        this.wallet = 1000000.0;
     }
 
-    public BlackjackPlayer(String accountName, String accountPassword){
-        this.wallet=wallet;
-        this.accountName=accountName;
-        this.accountPassword=accountPassword;
+    // Constructor with parameters
+    public BlackjackPlayer(String accountName, String accountPassword, Double wallet) {
+        this.accountName = accountName;
+        this.accountPassword = accountPassword;
+        this.wallet = wallet;
     }
+
+
+
     @Override
     public CasinoAccount getArcadeAccount() {
+        // Implement the Arcade account method if required
         return null;
     }
 
     @Override
     public String getAccountName() {
         return this.accountName;
-
     }
 
     @Override
     public String getAccountPassword() {
         return this.accountPassword;
-
     }
 
     @Override
     public Double getAccountBalance() {
-        return this.wallet;
-
+        return this.wallet; // Return current wallet balance
     }
 
     @Override
     public <SomeReturnType> SomeReturnType play() {
+        // Implement the play method as needed
         return null;
     }
-
 }
