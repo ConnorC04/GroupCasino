@@ -118,7 +118,9 @@ public class SlotsGame implements GameInterface {
             s[1] = sg.randomColumn();
             s[2] = sg.randomColumn();
             String[] column = new String[]{slotCharacters[s[0]], slotCharacters[s[1]], slotCharacters[s[2]]};
-            return Arrays.toString(column);
+            String printColumns = Arrays.toString(column);
+            System.out.println(printColumns);
+            return printColumns;
         }
 
     public int randomColumn () {
