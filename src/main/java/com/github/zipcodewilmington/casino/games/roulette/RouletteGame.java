@@ -20,6 +20,7 @@ public class RouletteGame implements GameInterface{
     public BetsAvailable currentBet;
     private int currentNumBetOn;
     public double currentAmtBet;
+    private double currentBalance = 1000.00;
     public enum BetsAvailable {STRAIGHT, SPLIT, STREET, CORNER, RED, BLACK, ODD, EVEN,
         LOW, HIGH, DOZEN1, DOZEN2, DOZEN3, ROW1, ROW2, ROW3};
 
@@ -314,15 +315,15 @@ public class RouletteGame implements GameInterface{
     }
 
     public Double calcChanges(int randNum) {
-        Double total = 0.0;
+        //Double total = 0.0;
         if (this.checkBets(this.currentBet, randNum)) {
-            total += this.calcWinnings(this.currentBet, this.currentAmtBet);
-            System.out.println(String.format("Your total winnings are: %.2f", total));
+            this.currentBalance += this.calcWinnings(this.currentBet, this.currentAmtBet);
+            System.out.println(String.format("Your total winnings are: %.2f", this.currentBalance));
         } else {
-            total -= this.currentAmtBet;
-            System.out.println(String.format("You lost: %.2f", total));
+            this.currentBalance -= this.currentAmtBet;
+            System.out.println(String.format("You lost: %.2f", this.currentBalance));
         }
-        return total;
+        return this.currentBalance;
     }
 
     public void printSpinSummary(int number, String modValue, String color) {
