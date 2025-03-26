@@ -50,13 +50,14 @@ public class GoFishGame implements GameInterface {
     }
 
     public void startGame() {
+        gameRunning = true;
         dealDeck();
         printHand(playerHand);
         playerTurns();
-        dealerTurns();
-        if (currentDeck.isEmpty()) {
-            winningHand();
-        }
+        //dealerTurns();
+//        if (currentDeck.isEmpty()) {
+//            winningHand();
+//        }
     }
 
     public String getUserInput(String string) {
@@ -69,12 +70,17 @@ public class GoFishGame implements GameInterface {
     }
 
     public boolean isUserInputAllowed(String userInput) {
+        if (userInput.equals("exit")) {
+            updatePlayer("Thanks for Playing");
+            gameRunning = false;
+            return true;
+        }
         for (int stringIndex = 0; stringIndex < currentDeck.size(); stringIndex++) {
             if (userInput.equals(currentDeck.get(stringIndex).split(" ")[0].toLowerCase())) {
                 return true;
             }
         }
-        throw new IllegalArgumentException("Invalid card: " + userInput);
+        return false;
     }
 
     //give 7 cards to each player and bank the rest.
@@ -124,13 +130,11 @@ public class GoFishGame implements GameInterface {
     }
 
     public void playerTurns() {
-        while (playersTurn) {
+        while (playersTurn && gameRunning) {
             //player asks for number
             String userInput = getUserInput("What card do you want from dealer").toLowerCase();
-            try {
-                isUserInputAllowed(userInput);
-            } catch (IllegalArgumentException e) {
-                updatePlayer("Error: " + e.getMessage());
+            if (!isUserInputAllowed(userInput)) {
+                updatePlayer("Error: Invalid Card");
                 continue;
             }
             int count = 0;
@@ -156,7 +160,7 @@ public class GoFishGame implements GameInterface {
     }
 
     private void dealerTurns() {
-        while (dealersTurn) {
+        while (dealersTurn && gameRunning) {
             String[] ranks = {"Ace", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Jack", "Queen", "King"};
             int num = rand.nextInt(ranks.length);
             String stringToMatch = ranks[num].toLowerCase();
@@ -210,7 +214,7 @@ public class GoFishGame implements GameInterface {
     }
 
     public void endGame() {
-        if (playerHand.isEmpty()|| dealerHand.isEmpty()|| drawStack.isEmpty()){
+        if (playerHand.isEmpty() || dealerHand.isEmpty() || drawStack.isEmpty()) {
             winningHand();
             String userInput = getUserInput("Do you want to keep playing? [1]- Yes [2]- No");
             if (userInput.equals("1")) {
@@ -273,14 +277,15 @@ public class GoFishGame implements GameInterface {
 
     @Override
     public void run() {
-        if (!gameRunning) {
-            GoFishGame gf = new GoFishGame();
-            gf.updatePlayer("Welcome to Go - Fish");
-            gf.startGame();
-            gameRunning = true;
-        } else {
-            updatePlayer("Game is already in progress");
-        }
+
+        GoFishGame gf = new GoFishGame();
+        gf.updatePlayer("Welcome to Go - Fish");
+        gf.startGame();
+
+
+//        else {
+//            updatePlayer("Game is already in progress");
+//        }
 
     }
 }
