@@ -67,6 +67,7 @@ public class RouletteGame implements GameInterface{
             //allBetsMade.clear();
             //currentNumsBetOn.clear();
             printTableLayout();
+            addBets = true;
             while (addBets) {
                 askForBets();
                 //askForAmountBet();
@@ -78,6 +79,7 @@ public class RouletteGame implements GameInterface{
             printSpinSummary(this.currentSpin, this.oddOrEven, this.currentColor);
             checkBets(this.currentBet, this.currentNumBetOn);
             calcChanges(this.currentSpin);
+            printCurrentBalance();
             exitGame();
         }
     }
@@ -216,7 +218,7 @@ public class RouletteGame implements GameInterface{
     }
 
     public Double askForAmountBet() {
-        Double amount = getDouble("How much would you like to wager?\n");
+        Double amount = getDouble("How much would you like to wager?");
         if (amount < 0) {
             amount = getDouble("Please use a positive value\n");
         }
@@ -315,15 +317,15 @@ public class RouletteGame implements GameInterface{
     }
 
     public Double calcChanges(int randNum) {
-        //Double total = 0.0;
+        Double total = 0.0;
         if (this.checkBets(this.currentBet, randNum)) {
-            this.currentBalance += this.calcWinnings(this.currentBet, this.currentAmtBet);
-            System.out.println(String.format("Your total winnings are: %.2f", this.currentBalance));
+            total += this.calcWinnings(this.currentBet, this.currentAmtBet);
+            System.out.println(String.format("Your total winnings are: %.2f", total));
         } else {
-            this.currentBalance -= this.currentAmtBet;
-            System.out.println(String.format("You lost: %.2f", this.currentBalance));
+            total -= this.currentAmtBet;
+            System.out.println(String.format("You lost: %.2f", total));
         }
-        return this.currentBalance;
+        return this.currentBalance += total;
     }
 
     public void printSpinSummary(int number, String modValue, String color) {
@@ -337,6 +339,10 @@ public class RouletteGame implements GameInterface{
             playGame = false;
         }
         return playGame;
+    }
+
+    public void printCurrentBalance() {
+        System.out.println(String.format("Your current balance is %.2f", this.currentBalance));
     }
 }
 
