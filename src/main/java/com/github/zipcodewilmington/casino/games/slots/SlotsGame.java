@@ -14,9 +14,15 @@ import java.util.Random;
  */
 public class SlotsGame implements GameInterface {
     double currentBalance = 1000.00;
-    int slot1 = 0;
-    int slot2 = 0;
-    int slot3 = 0;
+    SlotsPlayer wb = new SlotsPlayer();
+
+
+//    int slot1 = 0;
+//    int slot2 = 0;
+//    int slot3 = 0;
+    int slots[] = {0 ,0 ,0};
+
+
     Scanner scanner = new Scanner(System.in);
 
     @Override
@@ -51,12 +57,12 @@ public class SlotsGame implements GameInterface {
         if (userInput.equalsIgnoreCase("Yes")) {
             while (readyPlayer) {
                 System.out.println("Let's Play!!");
-                bet(currentBalance);
+                bet(wb.wallet);
                 System.out.println("Do you want to bet again? (Yes/No): ");
                 choiceToPlayAgain = scanner.nextLine();
 
                 if (choiceToPlayAgain.equalsIgnoreCase("Yes")) {
-                    if (currentBalance <= 0){
+                    if (wb.wallet <= 0){
                         System.out.println("Sorry, but you don't have the balance to bet.\n" +
                                 "You will be escorted back to the Casino.");
                         break;
@@ -74,45 +80,45 @@ public class SlotsGame implements GameInterface {
     public double bet(double balance){
         double amountToBet = Double.parseDouble(getUserInput("How much would you like to bet?"));
         double balanceAfterBet = balance - amountToBet;
-        pullTrigger();
+        pullTrigger(this.slots);
         return checkForWinOrLose(amountToBet, balanceAfterBet);
     }
 
     public double checkForWinOrLose(double amountToBet, double balanceAfterBet) {
         double winnings;
         double winningMultiplier;
-        if (slot1 == slot2 || slot1 == slot3 || slot2 == slot3) {
+        if (slots[0] == slots[1] || slots[0] == slots[2] || slots[1] == slots[2]) {
             winningMultiplier = 1.4;
             winnings = (winningMultiplier * amountToBet);
-            currentBalance = (winnings + balanceAfterBet);
+            wb.wallet = (winnings + balanceAfterBet);
             System.out.println((String.format("You've won!! Here's your winnings: %.2f\n", winnings)) +
-                    (String.format("Your new balance is: %.2f ", currentBalance)));
+                    (String.format("Your new balance is: %.2f ", wb.wallet)));
 
-            return currentBalance;
+            return wb.wallet;
         }
-        if (slot1 == slot2 && slot2 == slot3) {
+        if (slots[0] == slots[1] && slots[1] == slots[2]) {
             winningMultiplier = 2;
             winnings = (winningMultiplier * amountToBet);
-            currentBalance = winnings + balanceAfterBet;
+            wb.wallet = winnings + balanceAfterBet;
             System.out.println((String.format("You've won!! Here's your winnings: %.2f\n", winnings)) +
-                    (String.format("Your new balance is: %.2f ", currentBalance)));
-            return currentBalance;
+                    (String.format("Your new balance is: %.2f ", wb.wallet)));
+            return wb.wallet;
         } else {
-            currentBalance = balanceAfterBet;
-            System.out.println(String.format("Sorry, try again. Your current balance is %.2f", currentBalance));
-            return currentBalance;
+            wb.wallet = balanceAfterBet;
+            System.out.println(String.format("Sorry, try again. Your current balance is %.2f", wb.wallet));
+            return wb.wallet;
         }
     }
 
-    private void pullTrigger () {
+    private String pullTrigger (int[] s) {
             /*Cycle through a series of unicode to express the characters on the slots*/
             SlotsGame sg = new SlotsGame();
             String[] slotCharacters = new String[]{"\u2660", "\u2665", "\u2663", "\u2666", "\u26C0", "\u26C1", "\u26C2", "\u26C3", "\u265B", "\u277C"};
-            slot1 = sg.randomColumn();
-            slot2 = sg.randomColumn();
-            slot3 = sg.randomColumn();
-            String[] column = new String[]{slotCharacters[slot1], slotCharacters[slot2], slotCharacters[slot3]};
-            System.out.println(Arrays.toString(column));
+            s[0] = sg.randomColumn();
+            s[1] = sg.randomColumn();
+            s[2] = sg.randomColumn();
+            String[] column = new String[]{slotCharacters[s[0]], slotCharacters[s[1]], slotCharacters[s[2]]};
+            return Arrays.toString(column);
         }
 
     public int randomColumn () {
