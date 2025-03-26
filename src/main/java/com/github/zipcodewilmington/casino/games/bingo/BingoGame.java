@@ -18,11 +18,11 @@ public class BingoGame extends CasinoAccountManager implements GameInterface {
 
     @Override
     public void run(){
-        boolean playAgain = true;
-        Scanner scan = new Scanner(System.in);
+
 
         BingoGame bingoGame = new BingoGame();
-        while (playAgain) {
+
+        Scanner scan = new Scanner(System.in);
 
 
             int[][] playerBoard = bingoGame.makeBoard();
@@ -53,22 +53,14 @@ public class BingoGame extends CasinoAccountManager implements GameInterface {
                     if (playerWins(fiveInARow)) {
                         System.out.println("Bingo! You won!");
                         System.out.println("Would you like to play again? ");
-                        if (!scan.nextLine().equalsIgnoreCase("yes")){
-                            playAgain = false;
-                            System.out.println("Too da loo");
-                        }
                     }
                 }
                 if (!playerWins(fiveInARow)) {
                     System.out.println("Womp womp.");
-                    if (!scan.nextLine().equalsIgnoreCase("yes")){
-                        playAgain = false;
-                        System.out.println("Too da loo");
-                    }
                 }
             }
         }
-    }
+
 
     public void setNumbers(ArrayList<Integer> num, int start, int end) {
         for (int i = start; i < end; i++) {
