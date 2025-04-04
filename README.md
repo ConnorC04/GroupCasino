@@ -1,4 +1,3 @@
-[//]: # ( [MermaidChart: db6f3488-2306-4d0a-94ec-62835ed19c8c]
 # Casino Simulation
 
 * **Objective** - To create an casino simulation
