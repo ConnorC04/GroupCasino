@@ -24,7 +24,7 @@ public class BlackjackGame implements GameInterface {
         dealerHand = new ArrayList<>();
         Random random;
         intitializeDeck();
-        this.wallet=wallet;
+        this.wallet=1000.0;
     }
 
     @Override
@@ -112,6 +112,8 @@ public class BlackjackGame implements GameInterface {
                 System.out.println("It's a push!");
             } else {
                 System.out.println("Dealer wins. . .");
+                addOccurenceToWallet(-currentBet);
+                System.out.println("You have "+ walletBalance()+ " left to play with");
             }
             return;
         }
@@ -128,7 +130,10 @@ public class BlackjackGame implements GameInterface {
                 if (playerTotal > 21) {
                     //If player is over 21 they lose and the loop ends
                     System.out.println("Bust! Over 21. Dealer wins.");
-                    break;
+                    addOccurenceToWallet(-currentBet);
+                    System.out.println("Your new wallet balance: $" + walletBalance()); // Show the updated balance
+
+                    return;
                 }
             } else if (decision.equals("stay")) {
                 break;
@@ -146,6 +151,8 @@ public class BlackjackGame implements GameInterface {
 
             if (dealerTotal > 21) {
                 System.out.println("Dealer busts! You win.");
+                addOccurenceToWallet(currentBet*2);
+                System.out.println("Your new wallet balance: $"+ walletBalance());
                 return;
             }
         }
@@ -153,11 +160,17 @@ public class BlackjackGame implements GameInterface {
         // Determine winner
         if (playerTotal > dealerTotal) {
             //when player total is more than dealer total
-            System.out.println("Winner, winner, chicken dinner! you won: "+currentBet);//add in currentbet*2
+            addOccurenceToWallet(currentBet*2);
+            System.out.println("Winner, winner, chicken dinner! you won: "+currentBet);
+            System.out.println("Your new wallet balance: $" + walletBalance()); // Show the updated balance
+
         } else if (playerTotal < dealerTotal) {
-            System.out.println("Loser, loser, pay up!");//subtract bet from total
+           addOccurenceToWallet(-currentBet);
+            System.out.println("Your new wallet balance: $" + walletBalance()); // Show the updated balance
         } else {
             System.out.println("Push, keep your bet.");//give money back
+            System.out.println("Your new wallet balance: $" + walletBalance()); // Show the updated balance
+
         }
     }
 
@@ -207,9 +220,9 @@ public class BlackjackGame implements GameInterface {
             try {
                 double betAmount = Double.parseDouble(input.nextLine().trim());
 
-                if (wallet > betAmount){
-                    System.out.println("Get your money up, not your funny up!");
-                } else if (betAmount <= 0) {
+                if (betAmount <= 0 ){
+                    System.out.println("Bet must be greater than zero");
+                } else if (wallet < betAmount) {
                     System.out.println("Bet must be greater than zero, take your monopoly money somewhere else.");
                 } else {
                         wallet-=betAmount;
@@ -223,11 +236,11 @@ public class BlackjackGame implements GameInterface {
     }
 }
 
-    public void addWinnings(double amount){
+    public void addOccurenceToWallet(double amount){
         wallet+=amount;
         System.out.println("Winner dinks are on you, your new balance: "+wallet);
     }
-    public double getWalletBalance(){
+    public double walletBalance(){
         return wallet;
 
     }
