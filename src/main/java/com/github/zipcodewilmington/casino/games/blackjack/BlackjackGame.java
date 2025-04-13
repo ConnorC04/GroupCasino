@@ -166,7 +166,7 @@ public class BlackjackGame implements GameInterface {
             walletBalance(); // Show the updated balance
 
         } else if (playerTotal < dealerTotal) {
-            addOccurenceToWallet(-currentBet/4);
+            addOccurenceToWallet(-currentBet);
             walletBalance();
         }
            else{System.out.println("Push, keep your bet.");//give money back
@@ -243,13 +243,7 @@ public class BlackjackGame implements GameInterface {
 }
 
     public void addOccurenceToWallet(double amount){
-       if(amount<0){
-           //should ensure loss is not more than bet
-           double maxLoss=Math.min(currentBet,-amount);
-           wallet-=maxLoss;
-       }else {
-           wallet += amount;
-       }
+        wallet+=Math.abs(amount);
         //added statement here so wallet balance is adjusted every hand
         //don't need to manually add statements after every hand
         System.out.println("Your new wallet balance is :$"+ walletBalance());
