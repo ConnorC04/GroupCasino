@@ -131,13 +131,14 @@ public class BlackjackGame implements GameInterface {
                     //If player is over 21 they lose and the loop ends
                     System.out.println("Bust! Over 21. Dealer wins.");
                     addOccurenceToWallet(-currentBet);
-                    System.out.println("Your new wallet balance: $" + walletBalance()); // Show the updated balance
 
                     return;
                 }
             } else if (decision.equals("stay")) {
                 break;
             }
+            walletBalance(); // Show the updated balance
+
         }
         System.out.println("Dealer reveals their hand " + dealerHand + "Total: " + dealerTotal);
 
@@ -150,29 +151,31 @@ public class BlackjackGame implements GameInterface {
             System.out.println("New total = " + dealerTotal);
 
             if (dealerTotal > 21) {
-                System.out.println("Dealer busts! You win.");
-                addOccurenceToWallet(currentBet*2);
-                System.out.println("Your new wallet balance: $"+ walletBalance());
+                System.out.println("Dealer busts! You win."+currentBet*2);
+                addOccurenceToWallet(currentBet);
                 return;
             }
+            walletBalance();
+
         }
 
         // Determine winner
         if (playerTotal > dealerTotal) {
-            //when player total is more than dealer total
+            //when player total is <=21 && more than dealer total
             addOccurenceToWallet(currentBet*2);
-            System.out.println("Winner, winner, chicken dinner! you won: "+currentBet);
-            System.out.println("Your new wallet balance: $" + walletBalance()); // Show the updated balance
+            walletBalance(); // Show the updated balance
 
         } else if (playerTotal < dealerTotal) {
-           addOccurenceToWallet(-currentBet);
-            System.out.println("Your new wallet balance: $" + walletBalance()); // Show the updated balance
-        } else {
-            System.out.println("Push, keep your bet.");//give money back
+            addOccurenceToWallet(-currentBet/4);
+            walletBalance();
+        }
+           else{System.out.println("Push, keep your bet.");//give money back
             addOccurenceToWallet(currentBet);
-            System.out.println("Your new wallet balance: $" + walletBalance()); // Show the updated balance
+            walletBalance();
 
         }
+        walletBalance();
+
     }
 
     private void intro() {
@@ -195,10 +198,12 @@ public class BlackjackGame implements GameInterface {
             System.out.print("\nDo you want to play again? (yes/no): ");
             String response = scanner.nextLine().trim().toLowerCase();
 
-            if (!response.equals("yes")) {
+            if (response.equals("no")) {
                 playAgain = false;
                 System.out.println("Thanks for playing! Goodbye (Door slamming sound plays.");
-            }
+            }else{
+                System.out.println("Please type 'yes' or 'no': ");}
+                scanner.nextLine();
         }
         scanner.close();
     }
@@ -228,7 +233,7 @@ public class BlackjackGame implements GameInterface {
                 } else {
                         wallet-=betAmount;
                         currentBet = betAmount;
-                    System.out.println("\n bet placed :$");
+                    System.out.println("\n bet placed : $");
                         break;
                     }
 
@@ -238,8 +243,16 @@ public class BlackjackGame implements GameInterface {
 }
 
     public void addOccurenceToWallet(double amount){
-        wallet+=amount;
-        System.out.println(+wallet);
+       if(amount<0){
+           //should ensure loss is not more than bet
+           double maxLoss=Math.min(currentBet,-amount);
+           wallet-=maxLoss;
+       }else {
+           wallet += amount;
+       }
+        //added statement here so wallet balance is adjusted every hand
+        //don't need to manually add statements after every hand
+        System.out.println("Your new wallet balance is :$"+ walletBalance());
     }
     public double walletBalance(){
         return wallet;

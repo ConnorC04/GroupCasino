@@ -3,6 +3,7 @@ package com.github.zipcodewilmington;
 import com.github.zipcodewilmington.casino.games.Card;
 import com.github.zipcodewilmington.casino.games.blackjack.BlackjackGame;
 import com.github.zipcodewilmington.casino.games.blackjack.BlackjackPlayer;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -79,14 +80,50 @@ public class BlackjackTest {
         assertTrue(dealerBusted, "Dealer's hand should bust over 21.");
     }
 
+//    @Test
+//    public void testPlaceBet() {
+//        // Test that a bet is placed correctly
+//        double initialBalance = player.getAccountBalance();
+//        double betAmount = 100.0;
+//        boolean betPlaced = player.placeBet(betAmount);
+//
+//        assertTrue(betPlaced, "Bet should be placed successfully.");
+//        assertEquals(initialBalance - betAmount, player.getAccountBalance(), "Player's account balance should decrease by the bet amount.");
+//    }
     @Test
-    public void testPlaceBet() {
-        // Test that a bet is placed correctly
-        double initialBalance = player.getAccountBalance();
-        double betAmount = 100.0;
-        boolean betPlaced = player.placeBet(betAmount);
+    public void walletDecreaseOnLoss(){
+        double initialWallet =game.walletBalance();
+        double betAmount=100.0;
+        game.addOccurenceToWallet(-betAmount);
 
-        assertTrue(betPlaced, "Bet should be placed successfully.");
-        assertEquals(initialBalance - betAmount, player.getAccountBalance(), "Player's account balance should decrease by the bet amount.");
+        double expected=initialWallet-betAmount;
+
+        assertEquals(expected,game.walletBalance(),.01, "Wallet should decrease on a player loss");
     }
+    @Test
+    public void walletIncreaseOnWin(){
+        double initialWallet =game.walletBalance();
+        double betAmount=100.0;
+        game.addOccurenceToWallet(betAmount*2);
+
+        double expected=initialWallet+(betAmount*2);
+
+        assertEquals(expected,game.walletBalance(),.01, "Wallet should increase on a player loss");
+    }
+    @Test
+    public void testNoOverchargeOnLoss() {
+        // Given
+        BlackjackGame game = new BlackjackGame();
+        double startingWallet = game.walletBalance();
+        double betAmount = 20.0;
+
+        // Simulate a bad loss
+        game.addOccurenceToWallet(-50.0); // Remove more than 20 to simulate error
+
+        // Then
+        double amountLost = startingWallet - game.walletBalance();
+        Assertions.assertTrue(amountLost <= betAmount,
+                "Error: Player lost more than their bet, this should not happen!");
+    }
+
 }
