@@ -169,6 +169,7 @@ public class BlackjackGame implements GameInterface {
             System.out.println("Your new wallet balance: $" + walletBalance()); // Show the updated balance
         } else {
             System.out.println("Push, keep your bet.");//give money back
+            addOccurenceToWallet(currentBet);
             System.out.println("Your new wallet balance: $" + walletBalance()); // Show the updated balance
 
         }
@@ -238,7 +239,7 @@ public class BlackjackGame implements GameInterface {
 
     public void addOccurenceToWallet(double amount){
         wallet+=amount;
-        System.out.println("Winner dinks are on you, your new balance: "+wallet);
+        System.out.println(+wallet);
     }
     public double walletBalance(){
         return wallet;
