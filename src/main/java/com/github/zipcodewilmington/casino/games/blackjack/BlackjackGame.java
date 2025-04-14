@@ -49,10 +49,14 @@ public class BlackjackGame implements GameInterface {
             System.out.print("\nDo you want to play again? (yes/no): ");
             String response = scanner.nextLine().trim().toLowerCase();
 
-            if (!response.equals("yes")) {
-                playAgain = false;
-                System.out.println("Thanks for playing! Goodbye (Door slamming sound plays.");
-            }
+            if (response.equals("yes")) {
+                playAgain = true;
+            } else if (response.equals("no")) {
+                playAgain=false;
+                System.out.println("Thank you for playing.");
+            }else{
+                System.out.println("Please enter 'yes' or 'no': ");
+                scanner.nextLine();}
         }
         scanner.close();
     }
